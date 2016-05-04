@@ -44,34 +44,33 @@
 						<label id="prefWeightLabel" value="&prefWeightLabel;" tooltiptext="&prefWeightTooltip;"/>
 						<textbox id="prefWeightTextBox"/>
 					</row>
+					<!-- type : home or work  -->
 					<row align="center" flex="1">
 						<label value="&typeLabel;" tooltiptext="&typeTooltip;"/>
 						<listbox id="addressTypesListbox" align="center" flex="1"/>
 					</row>
-					<row align="center">
-						<label value="&adrPostOfficeLabel;"/>
-						<textbox id="adrPostOfficeTextBox" placeholder="deprecated"/>
-					</row>
-					<row align="center">
-						<label value="&adrExtendedAddrLabel;"/>
-						<textbox id="adrExtendedAddrTextBox" placeholder="deprecated"/>
-					</row>
+
+					<!-- street -->
 					<row align="center">
 						<label value="&adrStreetLabel;"/>
 						<textbox id="adrStreetTextBox" multiline="true" wrap="virtual"/>
 					</row>
+					<!-- locality -->
 					<row align="center">
 						<label value="&adrLocalityLabel;"/>
 						<textbox id="adrLocalityTextBox"/>
 					</row>
+					<!-- region -->
 					<row align="center">
 						<label value="&adrRegionLabel;"/>
 						<textbox id="adrRegionTextBox"/>
 					</row>
+					<!-- adr postal  -->
 					<row align="center">
 						<label value="&adrPostalCodeLabel;"/>
 						<textbox id="adrPostalCodeTextBox"/>
 					</row>
+					<!-- country -->
 					<row align="center">
 						<label value="&adrCountryLabel;"/>
 						<textbox id="adrCountryTextBox"/>
