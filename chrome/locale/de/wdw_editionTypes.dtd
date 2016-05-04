@@ -1,0 +1,6 @@
+<!ENTITY prefLabel "Präferenz">
+<!ENTITY prefWeightLabel "Wert der Präferenz">
+<!ENTITY prefWeightTooltip "Präferenzen können verschiedene Werte zwischen 1 und 100 haben.">
+
+<!ENTITY typeLabel "Typ">
+<!ENTITY typeTooltip "Typen werden in den Cardbook-Einstellungen definiert. Kontakte können nur entsprechend dieser Werte geändert werden. Stellen Sie also sicher, dass dort richtigen Type angegeben sind.">

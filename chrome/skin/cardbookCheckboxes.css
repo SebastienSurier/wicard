@@ -1,0 +1,17 @@
+﻿.cardbookTreeChildrenAccountClass treechildren::-moz-tree-checkbox(container) {
+	list-style-image: url("chrome://cardbook/skin/checkbox-images.png");
+	-moz-image-region: rect(0 13px 13px 0);
+}
+.cardbookTreeChildrenAccountClass treechildren::-moz-tree-checkbox(container, checked) {
+	list-style-image: url("chrome://cardbook/skin/checkbox-images.png");
+	-moz-image-region: rect(0 26px 13px 13px);
+}
+
+.cardbookTreeChildrenCardClass treechildren::-moz-tree-checkbox() {
+	list-style-image: url("chrome://cardbook/skin/checkbox-images.png");
+	-moz-image-region: rect(0 13px 13px 0);
+}
+.cardbookTreeChildrenCardClass treechildren::-moz-tree-checkbox(checked) {
+	list-style-image: url("chrome://cardbook/skin/checkbox-images.png");
+	-moz-image-region: rect(0 26px 13px 13px);
+}

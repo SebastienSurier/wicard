@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % configurationDTD SYSTEM "chrome://cardbook/locale/wdw_cardbookConfiguration.dtd"> %configurationDTD;
+]>
+
+<prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	title="&wdw_cardbookConfigurationWindowLabel;"
+	onload="wdw_cardbookConfiguration.load();" resizable="true"
+	ondialogcancel="wdw_cardbookConfiguration.cancel();"
+	ondialogaccept="wdw_cardbookConfiguration.accept();"
+	ondialogdisclosure="wdw_cardbookConfiguration.cancel();"
+	id="wdw_cardbookConfigurationWindow">
+
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_cardbookConfiguration.js"/>
+	<script src="cardbookUtils.js"/>
+	<script src="cardbookRepository.js"/>
+	<script src="wdw_log.js"/>
+	<script src="cardbookSynchronization.js"/>
+
+	<prefpane id="sw2-stock-pane" label="Stock Settings">
+
+		<preferences id="cardbookPreferences">
+			<preference id="extensions.cardbook.autocompletion"
+				name="extensions.cardbook.autocompletion" type="bool"/>
+			<preference id="extensions.cardbook.exclusive"
+				name="extensions.cardbook.exclusive" type="bool"/>
+			<preference id="extensions.cardbook.emailsCollection"
+				name="extensions.cardbook.emailsCollection" type="string"/>
+			<preference id="extensions.cardbook.requestsTimeout"
+				name="extensions.cardbook.requestsTimeout" type="string"/>
+			<preference id="extensions.cardbook.debugMode"
+				name="extensions.cardbook.debugMode" type="bool"/>
+			<preference id="extensions.cardbook.statusInformationLineNumber"
+				name="extensions.cardbook.statusInformationLineNumber" type="string"/>
+			<preference id="extensions.cardbook.buttonName"
+				name="extensions.cardbook.buttonName" type="bool"/>
+			<preference id="extensions.cardbook.buttonOrg"
+				name="extensions.cardbook.buttonOrg" type="bool"/>
+			<preference id="extensions.cardbook.buttonCategories"
+				name="extensions.cardbook.buttonCategories" type="bool"/>
+			<preference id="extensions.cardbook.buttonAddress"
+				name="extensions.cardbook.buttonAddress" type="bool"/>
+			<preference id="extensions.cardbook.buttonPhone"
+				name="extensions.cardbook.buttonPhone" type="bool"/>
+			<preference id="extensions.cardbook.buttonEmail"
+				name="extensions.cardbook.buttonEmail" type="bool"/>
+			<preference id="extensions.cardbook.buttonImpp"
+				name="extensions.cardbook.buttonImpp" type="bool"/>
+			<preference id="extensions.cardbook.buttonUrl"
+				name="extensions.cardbook.buttonUrl" type="bool"/>
+			<preference id="extensions.cardbook.buttonNote"
+				name="extensions.cardbook.buttonNote" type="bool"/>
+			<preference id="extensions.cardbook.buttonBirthday"
+				name="extensions.cardbook.buttonBirthday" type="bool"/>
+			<preference id="extensions.cardbook.preferEmailEdition"
+				name="extensions.cardbook.preferEmailEdition" type="bool"/>
+			<preference id="extensions.cardbook.preferAddressEdition"
+				name="extensions.cardbook.preferAddressEdition" type="bool"/>
+			<preference id="extensions.cardbook.cardCreationVersion"
+				name="extensions.cardbook.cardCreationVersion" type="string"/>
+			<preference id="extensions.cardbook.localizeEngine"
+				name="extensions.cardbook.localizeEngine" type="string"/>
+			<preference id="extensions.cardbook.localizeTarget"
+				name="extensions.cardbook.localizeTarget" type="string"/>
+			<preference id="extensions.cardbook.kindCustom"
+				name="extensions.cardbook.kindCustom" type="string"/>
+			<preference id="extensions.cardbook.memberCustom"
+				name="extensions.cardbook.memberCustom" type="string"/>
+			<preference id="extensions.cardbook.defaultLook"
+				name="extensions.cardbook.defaultLook" type="bool"/>
+			<preference id="extensions.cardbook.panesView"
+				name="extensions.cardbook.panesView" type="string"/>
+			<preference id="extensions.cardbook.preferDisk"
+				name="extensions.cardbook.preferDisk" type="bool"/>
+			<preference id="extensions.cardbook.autoSync"
+				name="extensions.cardbook.autoSync" type="bool"/>
+			<preference id="extensions.cardbook.autoSyncInterval"
+				name="extensions.cardbook.autoSyncInterval" type="string"/>
+			<preference id="extensions.cardbook.preferEmailPref"
+				name="extensions.cardbook.preferEmailPref" type="bool"/>
+		</preferences>
+
+		<tabbox id="advancedPrefs" width="400" height="300">
+			
+			<tabs>
+				<tab label="&generalTabLabel;"/>
+				<tab label="&buttonsTabLabel;"/>
+				<tab label="&editionTabLabel;"/>
+				<tab label="&typesTabLabel;"/>
+				<tab label="&customFieldsTabLabel;"/>
+				<tab label="&listsTabLabel;"/>
+				<tab label="&lookTabLabel;"/>
+				<tab label="&syncTabLabel;"/>
+				<tab label="&emailTabLabel;"/>
+			</tabs>
+			
+			<tabpanels>
+				<tabpanel orient="vertical">
+					<groupbox>
+						<caption label="&integrationGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&autocompletionLabel;"
+								accesskey="&autocompletionAccesskey;"
+								control="autocompletionCheckBox"
+								tooltiptext = "&autocompletionTooltip;"
+								id="autocompletionLabel"/>
+							<checkbox id="autocompletionCheckBox"
+								preference="extensions.cardbook.autocompletion"/>
+						</hbox>
+						<separator class="thin"/>
+						<hbox align="center">
+							<label value="&exclusiveLabel;"
+								accesskey="&exclusiveAccesskey;"
+								control="exclusiveCheckBox"
+								tooltiptext = "&exclusiveTooltip;"
+								id="exclusiveLabel"/>
+							<checkbox id="exclusiveCheckBox"
+								preference="extensions.cardbook.exclusive"/>
+						</hbox>
+					</groupbox>
+
+					<groupbox>
+						<caption>
+							<label value="&emailsCollectionLabel;"
+								accesskey="&emailsCollectionAccesskey;" 
+								control="emailsCollectionListbox"
+								tooltiptext = "&emailsCollectionTooltip;"
+								id="emailsCollectionLabel"/>
+						</caption>
+						<listbox rows="4" id="emailsCollectionListbox"/>
+					</groupbox>
+
+					<groupbox>
+						<caption label="&logGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&debugModeLabel;"
+								accesskey="&debugModeAccesskey;"
+								control="debugModeCheckBox"
+								tooltiptext = "&debugModeTooltip;"
+								id="debugModeLabel"/>
+							<checkbox id="debugModeCheckBox"
+								preference="extensions.cardbook.debugMode"/>
+						</hbox>
+						<hbox align="center">
+							<label value="&statusInformationLineNumberLabel;"
+								accesskey="&statusInformationLineNumberAccesskey;"
+								control="statusInformationLineNumberTextBox"
+								id="statusInformationLineNumber"/>
+							<textbox id="statusInformationLineNumberTextBox"
+								preference="extensions.cardbook.statusInformationLineNumber"/>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<vbox>
+						<grid align="center" flex="1">
+							<columns>
+								<column/>
+								<column flex="1"/>
+								<column/>
+								<column flex="1"/>
+								<column/>
+								<column flex="1"/>
+							</columns>
+				
+							<rows>
+								<row align="center">
+									<label value="&buttonNameLabel;"
+										accesskey="&buttonNameAccesskey;"
+										control="buttonNameCheckBox"
+										id="buttonNameLabel"/>
+									<checkbox id="buttonNameCheckBox"
+										preference="extensions.cardbook.buttonName"/>
+									<label value="&buttonOrgLabel;"
+										accesskey="&buttonOrgAccesskey;"
+										control="buttonOrgCheckBox"
+										id="buttonOrgLabel"/>
+									<checkbox id="buttonOrgCheckBox"
+										preference="extensions.cardbook.buttonOrg"/>
+									<label value="&buttonCategoriesLabel;"
+										accesskey="&buttonCategoriesAccesskey;"
+										control="buttonCategoriesCheckBox"
+										id="buttonCategoriesLabel"/>
+									<checkbox id="buttonCategoriesCheckBox"
+										preference="extensions.cardbook.buttonCategories"/>
+								</row>
+								<row align="center">
+									<label value="&buttonAddressLabel;"
+										accesskey="&buttonAddressAccesskey;"
+										control="buttonAddressCheckBox"
+										id="buttonAddressLabel"/>
+									<checkbox id="buttonAddressCheckBox"
+										preference="extensions.cardbook.buttonAddress"/>
+									<label value="&buttonPhoneLabel;"
+										accesskey="&buttonPhoneAccesskey;"
+										control="buttonPhoneCheckBox"
+										id="buttonPhoneLabel"/>
+									<checkbox id="buttonPhoneCheckBox"
+										preference="extensions.cardbook.buttonPhone"/>
+									<label value="&buttonEmailLabel;"
+										accesskey="&buttonEmailAccesskey;"
+										control="buttonEmailCheckBox"
+										id="buttonEmailLabel"/>
+									<checkbox id="buttonEmailCheckBox"
+										preference="extensions.cardbook.buttonEmail"/>
+								</row>
+								<row align="center">
+									<label value="&buttonImppLabel;"
+										accesskey="&buttonImppAccesskey;"
+										control="buttonImppCheckBox"
+										id="buttonImppLabel"/>
+									<checkbox id="buttonImppCheckBox"
+										preference="extensions.cardbook.buttonImpp"/>
+									<label value="&buttonUrlLabel;"
+										accesskey="&buttonUrlAccesskey;"
+										control="buttonUrlCheckBox"
+										id="buttonUrlLabel"/>
+									<checkbox id="buttonUrlCheckBox"
+										preference="extensions.cardbook.buttonUrl"/>
+									<label value="&buttonNoteLabel;"
+										accesskey="&buttonNoteAccesskey;"
+										control="buttonNoteCheckBox"
+										id="buttonNoteLabel"/>
+									<checkbox id="buttonNoteCheckBox"
+										preference="extensions.cardbook.buttonNote"/>
+								</row>
+								<row align="center">
+									<label value="&buttonBirthdayLabel;"
+										accesskey="&buttonBirthdayAccesskey;"
+										control="buttonBirthdayCheckBox"
+										id="buttonBirthdayLabel"/>
+									<checkbox id="buttonBirthdayCheckBox"
+										preference="extensions.cardbook.buttonBirthday"/>
+								</row>
+							</rows>
+						</grid>
+						<separator class="thin"/>
+						<hbox align="center">
+							<caption label="&cardbookRestartWarn;"/>
+						</hbox>
+					</vbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<groupbox>
+						<caption label="&miscEdittingGroupboxLabel;"/>
+						<hbox flex="1" align="center">
+							<label value="&cardCreationVersionLabel;"
+								accesskey="&cardCreationVersionAccesskey;"
+								control="cardCreationVersionRadiogroup"
+								id="cardCreationVersion"/>
+							<radiogroup id="cardCreationVersionRadiogroup" orient="vertical" preference="extensions.cardbook.cardCreationVersion">
+								<radio value="3.0" label="3.0"/>
+								<radio value="4.0" label="4.0"/>
+							</radiogroup>
+						</hbox>
+
+						<hbox align="center">
+							<label value="&preferEmailEditionLabel;"
+								accesskey="&preferEmailEditionAccesskey;"
+								control="preferEmailEditionCheckBox"
+								id="preferEmailEdition"/>
+							<checkbox id="preferEmailEditionCheckBox"
+								preference="extensions.cardbook.preferEmailEdition"/>
+						</hbox>
+
+						<hbox align="center">
+							<label value="&preferAddressEditionLabel;"
+								accesskey="&preferAddressEditionAccesskey;"
+								control="preferAddressEditionCheckBox"
+								id="preferAddressEdition"/>
+							<checkbox id="preferAddressEditionCheckBox"
+								preference="extensions.cardbook.preferAddressEdition"/>
+						</hbox>
+					</groupbox>
+
+					<groupbox>
+						<caption label="&localizeEdittingGroupboxLabel;"/>
+						<hbox flex="1" align="center">
+							<label value="&localizeEngineLabel;"
+								accesskey="&localizeEngineAccesskey;"
+								control="localizeEngineRadiogroup"
+								id="localizeEngine"/>
+							<radiogroup id="localizeEngineRadiogroup" orient="vertical" preference="extensions.cardbook.localizeEngine">
+								<radio value="OpenStreetMap" label="&localizeEngineOpenStreetMapLabel;"/>
+								<radio value="GoogleMaps" label="&localizeEngineGoogleMapsLabel;"/>
+								<radio value="BingMaps" label="&localizeEngineBingMapsLabel;"/>
+							</radiogroup>
+						</hbox>
+
+						<hbox flex="1" align="center">
+							<label value="&localizeTargetLabel;"
+								accesskey="&localizeTargetAccesskey;"
+								control="localizeTargetRadiogroup"
+								id="localizeTarget"/>
+							<radiogroup id="localizeTargetRadiogroup" orient="vertical" preference="extensions.cardbook.localizeTarget">
+								<radio value="in" label="&localizeTargetInLabel;"/>
+								<radio value="out" label="&localizeTargetOutLabel;"/>
+							</radiogroup>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<groupbox>
+						<caption label="&typesGroupboxLabel;"/>
+						<hbox flex="1" align="center">
+							<radiogroup id="typesCategoryRadiogroup" orient="horizontal" onselect="wdw_cardbookConfiguration.displayTypes();">
+								<radio value="address" label="&typesCategoryAddressLabel;" selected="true"/>
+								<radio value="email" label="&typesCategoryEmailLabel;"/>
+								<radio value="impp" label="&typesCategoryImppLabel;"/>
+								<radio value="tel" label="&typesCategoryTelLabel;"/>
+								<radio value="url" label="&typesCategoryUrlLabel;"/>
+							</radiogroup>
+						</hbox>
+						
+						<hbox flex="1" align="center">
+							<vbox flex="1">
+								<listbox rows="8" id="typesListbox"/>
+							</vbox>
+							<vbox flex="1">
+								<button id="addTypeLabel" label="&addTypeLabel;" oncommand="wdw_cardbookConfiguration.addType();"/>
+								<button id="renameTypeLabel" label="&renameTypeLabel;" oncommand="wdw_cardbookConfiguration.renameType();"/>
+								<button id="deleteTypeLabel" label="&deleteTypeLabel;" oncommand="wdw_cardbookConfiguration.deleteType();"/>
+							</vbox>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<caption label="&customFieldsPanelLabel;"/>
+					<groupbox>
+						<caption label="&customNameGroupboxLabel;"/>
+						<hbox flex="1">
+							<vbox flex="1">
+								<grid align="center" flex="1">
+									<columns>
+										<column flex="1"/>
+										<column flex="1"/>
+									</columns>
+						
+									<rows>
+										<row align="center">
+											<label value="&customFieldName;"/>
+											<label value="&customFieldLabel;"/>
+										</row>
+										<row align="center">
+											<textbox id="customField1NameName"/>
+											<textbox id="customField1NameLabel"/>
+										</row>
+										<row align="center">
+											<textbox id="customField2NameName"/>
+											<textbox id="customField2NameLabel"/>
+										</row>
+									</rows>
+								</grid>
+							</vbox>
+						</hbox>
+					</groupbox>
+
+					<groupbox>
+						<caption label="&customOrgGroupboxLabel;"/>
+						<hbox flex="1">
+							<vbox flex="1">
+								<grid align="center" flex="1">
+									<columns>
+										<column flex="1"/>
+										<column flex="1"/>
+									</columns>
+						
+									<rows>
+										<row align="center">
+											<label value="&customFieldName;"/>
+											<label value="&customFieldLabel;"/>
+										</row>
+										<row align="center">
+											<textbox id="customField1OrgName"/>
+											<textbox id="customField1OrgLabel"/>
+										</row>
+										<row align="center">
+											<textbox id="customField2OrgName"/>
+											<textbox id="customField2OrgLabel"/>
+										</row>
+									</rows>
+								</grid>
+							</vbox>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<description style="width:400px">&listPanelLabel;</description>
+					<groupbox>
+						<caption label="&listGroupboxLabel;"/>
+						<hbox flex="1">
+							<vbox flex="1">
+								<grid align="center" flex="1">
+									<columns>
+										<column flex="1"/>
+										<column flex="1"/>
+									</columns>
+						
+									<rows>
+										<row align="center">
+											<label value="&kindCustomLabel;"
+												accesskey="&kindCustomAccesskey;"
+												control="kindCustomTextBox"
+												id="kindCustom"/>
+											<textbox id="kindCustomTextBox"
+												preference="extensions.cardbook.kindCustom"/>
+										</row>
+										<row align="center">
+											<label value="&memberCustomLabel;"
+												accesskey="&memberCustomAccesskey;"
+												control="memberCustomTextBox"
+												id="memberCustom"/>
+											<textbox id="memberCustomTextBox"
+												preference="extensions.cardbook.memberCustom"/>
+										</row>
+									</rows>
+								</grid>
+							</vbox>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+				
+				<tabpanel orient="vertical">
+					<groupbox>
+						<caption label="&lookGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&defaultLookLabel;"
+								accesskey="&defaultLookAccesskey;"
+								control="defaultLookCheckBox"
+								id="defaultLook"/>
+							<checkbox id="defaultLookCheckBox"
+								preference="extensions.cardbook.defaultLook"/>
+						</hbox>
+					</groupbox>
+
+					<groupbox>
+						<caption label="&panesViewGroupboxLabel;"/>
+						<hbox align="center">
+							<radiogroup id="panesViewRadiogroup" preference="extensions.cardbook.panesView">
+								<radio value="classical" label="&panesViewClassical;" selected="true"/>
+								<radio value="modern" label="&panesViewModern;"/>
+							</radiogroup>
+						</hbox>
+						<hbox align="center">
+							<caption label="&cardbookRestartWarn;"/>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<description style="width:400px">&syncWarn;</description>
+					<separator class="thin"/>
+					<groupbox>
+						<caption label="&syncGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&preferDiskLabel;"
+								accesskey="&preferDiskAccesskey;"
+								control="preferDiskCheckBox"
+								id="preferDisk"/>
+							<checkbox id="preferDiskCheckBox"
+								preference="extensions.cardbook.preferDisk"/>
+						</hbox>
+					</groupbox>
+
+					<groupbox>
+						<caption label="&autoSyncGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&autoSyncLabel;"
+								accesskey="&autoSyncAccesskey;"
+								control="autoSyncCheckBox"
+								id="autoSync"/>
+							<checkbox id="autoSyncCheckBox"
+								preference="extensions.cardbook.autoSync" onclick="wdw_cardbookConfiguration.showautoSyncInterval();"/>
+						</hbox>
+						<separator class="thin"/>
+						<hbox align="center">
+							<label value="&autoSyncIntervalLabel;"
+								accesskey="&autoSyncIntervalAccesskey;"
+								control="autoSyncIntervalTextBox"
+								id="autoSyncInterval"/>
+							<textbox id="autoSyncIntervalTextBox"
+								preference="extensions.cardbook.autoSyncInterval"/>
+						</hbox>
+					</groupbox>
+
+					<groupbox>
+						<caption label="&requestsGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&requestsTimeoutLabel;"
+								accesskey="&requestsTimeoutAccesskey;"
+								control="requestsTimeoutTextBox"
+								id="requestsTimeout"/>
+							<textbox id="requestsTimeoutTextBox"
+								preference="extensions.cardbook.requestsTimeout"/>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel orient="vertical">
+					<groupbox>
+						<caption label="&miscEmailGroupboxLabel;"/>
+						<hbox align="center">
+							<label value="&preferEmailPrefLabel;"
+								accesskey="&preferEmailPrefAccesskey;"
+								control="preferEmailPrefCheckBox"
+								id="preferEmailPref"/>
+							<checkbox id="preferEmailPrefCheckBox"
+								preference="extensions.cardbook.preferEmailPref"/>
+						</hbox>
+						<separator class="thin"/>
+						<hbox align="center">
+							<caption label="&preferEmailPrefWarn;"/>
+						</hbox>
+					</groupbox>
+				</tabpanel>
+			</tabpanels>
+
+		</tabbox>
+	</prefpane>
+</prefwindow>

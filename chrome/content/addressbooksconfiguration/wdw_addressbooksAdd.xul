@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % passwordDTD SYSTEM "chrome://cardbook/locale/wdw_password.dtd"> %passwordDTD;
+	<!ENTITY % addressbooksAddDTD SYSTEM "chrome://cardbook/locale/wdw_addressbooksAdd.dtd"> %addressbooksAddDTD;
+]>
+
+<wizard id="addressbook-wizard"
+	title="&wizard.title;"
+	windowtype="Addressbook:NewAddressbookWizard"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+	onload="wdw_addressbooksAdd.loadWizard();"
+	onwizardcancel="wdw_addressbooksAdd.cancelWizard();"
+	onclose="wdw_addressbooksAdd.cancelWizard();"
+	onwizardfinish="wdw_addressbooksAdd.closeWizard();"
+	style="min-height:600px;"
+	persist="screenX screenY">
+
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="chrome://cardbook/content/cardbookUtils.js"/>
+	<script src="chrome://cardbook/content/wdw_log.js"/>
+	<script src="chrome://cardbook/content/cardbookPasswordManager.js"/>
+	<script src="chrome://cardbook/content/cardbookSynchronization.js"/>
+	<script src="wdw_newGoogleToken.js"/>
+	<script src="wdw_addressbooksAdd.js"/>
+
+   <wizardpage pageid="initialPage"
+			next="locationComputerPage"
+			label="&wizard.label;"
+			description="&initialpage.wizard.description;"
+			onpageshow="wdw_addressbooksAdd.checkRequired();"
+			onpageadvanced="wdw_addressbooksAdd.initialAdvance();">
+		<description>&initialpage.description;</description>
+		<radiogroup id="addressbookType">
+			<radio value="local" label="&initialpage.computer.label;" selected="true"/>
+			<radio value="remote" label="&initialpage.network.label;"/>
+		</radiogroup>
+   </wizardpage>
+
+   <wizardpage pageid="locationComputerPage"
+			next="namePage"
+			label="&wizard.label;"
+			description="&locationComputerPage.wizard.description;"
+			onpageshow="wdw_addressbooksAdd.checkRequired();"
+			onpageadvanced="wdw_addressbooksAdd.locationComputerPageTypeAdvance();">
+
+		<groupbox flex="1">
+			<caption label="&locationComputerPage.type.label;"/>
+			<grid flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+				<rows>
+					<description>&locationComputerPage.type.description;</description>
+					<row align="center">
+						<label value="&locationComputerPage.type.label;"/>
+						<radiogroup id="locationComputerPageType" onselect="wdw_addressbooksAdd.locationComputerPageTypeSelect();">
+							<radio value="open" label="&locationComputerPage.open.label;" selected="true"/>
+							<radio value="create" label="&locationComputerPage.create.label;"/>
+						</radiogroup>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+
+		<groupbox flex="1">
+			<caption label="&locationComputerPage.uri.label;"/>
+			<grid flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+				<rows>
+					<description>&locationComputerPage.uri.description;</description>
+					<row align="center">
+						<label value="&locationComputerPage.uri.label;"/>
+						<textbox id="locationComputerPageURI"
+							required="true"
+							disabled="true"
+							oninput="wdw_addressbooksAdd.checkRequired();"/>
+						<button id="uriButton" label="&locationComputerPage.uributton.label;" oncommand="wdw_addressbooksAdd.searchFile()"/>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+   </wizardpage>
+
+   <wizardpage pageid="locationNetworkPage"
+			next="namePage"
+			label="&wizard.label;"
+			description="&locationNetworkPage.wizard.description;"
+			onpageshow="wdw_addressbooksAdd.checklocationNetwork();"
+			onpageadvanced="wdw_addressbooksAdd.locationNetworkPageTypeAdvance();">
+
+		<groupbox flex="1">
+			<caption label="&locationNetworkPage.type.label;"/>
+			<grid flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+				<rows>
+					<description>&locationNetworkPage.description;</description>
+					<row align="center">
+						<label value="&locationNetworkPage.type.label;"/>
+						<radiogroup id="locationNetworkPageType" onselect="wdw_addressbooksAdd.locationNetworkPageTypeSelect();">
+							<radio value="CARDDAV" label="&locationNetworkPage.carddav.label;" selected="true"/>
+							<radio value="GOOGLE" label="&locationNetworkPage.google.label;"/>
+							<radio value="APPLE" label="&locationNetworkPage.apple.label;"/>
+						</radiogroup>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+
+		<groupbox flex="1" id="locationNetworkPageUriGroupbox">
+			<caption label="&locationNetworkPage.connection.label;"/>
+			<grid flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+					<column/>
+				</columns>
+				<rows>
+					<description>&locationNetworkPage.uri.description;</description>
+					<row align="center">
+						<label id="locationNetworkPageUriLabel" value="&locationNetworkPage.uri.label;"/>
+						<textbox id="locationNetworkPageURI"
+							required="true"
+							oninput="wdw_addressbooksAdd.locationNetworkPageTextboxInput();"/>
+					</row>
+					<separator class="groove-thin"/>
+					<description>&locationNetworkPage.credentials.description;</description>
+					<row align="center">
+						<label value="&usernameLabel;"/>
+						<textbox id="locationNetworkPageUsername"
+							required="true"
+							oninput="wdw_addressbooksAdd.locationNetworkPageTextboxInput();"/>
+					</row>
+					<row align="center">
+						<label id="locationNetworkPagePasswordLabel" value="&passwordLabel;"/>
+						<textbox id="locationNetworkPagePassword"
+							type="password"
+							required="true"
+							oninput="wdw_addressbooksAdd.locationNetworkPageTextboxInput();"/>
+						<checkbox id="locationNetworkPagePasswordCheckBox" label="&passwordShowLabel;" onclick="wdw_addressbooksAdd.showPassword();" disabled="false"/>
+					</row>
+				</rows>
+			</grid>
+			<separator class="groove-thin"/>
+			<hbox>
+				<spacer flex="1"/>
+				<textbox id="resultValidation" flex="1" hidden="true" disabled="true"/>
+				<button id="validateButton" label="&locationNetworkPage.validatebutton.label;" oncommand="wdw_addressbooksAdd.validateURL()"/>
+			</hbox>
+		</groupbox>
+	</wizardpage>
+
+	<wizardpage pageid="namePage"
+			next="finishPage"
+			label="&wizard.label;"
+			description="&namePage.wizard.description;"
+			onpageshow="wdw_addressbooksAdd.loadName();"
+			onpageadvanced="wdw_addressbooksAdd.createAddressbook();">
+		<grid flex="1">
+			<columns>
+				<column/>
+				<column flex="1"/>
+			</columns>
+			<rows>
+				<description>&namePage.color.description;</description>
+				<row align="center">
+					<label value="&namePage.color.label;" control="cardbook-color"/>
+					<hbox align="center">
+						<html:input id="serverColorInput"
+							class="small-margin"
+							type="color"/>
+					</hbox>
+				</row>
+				<separator class="groove-thin"/>
+				<description>&namePage.name.description;</description>
+				<row align="center">
+					<label value="&namePage.name.label;"/>
+					<textbox id="namePageName"
+						required="true"
+						oninput="wdw_addressbooksAdd.checkRequired();"/>
+				</row>
+			</rows>
+		</grid>
+	</wizardpage>
+
+	<wizardpage pageid="namesPage"
+			next="finishPage"
+			label="&wizard.label;"
+			description="&namesPage.wizard.description;"
+			onpageshow="wdw_addressbooksAdd.loadNames();"
+			onpageadvanced="wdw_addressbooksAdd.createAddressbook();">
+		<grid flex="1">
+			<columns>
+				<column/>
+				<column/>
+				<column flex="1"/>
+			</columns>
+			<rows id="namesRows" align="center">
+				<vbox>
+					<description>&namesPage.name.description;</description>
+				</vbox>
+				<vbox id="namesVbox"/>
+			</rows>
+		</grid>
+	</wizardpage>
+
+   <wizardpage pageid="finishPage"
+               label="&wizard.label;"
+               description="&finishPage.wizard.description;"
+               onpageshow="wdw_addressbooksAdd.setCanRewindFalse();">
+        <description>&finishPage.description;</description>
+   </wizardpage>
+</wizard>

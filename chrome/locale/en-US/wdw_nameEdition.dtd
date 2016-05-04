@@ -1,0 +1,9 @@
+<!ENTITY wdw_nameEditionTitle "Name editor">
+
+<!ENTITY fnLabel "Display name">
+<!ENTITY lastnameLabel "Last name">
+<!ENTITY firstnameLabel "First name">
+<!ENTITY othernameLabel "Other name">
+<!ENTITY suffixnameLabel "Suffix">
+<!ENTITY prefixnameLabel "Prefix">
+<!ENTITY nicknameLabel "Nickname">

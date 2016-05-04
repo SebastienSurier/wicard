@@ -1,0 +1,174 @@
+<!ENTITY wdw_cardbookWindowLabel "Cardbook">
+
+<!ENTITY accountsOrCatsTreeLabel "Agendas">
+<!ENTITY enableAccountsTooltip "Ligar ou deligar a procura e sincronização das agendas.">
+<!ENTITY colorAccountsTooltip "Colorir os resultados da pesquisa">
+
+<!ENTITY cardbookAccountMenuLabel "Agendas">
+
+<!ENTITY cardbookAccountMenuAddServerLabel "Adicionar agenda">
+<!ENTITY cardbookAccountMenuEditServerLabel "Editar agenda">
+<!ENTITY cardbookAccountMenuCloseServerLabel "Fechar agenda">
+<!ENTITY cardbookAccountMenuEnableOrDisableAddressbookLabel "Ligar agenda">
+<!ENTITY cardbookAccountMenuSyncsLabel "Sincronizar todas as agendas">
+<!ENTITY cardbookAccountMenuSyncLabel "Sincronizar esta agenda">
+
+<!ENTITY cardbookToolsMenuLabel "Ferramentas">
+<!ENTITY cardbookToolsMenuExportToFileLabel "Exportar para ficheiro UTF8">
+<!ENTITY cardbookToolsMenuImportFromFileLabel "Importar de ficheiro UTF8">
+<!ENTITY cardbookToolsMenuExportToDirLabel "Exportar para diretoria">
+<!ENTITY cardbookToolsMenuImportFromDirLabel "Importar de diretoria">
+
+<!ENTITY cardbookToolbarAddServerButtonLabel "Adicionar agenda">
+<!ENTITY cardbookToolbarAddServerButtonTooltip "Adicionar uma agenda local ou remota">
+<!ENTITY cardbookToolbarSyncButtonLabel "Sincronizar agendas">
+<!ENTITY cardbookToolbarSyncButtonTooltip "Sincronizar todas as agendas remotas">
+<!ENTITY cardbookToolbarCreateUserButtonLabel "Criar cartão">
+<!ENTITY cardbookToolbarCreateUserButtonTooltip "Criar novo cartão">
+
+<!ENTITY generalTabLabel "Geral">
+<!ENTITY listTabLabel "Listas">
+<!ENTITY technicalTabLabel "Tecnico">
+<!ENTITY vcardTabLabel "VCard">
+
+<!ENTITY dispnColumnLabel "Nomes">
+<!ENTITY lastnameColumnLabel "Nome">
+<!ENTITY firstnameColumnLabel "Apelido">
+<!ENTITY othernameColumnLabel "Outros nomes">
+<!ENTITY prefixnameColumnLabel "Prefixo">
+<!ENTITY suffixnameColumnLabel "Sufixo">
+<!ENTITY fnColumnLabel "Nome de apresentação">
+<!ENTITY nicknameColumnLabel "Alcunha">
+<!ENTITY bdayColumnLabel "Aniversário">
+<!ENTITY dispadrColumnLabel "Moradas">
+<!ENTITY disphomeadrColumnLabel "Morada de casa">
+<!ENTITY dispworkadrColumnLabel "Morada de trabalho">
+<!ENTITY disptelColumnLabel "Telefones">
+<!ENTITY disphometelColumnLabel "Telefone de casa">
+<!ENTITY dispworktelColumnLabel "Telefone de trabalho">
+<!ENTITY dispcelltelColumnLabel "Telemovel">
+<!ENTITY dispemailColumnLabel "Emails">
+<!ENTITY disphomeemailColumnLabel "Email pessoal">
+<!ENTITY dispworkemailColumnLabel "Email profissional">
+<!ENTITY mailerColumnLabel "Mailer">
+<!ENTITY tzColumnLabel "TZ">
+<!ENTITY geoColumnLabel "Geo">
+<!ENTITY titleColumnLabel "Titulo">
+<!ENTITY roleColumnLabel "Função">
+<!ENTITY orgColumnLabel "Organização">
+<!ENTITY categoriesColumnLabel "Categorias">
+<!ENTITY noteColumnLabel "Notas">
+<!ENTITY prodidColumnLabel "Prodid">
+<!ENTITY sortstringColumnLabel "Sort string">
+<!ENTITY uidColumnLabel "Uid">
+<!ENTITY dispurlColumnLabel "Url">
+<!ENTITY versionColumnLabel "Versão">
+<!ENTITY class1ColumnLabel "Classe">
+<!ENTITY dispimppColumnLabel "Mensagem Instantanea">
+<!ENTITY cardurlColumnLabel "Endereço URL do cartão">
+<!ENTITY dirPrefIdColumnLabel "DirPrefId">
+<!ENTITY kindColumnLabel "Tipo">
+<!ENTITY revColumnLabel "Rev">
+<!ENTITY etagColumnLabel "Etag">
+
+<!ENTITY buttonNameLabel "Nome">
+<!ENTITY buttonOrgLabel "Org">
+<!ENTITY buttonCategoriesLabel "Cat">
+<!ENTITY buttonAddressLabel "Moradas">
+<!ENTITY buttonPhoneLabel "Telefones">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonImppLabel "MI">
+<!ENTITY buttonUrlLabel "URL">
+<!ENTITY buttonNoteLabel "Nota">
+<!ENTITY buttonBirthdayLabel "Aniversário">
+
+<!ENTITY saveButtonLabel "Guardar">
+<!ENTITY cancelButtonLabel "Cancelar">
+			
+<!ENTITY persGroupboxLabel "Information pessoal">
+<!ENTITY orgGroupboxLabel "Information profissional">
+<!ENTITY categoriesGroupboxLabel "Categorias">
+<!ENTITY adrGroupboxLabel "Moradas">
+<!ENTITY telGroupboxLabel "Números de telefone">
+<!ENTITY emailGroupboxLabel "Endereços de email">
+<!ENTITY imppGroupboxLabel "Endereços de mensagem instantanea">
+<!ENTITY noteGroupboxLabel "Notas">
+
+<!ENTITY availableCardsGroupboxLabel "Cartões disponíveis">
+<!ENTITY addedCardsGroupboxLabel "Lista de cartões">
+<!ENTITY buttonAppendToListLabel "Adicionar">
+<!ENTITY buttonRemoveFromListLabel "Remover">
+<!ENTITY appendlistTreeLabel "Adicionar a lista">
+<!ENTITY deletelistTreeLabel "Remover da lista">
+
+<!ENTITY miscGroupboxLabel "Diversos">
+<!ENTITY othersGroupboxLabel "Otutros">
+<!ENTITY techGroupboxLabel "Tecnico">
+<!ENTITY urlGroupboxLabel "URLs">
+<!ENTITY labelGroupboxLabel "Etiquetas">
+<!ENTITY class1Label "Classes">
+<!ENTITY geoLabel "Geo">
+<!ENTITY mailerLabel "Mailer">
+<!ENTITY agentLabel "Agente">
+<!ENTITY keyLabel "Chave">
+<!ENTITY photoLocalURILabel "Imagem local">
+<!ENTITY logoLocalURILabel "Logotipo local">
+<!ENTITY soundLocalURILabel "Som local">
+<!ENTITY photoURILabel "Fotografia">
+<!ENTITY logoURILabel "Logo">
+<!ENTITY soundURILabel "Som">
+<!ENTITY prodidLabel "Prodid">
+<!ENTITY sortstringLabel "Sort String">
+<!ENTITY uidLabel "UID">
+<!ENTITY versionLabel "Versão">
+<!ENTITY versionLabel1 "Versão">
+<!ENTITY tzLabel "Fuso horário">
+
+<!ENTITY dirPrefIdLabel "dirPrefId">
+<!ENTITY cardurlLabel "Url do cartão">
+<!ENTITY revLabel "Rev">
+<!ENTITY etagLabel "Etag">
+
+<!ENTITY localizeaddressTreeLabel "Localizar">
+<!ENTITY emailemailTreeLabel "Entrada de email">
+
+<!ENTITY copyCardTreeLabel "Copiar entrada">
+<!ENTITY editCardTreeLabel "Editar entrada">
+<!ENTITY addCardTreeLabel "Adicionar entrada">
+<!ENTITY deleteCardTreeLabel "Apagar entrada">
+<!ENTITY moveUpCardTreeLabel "Move para cima">
+<!ENTITY moveDownCardTreeLabel "Move para baixo">
+<!ENTITY displayOrHideHeadersLabel "Ocultar cabeçalho">
+
+<!ENTITY addImageCardFromFileLabel "Adicionar imagem de ficheiro">
+<!ENTITY addImageCardFromClipboardLabel "Adicionar imagem do clipboard">
+<!ENTITY addImageCardFromUrlLabel "Adicionar imagem de URL">
+<!ENTITY saveImageCardLabel "Guardar imagem">
+<!ENTITY deleteImageCardLabel "Apagar imagem">
+
+<!ENTITY toEmailCardFromAccountsOrCatsLabel "Enviar cartões por email">
+<!ENTITY toEmailCardFromCardsLabel "Enviar cartões por email">
+<!ENTITY ccEmailCardFromAccountsOrCatsLabel "Enviar cartões por email (cc)">
+<!ENTITY ccEmailCardFromCardsLabel "Enviar cartões por email (cc)">
+<!ENTITY bccEmailCardFromAccountsOrCatsLabel "Enviar cartões por email (bcc)">
+<!ENTITY bccEmailCardFromCardsLabel "Enviar cartões por email (bcc)">
+<!ENTITY localizeCardFromCardsLabel "Localizar">
+<!ENTITY copyCardFromAccountsOrCatsLabel "Copiar cartão">
+<!ENTITY copyCardFromCardsLabel "Copiar cartão">
+<!ENTITY pasteCardFromAccountsOrCatsLabel "Colar cartão">
+<!ENTITY pasteCardFromCardsLabel "Colar cartão">
+<!ENTITY exportCardToFileFromAccountsOrCatsLabel "Exportar cartão para ficheiro">
+<!ENTITY exportCardToDirFromAccountsOrCatsLabel "Exportar cartão para diretoria">
+<!ENTITY exportCardToFileFromCardsLabel "Exportar cartão para ficheiro">
+<!ENTITY exportCardToDirFromCardsLabel "Exportar cartão para diretoria">
+<!ENTITY importCardFromFileFromAccountsOrCatsLabel "Importar cartões de ficheiro">
+<!ENTITY importCardFromDirFromAccountsOrCatsLabel "Importar cartões de diretoria">
+<!ENTITY removeCatFromAccountsOrCatsLabel "Remover categoria">
+<!ENTITY enableOrDisableFromAccountsOrCatsLabel "Ligar agenda">
+<!ENTITY deleteCardFromCardsLabel "Apagar cartão">
+<!ENTITY mergeCardsFromCardsLabel "Juntar cartões">
+<!ENTITY editAccountFromAccountsOrCatsLabel "Editar agenda">
+<!ENTITY syncAccountFromAccountsOrCatsLabel "Sinc. agenda">
+<!ENTITY removeAccountFromAccountsOrCatsLabel "Fechar agenda">
+
+<!ENTITY statusProgressInformationTooltip "Clique aqui para ver os logs">

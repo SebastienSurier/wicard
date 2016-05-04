@@ -1,0 +1,10 @@
+<!ENTITY cardbookMenuItemLabel "Cardbook">
+<!ENTITY cardbookMenuItemTooltip "Abrir agenda de VCard">
+
+<!ENTITY cardbookToolbarButtonLabel "Cardbook">
+<!ENTITY cardbookToolbarButtonTooltip "Abrir agenda de VCard">
+
+<!ENTITY cardbookTabButtonLabel "Cardbook">
+<!ENTITY cardbookTabButtonTooltip "Seleccionar tab do Cardbook">
+
+<!ENTITY addToCardbookMenuLabel "Adicionar ao Cardbook">

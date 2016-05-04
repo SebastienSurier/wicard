@@ -1,0 +1,10 @@
+<!ENTITY cardbookMenuItemLabel "Cardbook">
+<!ENTITY cardbookMenuItemTooltip "Ouvrir un carnet d'addresses au format VCard">
+
+<!ENTITY cardbookToolbarButtonLabel "Cardbook">
+<!ENTITY cardbookToolbarButtonTooltip "Ouvrir un carnet d'addresses au format VCard">
+
+<!ENTITY cardbookTabButtonLabel "Cardbook">
+<!ENTITY cardbookTabButtonTooltip "Aller à l'onglet Cardbook">
+
+<!ENTITY addToCardbookMenuLabel "Ajouter à Cardbook">

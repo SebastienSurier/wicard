@@ -1,0 +1,27 @@
+﻿#cardbookToolbarAddServerButton {
+	list-style-image: url("chrome://cardbook/skin/add_server_24_24.png");
+}
+
+toolbar[iconsize="small"] #cardbookToolbarAddServerButton {
+	list-style-image: url("chrome://cardbook/skin/add_server_16_16.png");
+}
+
+#cardbookToolbarSyncButton {
+	list-style-image: url("chrome://cardbook/skin/sync_24_24.png");
+}
+
+toolbar[iconsize="small"] #cardbookToolbarSyncButton {
+	list-style-image: url("chrome://cardbook/skin/sync_16_16.png");
+}
+
+#cardbookToolbarCreateUserButton {
+	list-style-image: url("chrome://cardbook/skin/cardbook_24_24.png");
+}
+
+toolbar[iconsize="small"] #cardbookToolbarCreateUserButton {
+	list-style-image: url("chrome://cardbook/skin/cardbook_16_16.png");
+}
+
+.cardbookButtonClass {
+	min-width: 20px !important;
+}

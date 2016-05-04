@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://cardbook/skin/toolbarButton.css" type="text/css"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://cardbook/locale/ovl_cardbook.dtd">
+
+<overlay id="ovl_cardbook"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+	
+	<script src="chrome://cardbook/content/yellowStars/ovl_cardbookYellowStars.js"/>
+	<script src="chrome://cardbook/content/quickCreation/ovl_cardbookAddContacts.js"/>
+	<script src="chrome://cardbook/content/formatMails/ovl_cardbookFormatMails.js"/>
+	<script src="wdw_log.js"/>
+	<script src="cardbookUtils.js"/>
+	<script src="cardbookSynchronization.js"/>
+	<script src="ovl_synchro.js"/>
+	<script src="cardbookMailPopularity.js"/>
+	<script src="ovl_mailPopularity.js"/>
+	<script src="ovl_cardbook.js"/>
+	
+	<menupopup id="taskPopup">
+		<menuitem id="cardbookMenuItem"
+			label="&cardbookMenuItemLabel;"
+			tooltiptext="&cardbookMenuItemTooltip;"
+			oncommand="ovl_cardbook.open()"
+			insertafter="addressBook"/>
+	</menupopup>
+	
+	<toolbarpalette id="MailToolbarPalette">
+		<toolbarbutton id="cardbookToolbarButton"
+			label="&cardbookToolbarButtonLabel;"
+			tooltiptext="&cardbookToolbarButtonTooltip;"
+			oncommand="ovl_cardbook.open();"
+			class="toolbarbutton-1"/>
+	</toolbarpalette>
+
+	<window id="messengerWindow">
+		<commandset id="cardbook_commands">
+			<command id="cardbookTabButtonOpen"
+				oncommand="ovl_cardbook.open();"/>
+		</commandset>
+	</window>
+  
+	<toolbar id="tabbar-toolbar">
+		<toolbarbutton id="cardbookTabButton"
+			class="toolbarbutton-1"
+			title="&cardbookTabButtonLabel;"
+			tooltiptext="&cardbookTabButtonTooltip;"
+			command="cardbookTabButtonOpen"/>
+	</toolbar>
+
+	<menupopup id="emailAddressPopup" onpopupshowing="setupEmailAddressPopup(findEmailNodeFromPopupNode(document.popupNode, 'emailAddressPopup'));
+														goUpdateCommand('cmd_createFilterFromPopup')">
+		<menu id="addToCardbookMenu" label="&addToCardbookMenuLabel;" insertbefore="addToAddressBookItem">
+			<menupopup id="addToCardbookMenuPopup" onpopupshowing="ovl_cardbook.addToCardbookMenuSubMenu()"/>
+		</menu>
+	</menupopup>
+	
+</overlay>

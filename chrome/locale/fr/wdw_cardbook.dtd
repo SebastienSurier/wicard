@@ -1,0 +1,174 @@
+<!ENTITY wdw_cardbookWindowLabel "Cardbook">
+
+<!ENTITY accountsOrCatsTreeLabel "Carnets d'adresses">
+<!ENTITY enableAccountsTooltip "Activer ou désactiver les carnets d'adresses lors des recherches et des synchronisations.">
+<!ENTITY colorAccountsTooltip "Choisir une couleur pour les carnets d'adresses lors des recherches sur plusieurs carnets d'adresses.">
+
+<!ENTITY cardbookAccountMenuLabel "Carnets d'adresses">
+
+<!ENTITY cardbookAccountMenuAddServerLabel "Ajouter un carnet d'adresses">
+<!ENTITY cardbookAccountMenuEditServerLabel "Éditer un carnet d'adresses">
+<!ENTITY cardbookAccountMenuCloseServerLabel "Fermer un carnet d'adresses">
+<!ENTITY cardbookAccountMenuEnableOrDisableAddressbookLabel "Activer un carnet d'adresses">
+<!ENTITY cardbookAccountMenuSyncsLabel "Synchroniser tous les carnets d'adresses">
+<!ENTITY cardbookAccountMenuSyncLabel "Synchroniser ce carnet d'adresses">
+
+<!ENTITY cardbookToolsMenuLabel "Outils">
+<!ENTITY cardbookToolsMenuExportToFileLabel "Exporter vers un fichier encodé en UTF8">
+<!ENTITY cardbookToolsMenuImportFromFileLabel "Importer un fichier encodé en UTF8">
+<!ENTITY cardbookToolsMenuExportToDirLabel "Exporter vers un répertoire">
+<!ENTITY cardbookToolsMenuImportFromDirLabel "Importer un répertoire">
+
+<!ENTITY cardbookToolbarAddServerButtonLabel "Ajouter un carnet d'adresses">
+<!ENTITY cardbookToolbarAddServerButtonTooltip "Ajouter un carnet d'adresses local ou distant">
+<!ENTITY cardbookToolbarSyncButtonLabel "Synchroniser">
+<!ENTITY cardbookToolbarSyncButtonTooltip "Synchroniser tous les carnets d'adresses distants">
+<!ENTITY cardbookToolbarCreateUserButtonLabel "Créér un contact">
+<!ENTITY cardbookToolbarCreateUserButtonTooltip "Créér un nouveau contact">
+
+<!ENTITY generalTabLabel "Général">
+<!ENTITY listTabLabel "Liste">
+<!ENTITY technicalTabLabel "Technique">
+<!ENTITY vcardTabLabel "VCard">
+
+<!ENTITY dispnColumnLabel "Noms">
+<!ENTITY lastnameColumnLabel "Nom">
+<!ENTITY firstnameColumnLabel "Prénom">
+<!ENTITY othernameColumnLabel "Autre nom">
+<!ENTITY prefixnameColumnLabel "Préfixe">
+<!ENTITY suffixnameColumnLabel "Suffixe">
+<!ENTITY fnColumnLabel "Nom affiché">
+<!ENTITY nicknameColumnLabel "Surnom">
+<!ENTITY bdayColumnLabel "Anniversaire">
+<!ENTITY dispadrColumnLabel "Adresses">
+<!ENTITY disphomeadrColumnLabel "Adresses maison">
+<!ENTITY dispworkadrColumnLabel "Adresses travail">
+<!ENTITY disptelColumnLabel "Téléphones">
+<!ENTITY disphometelColumnLabel "Téléphones maison">
+<!ENTITY dispworktelColumnLabel "Téléphones travail">
+<!ENTITY dispcelltelColumnLabel "Téléphones portables">
+<!ENTITY dispemailColumnLabel "Emails">
+<!ENTITY disphomeemailColumnLabel "Emails maison">
+<!ENTITY dispworkemailColumnLabel "Emails travail">
+<!ENTITY mailerColumnLabel "Mailer">
+<!ENTITY tzColumnLabel "Tz">
+<!ENTITY geoColumnLabel "Geo">
+<!ENTITY titleColumnLabel "Titre">
+<!ENTITY roleColumnLabel "Rôle">
+<!ENTITY orgColumnLabel "Société">
+<!ENTITY categoriesColumnLabel "Catégories">
+<!ENTITY noteColumnLabel "Note">
+<!ENTITY prodidColumnLabel "Prodid">
+<!ENTITY sortstringColumnLabel "Sort string">
+<!ENTITY uidColumnLabel "Uid">
+<!ENTITY dispurlColumnLabel "Url">
+<!ENTITY versionColumnLabel "Version">
+<!ENTITY class1ColumnLabel "Class">
+<!ENTITY dispimppColumnLabel "Instant messaging">
+<!ENTITY cardurlColumnLabel "Card URL">
+<!ENTITY dirPrefIdColumnLabel "DirPrefId">
+<!ENTITY kindColumnLabel "Type">
+<!ENTITY revColumnLabel "Rev">
+<!ENTITY etagColumnLabel "Etag">
+
+<!ENTITY buttonNameLabel "Name">
+<!ENTITY buttonOrgLabel "Org.">
+<!ENTITY buttonCategoriesLabel "Cat.">
+<!ENTITY buttonAddressLabel "Adresse">
+<!ENTITY buttonPhoneLabel "Tel.">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonImppLabel "Impp">
+<!ENTITY buttonUrlLabel "Url">
+<!ENTITY buttonNoteLabel "Note">
+<!ENTITY buttonBirthdayLabel "Anniversaire">
+
+<!ENTITY saveButtonLabel "Sauver">
+<!ENTITY cancelButtonLabel "Annuler">
+			
+<!ENTITY persGroupboxLabel "Informations personnelles">
+<!ENTITY orgGroupboxLabel "Informations professionnelles">
+<!ENTITY categoriesGroupboxLabel "Catégories">
+<!ENTITY adrGroupboxLabel "Adresses">
+<!ENTITY telGroupboxLabel "Téléphones">
+<!ENTITY emailGroupboxLabel "Emails">
+<!ENTITY imppGroupboxLabel "IMPPs">
+<!ENTITY noteGroupboxLabel "Note">
+
+<!ENTITY availableCardsGroupboxLabel "Contacts disponibles">
+<!ENTITY addedCardsGroupboxLabel "Liste de contacts">
+<!ENTITY buttonAppendToListLabel "Ajouter">
+<!ENTITY buttonRemoveFromListLabel "Supprimer">
+<!ENTITY appendlistTreeLabel "Ajouter à la liste">
+<!ENTITY deletelistTreeLabel "Supprimer de la liste">
+
+<!ENTITY miscGroupboxLabel "Divers">
+<!ENTITY othersGroupboxLabel "Autres">
+<!ENTITY techGroupboxLabel "Technique">
+<!ENTITY urlGroupboxLabel "URLs">
+<!ENTITY labelGroupboxLabel "Labels">
+<!ENTITY class1Label "Class">
+<!ENTITY geoLabel "Geo">
+<!ENTITY mailerLabel "Mailer">
+<!ENTITY agentLabel "Agent">
+<!ENTITY keyLabel "Key">
+<!ENTITY photoLocalURILabel "Local photo">
+<!ENTITY logoLocalURILabel "Local logo">
+<!ENTITY soundLocalURILabel "Local son">
+<!ENTITY photoURILabel "Photo">
+<!ENTITY logoURILabel "Logo">
+<!ENTITY soundURILabel "Son">
+<!ENTITY prodidLabel "Prodid">
+<!ENTITY sortstringLabel "Sort-String">
+<!ENTITY uidLabel "Uid">
+<!ENTITY versionLabel "Version">
+<!ENTITY versionLabel1 "Version">
+<!ENTITY tzLabel "Timezone">
+
+<!ENTITY dirPrefIdLabel "dirPrefId">
+<!ENTITY cardurlLabel "Url du contact">
+<!ENTITY revLabel "Rev">
+<!ENTITY etagLabel "Etag">
+
+<!ENTITY localizeaddressTreeLabel "Localiser">
+<!ENTITY emailemailTreeLabel "Envoyer un email">
+
+<!ENTITY copyCardTreeLabel "Copier cette ligne">
+<!ENTITY editCardTreeLabel "Modifier cette ligne">
+<!ENTITY addCardTreeLabel "Ajouter une ligne">
+<!ENTITY deleteCardTreeLabel "Supprimer cette ligne">
+<!ENTITY moveUpCardTreeLabel "Déplacer vers le haut">
+<!ENTITY moveDownCardTreeLabel "Déplacer vers le bas">
+<!ENTITY displayOrHideHeadersLabel "Afficher les en-têtes">
+
+<!ENTITY addImageCardFromFileLabel "Ajouter une image depuis un fichier">
+<!ENTITY addImageCardFromClipboardLabel "Ajouter une image depuis le presse-papier">
+<!ENTITY addImageCardFromUrlLabel "Ajouter une image depuis une URL copiée">
+<!ENTITY saveImageCardLabel "Sauver l'image">
+<!ENTITY deleteImageCardLabel "Supprimer l'image">
+
+<!ENTITY toEmailCardFromAccountsOrCatsLabel "Envoyer des emails">
+<!ENTITY toEmailCardFromCardsLabel "Envoyer des emails">
+<!ENTITY ccEmailCardFromAccountsOrCatsLabel "Envoyer des emails (copie / cc)">
+<!ENTITY ccEmailCardFromCardsLabel "Envoyer des emails (copie / cc)">
+<!ENTITY bccEmailCardFromAccountsOrCatsLabel "Envoyer des emails (copie cachée / bcc)">
+<!ENTITY bccEmailCardFromCardsLabel "Envoyer des emails (copie cachée / bcc)">
+<!ENTITY localizeCardFromCardsLabel "Localiser">
+<!ENTITY copyCardFromAccountsOrCatsLabel "Copier le contact">
+<!ENTITY copyCardFromCardsLabel "Copier le contact">
+<!ENTITY pasteCardFromAccountsOrCatsLabel "Coller le contact">
+<!ENTITY pasteCardFromCardsLabel "Coller le contact">
+<!ENTITY exportCardToFileFromAccountsOrCatsLabel "Exporter le contact vers un fichier">
+<!ENTITY exportCardToDirFromAccountsOrCatsLabel "Exporter le contact vers un répertoire">
+<!ENTITY exportCardToFileFromCardsLabel "Exporter le contact vers un fichier">
+<!ENTITY exportCardToDirFromCardsLabel "Exporter le contact vers un répertoire">
+<!ENTITY importCardFromFileFromAccountsOrCatsLabel "Importer des contacts depuis un fichier">
+<!ENTITY importCardFromDirFromAccountsOrCatsLabel "Importer des contacts depuis un répertoire">
+<!ENTITY removeCatFromAccountsOrCatsLabel "Supprimer la catégorie">
+<!ENTITY enableOrDisableFromAccountsOrCatsLabel "Activer le carnet d'adresses">
+<!ENTITY mergeCardsFromCardsLabel "Fusionner les contacts">
+<!ENTITY deleteCardFromCardsLabel "Supprimer le contact">
+<!ENTITY editAccountFromAccountsOrCatsLabel "Éditer le carnet d'adresses">
+<!ENTITY syncAccountFromAccountsOrCatsLabel "Synchroniser">
+<!ENTITY removeAccountFromAccountsOrCatsLabel "Fermer le carnet d'adresses">
+
+<!ENTITY statusProgressInformationTooltip "Cliquer ici pour voir les logs">

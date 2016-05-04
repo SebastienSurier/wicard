@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % nameDTD SYSTEM "chrome://cardbook/locale/wdw_nameEdition.dtd"> %nameDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="wdw_nameEdition.load();" resizable="true"
+	onclose="wdw_nameEdition.cancel();"
+	id="wdw_nameEdition" title="&wdw_nameEditionTitle;"
+	persist="screenX screenY width height" class="cardbookBackgroundColorClass"
+	style="min-width:400px;min-height:100px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_nameEdition.js"/>
+
+	<keyset id="wdw_nameEdition-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_nameEdition.cancel();"/>
+	</keyset>
+
+	<hbox flex="1">
+		<vbox flex="1">
+			<grid align="center" flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+	
+				<rows>
+					<row align="center">
+						<label value="&fnLabel;"/>
+						<textbox id="fnTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&lastnameLabel;"/>
+						<textbox id="lastnameTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&firstnameLabel;"/>
+						<textbox id="firstnameTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&othernameLabel;"/>
+						<textbox id="othernameTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&suffixnameLabel;"/>
+						<textbox id="suffixnameTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&prefixnameLabel;"/>
+						<textbox id="prefixnameTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&nicknameLabel;"/>
+						<textbox id="nicknameTextBox"/>
+					</row>
+					<row align="center">
+						<label id="customField1NameLabel"/>
+						<textbox id="customField1NameTextBox"/>
+					</row>
+					<row align="center">
+						<label id="customField2NameLabel"/>
+						<textbox id="customField2NameTextBox"/>
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+	</hbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_nameEdition.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_nameEdition.cancel();"/>
+	</hbox>
+</window>

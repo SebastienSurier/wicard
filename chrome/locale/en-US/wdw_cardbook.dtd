@@ -1,0 +1,174 @@
+<!ENTITY wdw_cardbookWindowLabel "Cardbook">
+
+<!ENTITY accountsOrCatsTreeLabel "Address Books">
+<!ENTITY enableAccountsTooltip "Enable or disable search and synchronization of address books.">
+<!ENTITY colorAccountsTooltip "Color address book search results (use when searches span multiple address books).">
+
+<!ENTITY cardbookAccountMenuLabel "Address Books">
+
+<!ENTITY cardbookAccountMenuAddServerLabel "Add address book">
+<!ENTITY cardbookAccountMenuEditServerLabel "Edit address book">
+<!ENTITY cardbookAccountMenuCloseServerLabel "Close address book">
+<!ENTITY cardbookAccountMenuEnableOrDisableAddressbookLabel "Enable address book">
+<!ENTITY cardbookAccountMenuSyncsLabel "Synchronize all address books">
+<!ENTITY cardbookAccountMenuSyncLabel "Synchronize this address book">
+
+<!ENTITY cardbookToolsMenuLabel "Tools">
+<!ENTITY cardbookToolsMenuExportToFileLabel "Export to a UTF8 encoded file">
+<!ENTITY cardbookToolsMenuImportFromFileLabel "Import from a UTF8 encoded file">
+<!ENTITY cardbookToolsMenuExportToDirLabel "Export to a directory">
+<!ENTITY cardbookToolsMenuImportFromDirLabel "Import from a directory">
+
+<!ENTITY cardbookToolbarAddServerButtonLabel "Add address book">
+<!ENTITY cardbookToolbarAddServerButtonTooltip "Add a remote or local address book">
+<!ENTITY cardbookToolbarSyncButtonLabel "Sync. address books">
+<!ENTITY cardbookToolbarSyncButtonTooltip "Synchronize all remote address books">
+<!ENTITY cardbookToolbarCreateUserButtonLabel "Create card">
+<!ENTITY cardbookToolbarCreateUserButtonTooltip "Create a new card">
+
+<!ENTITY generalTabLabel "General">
+<!ENTITY listTabLabel "List">
+<!ENTITY technicalTabLabel "Technical">
+<!ENTITY vcardTabLabel "VCard">
+
+<!ENTITY dispnColumnLabel "Names">
+<!ENTITY lastnameColumnLabel "Lastname">
+<!ENTITY firstnameColumnLabel "Firstname">
+<!ENTITY othernameColumnLabel "Other name">
+<!ENTITY prefixnameColumnLabel "Prefix">
+<!ENTITY suffixnameColumnLabel "Suffix">
+<!ENTITY fnColumnLabel "Display name">
+<!ENTITY nicknameColumnLabel "Nickname">
+<!ENTITY bdayColumnLabel "Birthday">
+<!ENTITY dispadrColumnLabel "Addresses">
+<!ENTITY disphomeadrColumnLabel "Home Addresses">
+<!ENTITY dispworkadrColumnLabel "Work Addresses">
+<!ENTITY disptelColumnLabel "Phones">
+<!ENTITY disphometelColumnLabel "Home Phones">
+<!ENTITY dispworktelColumnLabel "Work Phones">
+<!ENTITY dispcelltelColumnLabel "Cell Phones">
+<!ENTITY dispemailColumnLabel "Emails">
+<!ENTITY disphomeemailColumnLabel "Home Emails">
+<!ENTITY dispworkemailColumnLabel "Work Emails">
+<!ENTITY mailerColumnLabel "Mailer">
+<!ENTITY tzColumnLabel "TZ">
+<!ENTITY geoColumnLabel "Geo">
+<!ENTITY titleColumnLabel "Title">
+<!ENTITY roleColumnLabel "Role">
+<!ENTITY orgColumnLabel "Organization">
+<!ENTITY categoriesColumnLabel "Categories">
+<!ENTITY noteColumnLabel "Notes">
+<!ENTITY prodidColumnLabel "Prodid">
+<!ENTITY sortstringColumnLabel "Sort string">
+<!ENTITY uidColumnLabel "Uid">
+<!ENTITY dispurlColumnLabel "Url">
+<!ENTITY versionColumnLabel "Version">
+<!ENTITY class1ColumnLabel "Class">
+<!ENTITY dispimppColumnLabel "Instant messaging">
+<!ENTITY cardurlColumnLabel "Card URL">
+<!ENTITY dirPrefIdColumnLabel "DirPrefId">
+<!ENTITY kindColumnLabel "Kind">
+<!ENTITY revColumnLabel "Rev">
+<!ENTITY etagColumnLabel "Etag">
+
+<!ENTITY buttonNameLabel "Name">
+<!ENTITY buttonOrgLabel "Org">
+<!ENTITY buttonCategoriesLabel "Cat">
+<!ENTITY buttonAddressLabel "Address">
+<!ENTITY buttonPhoneLabel "Phone">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonImppLabel "IM">
+<!ENTITY buttonUrlLabel "URL">
+<!ENTITY buttonNoteLabel "Note">
+<!ENTITY buttonBirthdayLabel "Birthday">
+
+<!ENTITY saveButtonLabel "Save">
+<!ENTITY cancelButtonLabel "Cancel">
+			
+<!ENTITY persGroupboxLabel "Personal information">
+<!ENTITY orgGroupboxLabel "Professional information">
+<!ENTITY categoriesGroupboxLabel "Categories">
+<!ENTITY adrGroupboxLabel "Addresses">
+<!ENTITY telGroupboxLabel "Telephone numbers">
+<!ENTITY emailGroupboxLabel "Email addresses">
+<!ENTITY imppGroupboxLabel "IM addresses">
+<!ENTITY noteGroupboxLabel "Notes">
+
+<!ENTITY availableCardsGroupboxLabel "Available cards">
+<!ENTITY addedCardsGroupboxLabel "Cards list">
+<!ENTITY buttonAppendToListLabel "Add">
+<!ENTITY buttonRemoveFromListLabel "Remove">
+<!ENTITY appendlistTreeLabel "Add to list">
+<!ENTITY deletelistTreeLabel "Remove from list">
+
+<!ENTITY miscGroupboxLabel "Miscellaneous">
+<!ENTITY othersGroupboxLabel "Other">
+<!ENTITY techGroupboxLabel "Technical">
+<!ENTITY urlGroupboxLabel "URLs">
+<!ENTITY labelGroupboxLabel "Labels">
+<!ENTITY class1Label "Class">
+<!ENTITY geoLabel "Geo">
+<!ENTITY mailerLabel "Mailer">
+<!ENTITY agentLabel "Agent">
+<!ENTITY keyLabel "Key">
+<!ENTITY photoLocalURILabel "Local photo">
+<!ENTITY logoLocalURILabel "Local logo">
+<!ENTITY soundLocalURILabel "Local sound">
+<!ENTITY photoURILabel "Photo">
+<!ENTITY logoURILabel "Logo">
+<!ENTITY soundURILabel "Sound">
+<!ENTITY prodidLabel "Prodid">
+<!ENTITY sortstringLabel "Sort String">
+<!ENTITY uidLabel "UID">
+<!ENTITY versionLabel "Version">
+<!ENTITY versionLabel1 "Version">
+<!ENTITY tzLabel "Timezone">
+
+<!ENTITY dirPrefIdLabel "dirPrefId">
+<!ENTITY cardurlLabel "Card Url">
+<!ENTITY revLabel "Rev">
+<!ENTITY etagLabel "Etag">
+
+<!ENTITY localizeaddressTreeLabel "Localize">
+<!ENTITY emailemailTreeLabel "Email entry">
+
+<!ENTITY copyCardTreeLabel "Copy entry">
+<!ENTITY editCardTreeLabel "Edit entry">
+<!ENTITY addCardTreeLabel "Add entry">
+<!ENTITY deleteCardTreeLabel "Delete entry">
+<!ENTITY moveUpCardTreeLabel "Move up">
+<!ENTITY moveDownCardTreeLabel "Move down">
+<!ENTITY displayOrHideHeadersLabel "Hide headers">
+
+<!ENTITY addImageCardFromFileLabel "Add image from a file">
+<!ENTITY addImageCardFromClipboardLabel "Add image from the clipboard">
+<!ENTITY addImageCardFromUrlLabel "Add image from a clipboarded URL">
+<!ENTITY saveImageCardLabel "Save image">
+<!ENTITY deleteImageCardLabel "Delete image">
+
+<!ENTITY toEmailCardFromAccountsOrCatsLabel "Email cards">
+<!ENTITY toEmailCardFromCardsLabel "Email cards">
+<!ENTITY ccEmailCardFromAccountsOrCatsLabel "Email cards (copy / cc)">
+<!ENTITY ccEmailCardFromCardsLabel "Email cards (copy / cc)">
+<!ENTITY bccEmailCardFromAccountsOrCatsLabel "Email cards (blind copy / bcc)">
+<!ENTITY bccEmailCardFromCardsLabel "Email cards (blind copy / bcc)">
+<!ENTITY localizeCardFromCardsLabel "Localize">
+<!ENTITY copyCardFromAccountsOrCatsLabel "Copy card">
+<!ENTITY copyCardFromCardsLabel "Copy card">
+<!ENTITY pasteCardFromAccountsOrCatsLabel "Paste card">
+<!ENTITY pasteCardFromCardsLabel "Paste card">
+<!ENTITY exportCardToFileFromAccountsOrCatsLabel "Export card to a file">
+<!ENTITY exportCardToDirFromAccountsOrCatsLabel "Export card to a directory">
+<!ENTITY exportCardToFileFromCardsLabel "Export card to a file">
+<!ENTITY exportCardToDirFromCardsLabel "Export card to a directory">
+<!ENTITY importCardFromFileFromAccountsOrCatsLabel "Import cards from a file">
+<!ENTITY importCardFromDirFromAccountsOrCatsLabel "Import cards from a directory">
+<!ENTITY removeCatFromAccountsOrCatsLabel "Remove category">
+<!ENTITY enableOrDisableFromAccountsOrCatsLabel "Enable address book">
+<!ENTITY deleteCardFromCardsLabel "Delete card">
+<!ENTITY mergeCardsFromCardsLabel "Merge cards">
+<!ENTITY editAccountFromAccountsOrCatsLabel "Edit address book">
+<!ENTITY syncAccountFromAccountsOrCatsLabel "Sync. address book">
+<!ENTITY removeAccountFromAccountsOrCatsLabel "Close address book">
+
+<!ENTITY statusProgressInformationTooltip "Click here to view logs">

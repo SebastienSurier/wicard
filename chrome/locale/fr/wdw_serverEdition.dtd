@@ -1,0 +1,7 @@
+<!ENTITY wdw_serverEditionTitle "Modification de carnet d'adresses">
+
+<!ENTITY serverNameLabel "Nom">
+<!ENTITY serverTypeLabel "Type">
+<!ENTITY serverUserLabel "Utilisateur">
+<!ENTITY serverUrlLabel "URL">
+<!ENTITY serverColorLabel "Couleur">

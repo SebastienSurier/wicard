@@ -1,0 +1,119 @@
+<!ENTITY wdw_cardbookConfigurationWindowLabel "Cardbook configuration">
+
+<!ENTITY generalTabLabel "General">
+<!ENTITY buttonsTabLabel "Buttons">
+<!ENTITY editionTabLabel "Editing">
+<!ENTITY typesTabLabel "Types">
+<!ENTITY customFieldsTabLabel "Custom fields">
+<!ENTITY listsTabLabel "Lists">
+<!ENTITY lookTabLabel "Look">
+<!ENTITY syncTabLabel "Sync.">
+<!ENTITY emailTabLabel "Email">
+
+<!ENTITY integrationGroupboxLabel "Integration in Thunderbird">
+<!ENTITY autocompletionLabel "Autocompletion of email addresses">
+<!ENTITY autocompletionAccesskey "A">
+<!ENTITY autocompletionTooltip "Extends the standard autocompletion of contacts in address books of Thunderbird with an autocompletion of contacts in address books of Cardbook.">
+<!ENTITY exclusiveLabel "Unique source for contacts">
+<!ENTITY exclusiveAccesskey "U">
+<!ENTITY exclusiveTooltip "If disabled, this option allows to retrieve contacts in Thunderbird standard address books for the yellow stars, for the email display name and the for the email autocompletion.">
+<!ENTITY emailsCollectionLabel "Collect outgoing email">
+<!ENTITY emailsCollectionAccesskey "C">
+<!ENTITY emailsCollectionTooltip "Extends the standard outgoing email address collection of Thunderbird with an outgoing email address collection of Cardbook named 'Collected Cards'. If enabled, email addresses not present in any Cardbook address book will be added to 'Collected Cards'.">
+
+<!ENTITY logGroupboxLabel "Log">
+<!ENTITY debugModeLabel "Debug mode">
+<!ENTITY debugModeAccesskey "D">
+<!ENTITY debugModeTooltip "Enable debug mode for extended logging.">
+<!ENTITY statusInformationLineNumberLabel "Number of lines kept in the log file">
+<!ENTITY statusInformationLineNumberAccesskey "N">
+
+<!ENTITY buttonNameLabel "Name">
+<!ENTITY buttonNameAccesskey "N">
+<!ENTITY buttonOrgLabel "Org.">
+<!ENTITY buttonOrgAccesskey "O">
+<!ENTITY buttonCategoriesLabel "Cat.">
+<!ENTITY buttonCategoriesAccesskey "C">
+<!ENTITY buttonAddressLabel "Address">
+<!ENTITY buttonAddressAccesskey "A">
+<!ENTITY buttonPhoneLabel "Phone">
+<!ENTITY buttonPhoneAccesskey "P">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonEmailAccesskey "E">
+<!ENTITY buttonImppLabel "IM">
+<!ENTITY buttonImppAccesskey "I">
+<!ENTITY buttonUrlLabel "URL">
+<!ENTITY buttonUrlAccesskey "U">
+<!ENTITY buttonNoteLabel "Note">
+<!ENTITY buttonNoteAccesskey "T">
+<!ENTITY buttonBirthdayLabel "Birthday">
+<!ENTITY buttonBirthdayAccesskey "B">
+
+<!ENTITY miscEdittingGroupboxLabel "Misc.">
+<!ENTITY cardCreationVersionLabel "Default VCard version">
+<!ENTITY cardCreationVersionAccesskey "V">
+<!ENTITY preferEmailEditionLabel "Double-click on email address edits it">
+<!ENTITY preferEmailEditionAccesskey "E">
+<!ENTITY preferAddressEditionLabel "Double-click on address edits it">
+<!ENTITY preferAddressEditionAccesskey "A">
+<!ENTITY localizeEdittingGroupboxLabel "Localize">
+<!ENTITY localizeEngineLabel "Use">
+<!ENTITY localizeEngineAccesskey "U">
+<!ENTITY localizeEngineOpenStreetMapLabel "OpenStreetMap">
+<!ENTITY localizeEngineGoogleMapsLabel "Google Maps">
+<!ENTITY localizeEngineBingMapsLabel "Bing Maps">
+<!ENTITY localizeTargetLabel "Open addresses">
+<!ENTITY localizeTargetAccesskey "O">
+<!ENTITY localizeTargetInLabel "inside Thunderbird">
+<!ENTITY localizeTargetOutLabel "outside Thunderbird">
+
+<!ENTITY typesGroupboxLabel "Types">
+<!ENTITY typesCategoryAddressLabel "Address">
+<!ENTITY typesCategoryEmailLabel "Email">
+<!ENTITY typesCategoryImppLabel "IMPP">
+<!ENTITY typesCategoryTelLabel "Phone">
+<!ENTITY typesCategoryUrlLabel "URL">
+<!ENTITY addTypeLabel "Add">
+<!ENTITY renameTypeLabel "Rename">
+<!ENTITY deleteTypeLabel "Delete">
+
+<!ENTITY customFieldsPanelLabel "Define your own custom fields.">
+<!ENTITY customNameGroupboxLabel "Name">
+<!ENTITY customOrgGroupboxLabel "Organization">
+<!ENTITY customFieldName "Field name">
+<!ENTITY customFieldLabel "Field label">
+
+<!ENTITY listPanelLabel "If your server does not support categories (like Google, Apple, Zimbra, etc...), lists are a good way to send emails to groups. VCard 3.0 do not natively support lists, but this may be achieved with custom fields, so if you want to use lists in VCard 3.0, you have to define these fields.">
+<!ENTITY listGroupboxLabel "Custom fields for lists">
+<!ENTITY kindCustomLabel "Kind">
+<!ENTITY kindCustomAccesskey "K">
+<!ENTITY memberCustomLabel "Member">
+<!ENTITY memberCustomAccesskey "M">
+
+<!ENTITY lookGroupboxLabel "Style">
+<!ENTITY defaultLookLabel "Cardbook style (blue)">
+<!ENTITY defaultLookAccesskey "C">
+
+<!ENTITY panesViewGroupboxLabel "Contact entry style">
+<!ENTITY panesViewClassical "One column, two rows (Classical view)">
+<!ENTITY panesViewModern "Three columns">
+
+<!ENTITY syncGroupboxLabel "Sync.">
+<!ENTITY syncWarn "Synchronizing propagates your modifications to a remote server and the server's modifications to you.">
+<!ENTITY preferDiskLabel "Prefer local modifications to server's">
+<!ENTITY preferDiskAccesskey "I">
+<!ENTITY autoSyncGroupboxLabel "Periodic syncing">
+<!ENTITY autoSyncLabel "Enable periodic syncing">
+<!ENTITY autoSyncAccesskey "E">
+<!ENTITY autoSyncIntervalLabel "Interval for periodic syncing (minutes)">
+<!ENTITY autoSyncIntervalAccesskey "T">
+<!ENTITY requestsGroupboxLabel "Requests">
+<!ENTITY requestsTimeoutLabel "Timeout (seconds)">
+<!ENTITY requestsTimeoutAccesskey "T">
+
+<!ENTITY miscEmailGroupboxLabel "Sending emails">
+<!ENTITY preferEmailPrefLabel "Prefer email addresses marked PREFerred">
+<!ENTITY preferEmailPrefAccesskey "W">
+<!ENTITY preferEmailPrefWarn "If no address is marked 'PREFerred', the message is sent to all of the contact's addresses.">
+
+<!ENTITY cardbookRestartWarn "You must close and reopen Cardbook for this change to take effect.">

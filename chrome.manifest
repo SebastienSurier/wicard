@@ -1,0 +1,31 @@
+manifest components/cardbookAutocompleteSearch.manifest
+
+content	cardbook                                                        	chrome/content/
+
+locale	cardbook                                                        	en-US chrome/locale/en-US/
+locale	cardbook	fr	chrome/locale/fr/
+locale	cardbook	de	chrome/locale/de/
+locale	cardbook	pt-PT	chrome/locale/pt-PT/
+skin	cardbook                                                        	classic/1.0 chrome/skin/
+style	chrome://global/content/customizeToolbar.xul                    	chrome://cardbook/skin/toolbarButton.css
+
+# support for Cardbook, yellow stars, creation from emails, formatting email fields
+overlay	chrome://messenger/content/messenger.xul                        	chrome://cardbook/content/ovl_cardbook.xul
+
+# support for autocompletion in composition window
+overlay    chrome://messenger/content/messengercompose/messengercompose.xul chrome://cardbook/content/autocomplete/ovl_cardbookautocomplete.xul
+
+# support for collected mail
+overlay	chrome://messenger/content/messengercompose/messengercompose.xul chrome://cardbook/content/collected/ovl_collected.xul
+
+# support for expanding list
+overlay	chrome://messenger/content/messengercompose/messengercompose.xul chrome://cardbook/content/ovl_list.xul
+
+# support for search engines
+overlay	chrome://messenger/content/messenger.xul chrome://cardbook/content/filters/ovl_filters.xul
+
+# support for filter messages
+overlay	chrome://messenger/content/FilterEditor.xul chrome://cardbook/content/filters/ovl_filterEditor.xul
+
+# support for Lightning attendees
+overlay	chrome://calendar/content/calendar-event-dialog-attendees.xul chrome://cardbook/content/lightning/ovl_lightning.xul

@@ -1,0 +1,6 @@
+<!ENTITY wdw_logEditionTitle "Consultation du log">
+
+<!ENTITY logEditionTreeLineLabel "Ligne">
+<!ENTITY flushLogEditionLabel "Vider">
+<!ENTITY clipboardLogEditionLabel "Copier dans le presse-papier">
+<!ENTITY cancelLogEditionLabel "OK">

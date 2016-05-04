@@ -1,0 +1,44 @@
+<!ENTITY wizard.title "Neues Adressbuch hinzufügen">
+<!ENTITY wizard.label "Neues Adressbuch hinzufügen">
+
+<!ENTITY initialpage.wizard.description "Ort des neuen Adressbuchs">
+<!ENTITY initialpage.description "Ist das Adressbuch lokal oder im Netzwerk gespeichert?">
+<!ENTITY initialpage.computer.label "Lokal">
+<!ENTITY initialpage.network.label "Im Netzwerk">
+
+<!ENTITY locationComputerPage.wizard.description "Art und Ort des neuen lokalen Adressbuchs.">
+<!ENTITY locationComputerPage.description "Möchten Sie ein existierendes Adressbuch öffnen oder ein neues erstellen?">
+<!ENTITY locationComputerPage.type.description "Welcher Art ist das lokale Adressbuch?">
+<!ENTITY locationComputerPage.type.label "Art">
+<!ENTITY locationComputerPage.open.label "Existierendes Adressbuch öffnen">
+<!ENTITY locationComputerPage.create.label "Neues Adressbuch erstellen">
+<!ENTITY locationComputerPage.uri.label "Datei">
+<!ENTITY locationComputerPage.uri.description "Wählen Sie den Speicherort für das Adressbuch. Für neue Adressbücher wird die Endung .vcf empfohlen.">
+<!ENTITY locationComputerPage.uributton.label "Durchsuchen">
+
+<!ENTITY locationNetworkPage.wizard.description "Art und Ort des neuen Netzwerk-Adressbuchs">
+<!ENTITY locationNetworkPage.description "Welcher Art ist das Netzwerk-Adressbuch? (Achtung: Google hält sich nicht an VCard-Standards.)">
+<!ENTITY locationNetworkPage.type.label "Art">
+<!ENTITY locationNetworkPage.carddav.label "CardDAV">
+<!ENTITY locationNetworkPage.google.label "Google">
+<!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.connection.label "Verbindung">
+<!ENTITY locationNetworkPage.uri.description "Adresse für das CardDAV-Adressbuch. Sie können versuchen, Teil-URLs anzugeben (z.B. http(s)://carddav.example.org). Für Google-Adressbücher muss keine URL angegeben werden.">
+<!ENTITY locationNetworkPage.uri.label "URL">
+<!ENTITY locationNetworkPage.credentials.description "Zugangsdaten für das Adressbuch. Für Google-Adressbücher sollte der Benutzername der Email-Adresse entsprechen.">
+<!ENTITY locationNetworkPage.validatebutton.label "Überprüfen">
+
+<!ENTITY googleOauthPage.wizard.description "Google-Authentifizierung">
+
+<!ENTITY namePage.wizard.description "Name für das neue Adressbuch">
+<!ENTITY namePage.color.label "Farbe">
+<!ENTITY namePage.name.label "Name">
+<!ENTITY namePage.color.description "Wählen Sie eine Farbe für das Adressbuch">
+<!ENTITY namePage.name.description "Wählen Sie einen Namen für das Adressbuch">
+
+<!ENTITY namesPage.wizard.description "Namen für die neuen Adressbücher">
+<!ENTITY namesPage.name.label "Namen">
+<!ENTITY namesPage.name.description "Es wurden mehrere Adressbücher gefunden. Wählen Sie, welche Adressbücher geöffnet werden sollen und vergeben Sie Namen für diese.">
+
+<!ENTITY finishPage.wizard.description "Adressbuch konfiguriert">
+<!ENTITY finishPage.description "Ihr neues Adressbuch wurde erfolgreich konfiguriert.">

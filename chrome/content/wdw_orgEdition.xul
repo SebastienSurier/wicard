@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % orgDTD SYSTEM "chrome://cardbook/locale/wdw_orgEdition.dtd"> %orgDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="wdw_orgEdition.load();" resizable="true"
+	onclose="wdw_orgEdition.cancel();"
+	id="wdw_orgEdition" title="&wdw_orgEditionTitle;"
+	persist="screenX screenY width height" class="cardbookBackgroundColorClass"
+	style="min-width:400px;min-height:100px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_orgEdition.js"/>
+
+	<keyset id="wdw_orgEdition-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_orgEdition.cancel();"/>
+	</keyset>
+
+	<hbox flex="1">
+		<vbox flex="1">
+			<grid align="center" flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+	
+				<rows>
+					<row align="center">
+						<label value="&orgLabel;"/>
+						<textbox id="orgTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&titleLabel;"/>
+						<textbox id="titleTextBox"/>
+					</row>
+					<row align="center">
+						<label value="&roleLabel;"/>
+						<textbox id="roleTextBox"/>
+					</row>
+					<row align="center">
+						<label id="customField1OrgLabel"/>
+						<textbox id="customField1OrgTextBox"/>
+					</row>
+					<row align="center">
+						<label id="customField2OrgLabel"/>
+						<textbox id="customField2OrgTextBox"/>
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+	</hbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_orgEdition.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_orgEdition.cancel();"/>
+	</hbox>
+</window>

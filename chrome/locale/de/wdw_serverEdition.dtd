@@ -1,0 +1,7 @@
+<!ENTITY wdw_serverEditionTitle "Bearbeitung des Adressbuchs">
+
+<!ENTITY serverNameLabel "Name">
+<!ENTITY serverTypeLabel "Art">
+<!ENTITY serverUserLabel "Benutzer">
+<!ENTITY serverUrlLabel "URL">
+<!ENTITY serverColorLabel "Farbe">

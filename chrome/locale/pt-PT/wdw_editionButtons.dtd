@@ -1,0 +1,8 @@
+<!ENTITY createEditionLabel "Criar">
+<!ENTITY createEditionAccesskey "R">
+<!ENTITY createAndReplaceEditionLabel "Criar e substituir">
+<!ENTITY createAndReplaceEditionAccesskey "S">
+<!ENTITY saveEditionLabel "Guardar">
+<!ENTITY saveEditionAccesskey "G">
+<!ENTITY cancelEditionLabel "Cancelar">
+<!ENTITY cancelEditionAccesskey "C">

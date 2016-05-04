@@ -1,0 +1,6 @@
+<!ENTITY prefLabel "Préférence">
+<!ENTITY prefWeightLabel "Valeur de la préference">
+<!ENTITY prefWeightTooltip "Les préférences peuvent être différenciées par des valeurs allant de 1 à 100. Pour une utilisation courrante, ce champ peut rester vide. ">
+
+<!ENTITY typeLabel "Type">
+<!ENTITY typeTooltip "Les types sont définis dans les préférences de Cardbook. Les contatcs ne peuvent être modifiés qu'avec ces valeurs prédéfinies, assurez-vous donc que ces valeurs soient correctes.">

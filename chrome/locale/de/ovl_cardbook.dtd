@@ -1,0 +1,10 @@
+<!ENTITY cardbookMenuItemLabel "Cardbook">
+<!ENTITY cardbookMenuItemTooltip "VCard-Adressbuch öffnen">
+
+<!ENTITY cardbookToolbarButtonLabel "Cardbook">
+<!ENTITY cardbookToolbarButtonTooltip "VCard-Adressbuch öffnen">
+
+<!ENTITY cardbookTabButtonLabel "Cardbook">
+<!ENTITY cardbookTabButtonTooltip "Zum Tab von Cardbook">
+
+<!ENTITY addToCardbookMenuLabel "Zu Cardbook hinzufügen">

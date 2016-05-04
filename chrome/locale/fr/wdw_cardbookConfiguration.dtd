@@ -1,0 +1,119 @@
+<!ENTITY wdw_cardbookConfigurationWindowLabel "Configuration de Cardbook">
+
+<!ENTITY generalTabLabel "Général">
+<!ENTITY buttonsTabLabel "Boutons">
+<!ENTITY editionTabLabel "Édition">
+<!ENTITY typesTabLabel "Types">
+<!ENTITY customFieldsTabLabel "Champs personnalisés">
+<!ENTITY listsTabLabel "Listes">
+<!ENTITY lookTabLabel "Apparence">
+<!ENTITY syncTabLabel "Synchronisations">
+<!ENTITY emailTabLabel "Email">
+
+<!ENTITY integrationGroupboxLabel "Intégration avec Thunderbird">
+<!ENTITY autocompletionLabel "Suggestion d'emails faite par Cardbook">
+<!ENTITY autocompletionAccesskey "S">
+<!ENTITY autocompletionTooltip "Remplace la suggestion d'emails standard par celle fournie par Cardbook. Si active, les emails vont être récupérés dans les carnets d'adresses Cardbook et dans les emails collectés.">
+<!ENTITY exclusiveLabel "Cardbook, unique source pour les contacts">
+<!ENTITY exclusiveAccesskey "U">
+<!ENTITY exclusiveTooltip "Si décochée, cette option permet la recherche des contacts dans les carnets d'adresses standards de Thunderbird pour les étoiles jaunes, pour le nom affiché des emails et la suggestion d'emails.">
+<!ENTITY emailsCollectionLabel "Collecte des emails sortants">
+<!ENTITY emailsCollectionAccesskey "C">
+<!ENTITY emailsCollectionTooltip "S'ajoute à la collecte d'emails standard. Si active, les emails, qui ne sont pas présents dans les carnets d'adresses Cardbook, vont être ajoutés dans ue carnet d'adresses nommé 'Contacts collectés'.">
+
+<!ENTITY logGroupboxLabel "Log">
+<!ENTITY debugModeLabel "Mode debug">
+<!ENTITY debugModeAccesskey "M">
+<!ENTITY debugModeTooltip "Mettre ce mode pour générer plus de logs.">
+<!ENTITY statusInformationLineNumberLabel "Nombre de lignes du fichier de log">
+<!ENTITY statusInformationLineNumberAccesskey "N">
+
+<!ENTITY buttonNameLabel "Nom">
+<!ENTITY buttonNameAccesskey "N">
+<!ENTITY buttonOrgLabel "Org.">
+<!ENTITY buttonOrgAccesskey "O">
+<!ENTITY buttonCategoriesLabel "Cat.">
+<!ENTITY buttonCategoriesAccesskey "C">
+<!ENTITY buttonAddressLabel "Adresse">
+<!ENTITY buttonAddressAccesskey "A">
+<!ENTITY buttonPhoneLabel "Tel.">
+<!ENTITY buttonPhoneAccesskey "L">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonEmailAccesskey "E">
+<!ENTITY buttonImppLabel "Impp">
+<!ENTITY buttonImppAccesskey "I">
+<!ENTITY buttonUrlLabel "Url">
+<!ENTITY buttonUrlAccesskey "U">
+<!ENTITY buttonNoteLabel "Note">
+<!ENTITY buttonNoteAccesskey "N">
+<!ENTITY buttonBirthdayLabel "Anniversaire">
+<!ENTITY buttonBirthdayAccesskey "V">
+
+<!ENTITY miscEdittingGroupboxLabel "Divers">
+<!ENTITY cardCreationVersionLabel "Version des VCard par défaut">
+<!ENTITY cardCreationVersionAccesskey "D">
+<!ENTITY preferEmailEditionLabel "Au lieu d'envoyer un email, double-cliquer provoque l'édition">
+<!ENTITY preferEmailEditionAccesskey "E">
+<!ENTITY preferAddressEditionLabel "Au lieu d'ouvrir une adresse, double-cliquer provoque l'édition">
+<!ENTITY preferAddressEditionAccesskey "A">
+<!ENTITY localizeEdittingGroupboxLabel "Localiser">
+<!ENTITY localizeEngineLabel "Utiliser">
+<!ENTITY localizeEngineAccesskey "U">
+<!ENTITY localizeEngineOpenStreetMapLabel "OpenStreetMap">
+<!ENTITY localizeEngineGoogleMapsLabel "Google Maps">
+<!ENTITY localizeEngineBingMapsLabel "Bing Maps">
+<!ENTITY localizeTargetLabel "Ouvrir les adresses">
+<!ENTITY localizeTargetAccesskey "O">
+<!ENTITY localizeTargetInLabel "dans Thunderbird">
+<!ENTITY localizeTargetOutLabel "hors de Thunderbird">
+
+<!ENTITY typesGroupboxLabel "Types">
+<!ENTITY typesCategoryAddressLabel "Adresse">
+<!ENTITY typesCategoryEmailLabel "Email">
+<!ENTITY typesCategoryImppLabel "IMPP">
+<!ENTITY typesCategoryTelLabel "Téléphone">
+<!ENTITY typesCategoryUrlLabel "URL">
+<!ENTITY addTypeLabel "Ajouter">
+<!ENTITY renameTypeLabel "Renommer">
+<!ENTITY deleteTypeLabel "Supprimer">
+
+<!ENTITY customFieldsPanelLabel "Définissez vos champs personnalisés.">
+<!ENTITY customNameGroupboxLabel "Informations personnelles">
+<!ENTITY customOrgGroupboxLabel "Informations professionnelles">
+<!ENTITY customFieldName "Nom du champ">
+<!ENTITY customFieldLabel "Label du champ">
+
+<!ENTITY lookGroupboxLabel "Apparence">
+<!ENTITY defaultLookLabel "Thème Cardbook (bleu)">
+<!ENTITY defaultLookAccesskey "C">
+
+<!ENTITY listPanelLabel "Si votre serveur n'utilise pas les catégories (comme Google, Apple, Zimbra, etc...), les listes sont un bon moyen d'envoyer des emails à des groupes. VCard 3.0 ne prend pas en charge nativement les listes, mais cela peut quand même être fait en définissant des champs personnalisés, donc si vous voulez utiliser des listes en VCard 3.0, vous devez définir ces champs.">
+<!ENTITY listGroupboxLabel "Champs personnalisés pour les listes">
+<!ENTITY kindCustomLabel "Type">
+<!ENTITY kindCustomAccesskey "T">
+<!ENTITY memberCustomLabel "Membre">
+<!ENTITY memberCustomAccesskey "M">
+
+<!ENTITY panesViewGroupboxLabel "Positionnement des blocs">
+<!ENTITY panesViewClassical "Vue avec une colonne et deux lignes (vue standard)">
+<!ENTITY panesViewModern "Vue en trois colonnes">
+
+<!ENTITY syncGroupboxLabel "Synchronisations">
+<!ENTITY syncWarn "Synchroniser est la seule méthode pour sauver vos modifications sur un serveur distant.">
+<!ENTITY preferDiskLabel "Si un contact est modifié sur le serveur et localement, préférer la modification locale">
+<!ENTITY preferDiskAccesskey "S">
+<!ENTITY autoSyncGroupboxLabel "Synchronisation périodique">
+<!ENTITY autoSyncLabel "Activer la synchronisation périodique">
+<!ENTITY autoSyncAccesskey "A">
+<!ENTITY autoSyncIntervalLabel "Intervalle pour la synchronisation périodique (minutes)">
+<!ENTITY autoSyncIntervalAccesskey "I">
+<!ENTITY requestsGroupboxLabel "Requêtes">
+<!ENTITY requestsTimeoutLabel "Délai (secondes)">
+<!ENTITY requestsTimeoutAccesskey "D">
+
+<!ENTITY miscEmailGroupboxLabel "Envoi d'emails">
+<!ENTITY preferEmailPrefLabel "Préférer les email de type 'pref'">
+<!ENTITY preferEmailPrefAccesskey "P">
+<!ENTITY preferEmailPrefWarn "Pour cette option, si il n'y a pas d'email de type 'pref', tous les emails sont pris en compte.">
+
+<!ENTITY cardbookRestartWarn "Cette modification requiert d'ouvrir et de fermer Cardbook.">

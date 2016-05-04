@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % quickCreationDTD SYSTEM "chrome://cardbook/locale/wdw_quickCreation.dtd"> %quickCreationDTD;
+	<!ENTITY % nameDTD SYSTEM "chrome://cardbook/locale/wdw_nameEdition.dtd"> %nameDTD;
+	<!ENTITY % emailDTD SYSTEM "chrome://cardbook/locale/wdw_emailEdition.dtd"> %emailDTD;
+	<!ENTITY % categoriesDTD SYSTEM "chrome://cardbook/locale/wdw_categoriesEdition.dtd"> %categoriesDTD;
+	<!ENTITY % orgDTD SYSTEM "chrome://cardbook/locale/wdw_orgEdition.dtd"> %orgDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+	<!ENTITY % typesDTD SYSTEM "chrome://cardbook/locale/wdw_editionTypes.dtd"> %typesDTD;
+	<!ENTITY % cardbookDTD SYSTEM "chrome://cardbook/locale/wdw_cardbook.dtd"> %cardbookDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="wdw_quickCreation.load();" resizable="true"
+	onclose="wdw_quickCreation.cancel();"
+	id="wdw_quickCreation" title="&wdw_quickCreationTitle;"
+	persist="screenX screenY width height"
+	style="min-width:500px;min-height:200px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="chrome://cardbook/content/quickCreation/wdw_quickCreation.js"/>
+	<script src="chrome://cardbook/content/wdw_orgEdition.js"/>
+	<script src="chrome://cardbook/content/wdw_nameEdition.js"/>
+	<script src="chrome://cardbook/content/cardbookUtils.js"/>
+	<script src="chrome://cardbook/content/cardbookTypes.js"/>
+	<script src="chrome://cardbook/content/wdw_categoriesEdition.js"/>
+
+	<keyset id="wdw_quickCreation-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_quickCreation.cancel();" />
+	</keyset>
+
+	<tabbox id="wdw_quickCreationTabbox" width="400" height="300">
+		
+		<tabs>
+			<tab label="&persGroupboxLabel;"/>        
+			<tab label="&orgGroupboxLabel;"/>
+			<tab label="&categoriesGroupboxLabel;"/>
+		</tabs>
+		
+		<tabpanels>
+			<tabpanel orient="vertical">
+				<groupbox flex="1">
+					<caption label="&addressbookGroupboxLabel;"/>
+					<grid align="center" flex="1">
+						<columns>
+							<column/>
+							<column flex="1"/>
+						</columns>
+						<rows>
+							<row align="center">
+								<label value="&addressbookLabel;"/>
+								<menulist id="addressbookMenulist" editable="true" oncommand="wdw_quickCreation.changeAddressbook();">
+									<menupopup id="addressbookMenupopup"/>
+								</menulist>
+							</row>
+							<row align="center">
+								<label value="&contactLabel;"/>
+								<menulist id="contactMenulist" editable="true" oncommand="wdw_quickCreation.changeContact();">
+									<menupopup id="contactMenupopup"/>
+								</menulist>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox id="versionGroupbox" flex="1">
+					<caption label="&versionLabel;"/>
+					<radiogroup id="cardCreationVersionRadiogroup" orient="horizontal" onselect="wdw_quickCreation.changeVersion();">
+						<radio value="3.0" label="3.0"/>
+						<radio value="4.0" label="4.0"/>
+					</radiogroup>
+				</groupbox>
+				<groupbox id="contactGroupbox" flex="1">
+					<caption label="&persGroupboxLabel;"/>
+					<grid align="center" flex="1">
+						<columns>
+							<column/>
+							<column flex="1"/>
+						</columns>
+						<rows>
+							<row align="center">
+								<label value="&fnLabel;"/>
+								<textbox id="fnTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&lastnameLabel;"/>
+								<textbox id="lastnameTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&firstnameLabel;"/>
+								<textbox id="firstnameTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&othernameLabel;"/>
+								<textbox id="othernameTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&suffixnameLabel;"/>
+								<textbox id="suffixnameTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&prefixnameLabel;"/>
+								<textbox id="prefixnameTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&nicknameLabel;"/>
+								<textbox id="nicknameTextBox"/>
+							</row>
+							<row align="center">
+								<label id="customField1NameLabel"/>
+								<textbox id="customField1NameTextBox"/>
+							</row>
+							<row align="center">
+								<label id="customField2NameLabel"/>
+								<textbox id="customField2NameTextBox"/>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox flex="1">
+					<caption label="&emailGroupboxLabel;"/>
+					<grid align="center" flex="1">
+						<columns>
+							<column/>
+							<column flex="1"/>
+						</columns>
+						<rows>
+							<row align="center">
+								<label value="&prefLabel;"/>
+								<checkbox id="prefCheckbox" align="center" onclick="cardbookTypes.changePrefWeight();"/>
+							</row>
+							<row align="center">
+								<label id="prefWeightLabel" value="&prefWeightLabel;" tooltiptext="&prefWeightTooltip;"/>
+								<textbox id="prefWeightTextBox"/>
+							</row>
+							<row align="center" flex="1">
+								<label value="&typeLabel;" tooltiptext="&typeTooltip;"/>
+								<listbox id="emailTypesListbox"/>
+							</row>
+							<row align="center">
+								<label value="&emailValueLabel;"/>
+								<textbox id="emailValueTextBox"/>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<spacer flex="100"/>
+			</tabpanel>
+
+			<tabpanel orient="vertical">
+				<groupbox id="orgGroupbox" flex="1">
+					<caption label="&orgGroupboxLabel;"/>
+					<grid align="center" flex="1">
+						<columns>
+							<column/>
+							<column flex="1"/>
+						</columns>
+						<rows>
+							<row align="center">
+								<label value="&orgLabel;"/>
+								<textbox id="orgTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&titleLabel;"/>
+								<textbox id="titleTextBox"/>
+							</row>
+							<row align="center">
+								<label value="&roleLabel;"/>
+								<textbox id="roleTextBox"/>
+							</row>
+							<row align="center">
+								<label id="customField1OrgLabel"/>
+								<textbox id="customField1OrgTextBox"/>
+							</row>
+							<row align="center">
+								<label id="customField2OrgLabel"/>
+								<textbox id="customField2OrgTextBox"/>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<spacer flex="100"/>
+			</tabpanel>
+
+			<tabpanel orient="vertical">
+				<groupbox id="categoriesGroupbox" flex="1">
+					<caption label="&categoriesGroupboxLabel;"/>
+					<grid align="center" flex="1">
+						<columns>
+							<column/>
+							<column flex="1"/>
+						</columns>
+						<rows>
+							<row align="center" flex="1">
+								<label value="&categoriesListboxLabel;"/>
+								<listbox id="categoriesListbox" align="center" flex="1"/>
+							</row>
+							<row align="center">
+								<label value="&categoryTextboxLabel;"/>
+								<textbox id="categoryTextbox"/>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<spacer flex="100"/>
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_quickCreation.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_quickCreation.cancel();"/>
+	</hbox>
+</window>

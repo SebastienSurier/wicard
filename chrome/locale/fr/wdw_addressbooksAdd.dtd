@@ -1,0 +1,44 @@
+<!ENTITY wizard.title "Ajouter un nouveau carnet d'adresses">
+<!ENTITY wizard.label "Ajouter un nouveau carnet d'adresses">
+
+<!ENTITY initialpage.wizard.description "Emplacement du nouveau carnet d'adresses.">
+<!ENTITY initialpage.description "Est ce que votre carnet d'adresses est local ou distant ? :">
+<!ENTITY initialpage.computer.label "Local">
+<!ENTITY initialpage.network.label "Distant">
+
+<!ENTITY locationComputerPage.wizard.description "Type et emplacement du nouveau carnet d'adresses local.">
+<!ENTITY locationComputerPage.description "Voulez vous ouvrir un carnet d'adresses existant ou un nouveau ? :">
+<!ENTITY locationComputerPage.type.description "Quel est le type de votre carnet d'adresses local ? :">
+<!ENTITY locationComputerPage.type.label "Type">
+<!ENTITY locationComputerPage.open.label "Ouvrir un carnet d'adresses existant">
+<!ENTITY locationComputerPage.create.label "Créér un nouveau carnet d'adresses">
+<!ENTITY locationComputerPage.uri.label "Fichier">
+<!ENTITY locationComputerPage.uri.description "Choisissez l'emplacement du nouveau carnet d'adresses local. Si c'est un nouveau, il est conseillé de choisir un fichier avec une extension en .vcf.">
+<!ENTITY locationComputerPage.uributton.label "Naviguer">
+
+<!ENTITY locationNetworkPage.wizard.description "Type et emplacement du nouveau carnet d'adresses distant.">
+<!ENTITY locationNetworkPage.description "Quel est le type de votre carnet d'adresses distant ? : (Attention avec Google, qui ne respecte pas le standard VCard)">
+<!ENTITY locationNetworkPage.type.label "Type">
+<!ENTITY locationNetworkPage.carddav.label "CardDAV">
+<!ENTITY locationNetworkPage.google.label "Google">
+<!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.connection.label "Connection">
+<!ENTITY locationNetworkPage.uri.description "Pour un type CardDAV, entrez l'URL de votre carnet d'adresses distant. Vous pouvez utiliser une URL partielle (par exemple : http(s)://carddav.example.org). Pour un type Google, ce champ ne doit pas être rempli.">
+<!ENTITY locationNetworkPage.uri.label "URL">
+<!ENTITY locationNetworkPage.credentials.description "Entrez les identifiants de connection. Pour un type Google, l'utilisateur doit être votre email Google.">
+<!ENTITY locationNetworkPage.validatebutton.label "Valider">
+
+<!ENTITY googleOauthPage.wizard.description "Authentification Google">
+
+<!ENTITY namePage.wizard.description "Nom du nouveau carnet d'adresses.">
+<!ENTITY namePage.color.label "Couleur">
+<!ENTITY namePage.name.label "Nom">
+<!ENTITY namePage.color.description "Choisissez la couleur du nouveau carnet d'adresses :">
+<!ENTITY namePage.name.description "Choisissez le nom du nouveau carnet d'adresses :">
+
+<!ENTITY namesPage.wizard.description "Noms des nouveaux carnets d'adresses.">
+<!ENTITY namesPage.name.label "Noms">
+<!ENTITY namesPage.name.description "Plusieurs carnets d'adresses ont été découverts. Choisissez quels carnets d'adresses vous désirez ouvrir ainsi que leurs noms :">
+
+<!ENTITY finishPage.wizard.description "Carnet d'adresses configuré">
+<!ENTITY finishPage.description "Votre nouveau carnet d'adresses a été configuré avec succès.">

@@ -1,0 +1,44 @@
+<!ENTITY wizard.title "Add a new address book">
+<!ENTITY wizard.label "Add a new address book">
+
+<!ENTITY initialpage.wizard.description "Location for the new address book.">
+<!ENTITY initialpage.description "Is your address book local or remote ? :">
+<!ENTITY initialpage.computer.label "Local">
+<!ENTITY initialpage.network.label "Remote">
+
+<!ENTITY locationComputerPage.wizard.description "Type and location of the new local address book.">
+<!ENTITY locationComputerPage.description "Do you want to open an existing address book or create a new empty one ? :">
+<!ENTITY locationComputerPage.type.description "What is the type of your local address book ? :">
+<!ENTITY locationComputerPage.type.label "Type">
+<!ENTITY locationComputerPage.open.label "Open an existing address book">
+<!ENTITY locationComputerPage.create.label "Create a new address book">
+<!ENTITY locationComputerPage.uri.label "File">
+<!ENTITY locationComputerPage.uri.description "Using the browser, choose the location for your new local address book. If you are creating a new one, specify .vcf as the file extension.">
+<!ENTITY locationComputerPage.uributton.label "Browse">
+
+<!ENTITY locationNetworkPage.wizard.description "Type and location of the new remote address book.">
+<!ENTITY locationNetworkPage.description "What is the type of your remote address book ? : (Caution: Google does NOT conform to  VCard standards)">
+<!ENTITY locationNetworkPage.type.label "Type">
+<!ENTITY locationNetworkPage.carddav.label "CardDAV">
+<!ENTITY locationNetworkPage.google.label "Google">
+<!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.connection.label "Connection">
+<!ENTITY locationNetworkPage.uri.description "For a CardDAV type, enter the URL of your remote address book. You may try to use a partial URL (example : http(s)://carddav.example.org). For a Google address book, don't specify this field.">
+<!ENTITY locationNetworkPage.uri.label "URL">
+<!ENTITY locationNetworkPage.credentials.description "Enter the credentials for accessing your address book. For a Google address book, the username should be your Google email.">
+<!ENTITY locationNetworkPage.validatebutton.label "Validate">
+
+<!ENTITY googleOauthPage.wizard.description "Google Authentication">
+
+<!ENTITY namePage.wizard.description "Name of the new address book.">
+<!ENTITY namePage.color.label "Color">
+<!ENTITY namePage.name.label "Name">
+<!ENTITY namePage.color.description "Choose the color for the new address book :">
+<!ENTITY namePage.name.description "Choose the name of the new address book :">
+
+<!ENTITY namesPage.wizard.description "Names of the new address books.">
+<!ENTITY namesPage.name.label "Names">
+<!ENTITY namesPage.name.description "Multiple address books have been discovered. Choose which address books you want to open and their names :">
+
+<!ENTITY finishPage.wizard.description "Address book configured">
+<!ENTITY finishPage.description "Your new address book has been successfully configured.">

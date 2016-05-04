@@ -1,0 +1,174 @@
+<!ENTITY wdw_cardbookWindowLabel "Cardbook">
+
+<!ENTITY accountsOrCatsTreeLabel "Adressbücher">
+<!ENTITY enableAccountsTooltip "Adressbücher zur Suche und Synchronisierung aktivieren oder deaktivieren.">
+<!ENTITY colorAccountsTooltip "Adressbuch-Farbe zur Unterscheidung mehrerer Adressbücher.">
+
+<!ENTITY cardbookAccountMenuLabel "Adressbücher">
+
+<!ENTITY cardbookAccountMenuAddServerLabel "Adressbuch hinzufügen">
+<!ENTITY cardbookAccountMenuEditServerLabel "Adressbuch bearbeiten">
+<!ENTITY cardbookAccountMenuCloseServerLabel "Adressbuch schließen">
+<!ENTITY cardbookAccountMenuEnableOrDisableAddressbookLabel "Adressbuch aktivieren">
+<!ENTITY cardbookAccountMenuSyncsLabel "Alle Adressbücher synchronisieren">
+<!ENTITY cardbookAccountMenuSyncLabel "Dieses Adressbuch synchronisieren">
+
+<!ENTITY cardbookToolsMenuLabel "Extras">
+<!ENTITY cardbookToolsMenuExportToFileLabel "Exportieren in eine UTF8 codierte Datei">
+<!ENTITY cardbookToolsMenuImportFromFileLabel "Importieren von einer UTF8 codierten Datei">
+<!ENTITY cardbookToolsMenuExportToDirLabel "Exportieren in ein Verzeichnis">
+<!ENTITY cardbookToolsMenuImportFromDirLabel "Importieren von einem Verzeichnis">
+
+<!ENTITY cardbookToolbarAddServerButtonLabel "Adressbuch hinzufügen">
+<!ENTITY cardbookToolbarAddServerButtonTooltip "Lokales oder auf einem Server gespeichertes Adressbuch hinzufügen">
+<!ENTITY cardbookToolbarSyncButtonLabel "Adressbücher synchronisieren">
+<!ENTITY cardbookToolbarSyncButtonTooltip "Alle Netzwerk-Adressbücher synchronisieren">
+<!ENTITY cardbookToolbarCreateUserButtonLabel "Kontakt hinzufügen">
+<!ENTITY cardbookToolbarCreateUserButtonTooltip "Einen neuen Kontakt hinzufügen">
+
+<!ENTITY generalTabLabel "Allgemein">
+<!ENTITY listTabLabel "Liste">
+<!ENTITY technicalTabLabel "Technische Details">
+<!ENTITY vcardTabLabel "VCard">
+
+<!ENTITY dispnColumnLabel "Namen">
+<!ENTITY lastnameColumnLabel "Nachname">
+<!ENTITY firstnameColumnLabel "Vorname">
+<!ENTITY othernameColumnLabel "Weiterer Name">
+<!ENTITY prefixnameColumnLabel "Namenspräfix">
+<!ENTITY suffixnameColumnLabel "Namenssuffix">
+<!ENTITY fnColumnLabel "Anzeigename">
+<!ENTITY nicknameColumnLabel "Spitzname">
+<!ENTITY bdayColumnLabel "Geburtstag">
+<!ENTITY dispadrColumnLabel "Adressen">
+<!ENTITY disphomeadrColumnLabel "Adressen (privat)">
+<!ENTITY dispworkadrColumnLabel "Adressen (geschäftlich)">
+<!ENTITY disptelColumnLabel "Telefon">
+<!ENTITY disphometelColumnLabel "Telefon (privat)">
+<!ENTITY dispworktelColumnLabel "Telefon (geschäftlich)">
+<!ENTITY dispcelltelColumnLabel "Telefon (mobil)">
+<!ENTITY dispemailColumnLabel "Emails">
+<!ENTITY disphomeemailColumnLabel "Emails (privat)">
+<!ENTITY dispworkemailColumnLabel "Emails (geschäftlich)">
+<!ENTITY mailerColumnLabel "Mailer">
+<!ENTITY tzColumnLabel "Zeitzone">
+<!ENTITY geoColumnLabel "Geo">
+<!ENTITY titleColumnLabel "Titel">
+<!ENTITY roleColumnLabel "Position">
+<!ENTITY orgColumnLabel "Organisation">
+<!ENTITY categoriesColumnLabel "Kategorien">
+<!ENTITY noteColumnLabel "Notizen">
+<!ENTITY prodidColumnLabel "Prodid">
+<!ENTITY sortstringColumnLabel "Sortierbegriff">
+<!ENTITY uidColumnLabel "Uid">
+<!ENTITY dispurlColumnLabel "URL">
+<!ENTITY versionColumnLabel "Version">
+<!ENTITY class1ColumnLabel "Klasse">
+<!ENTITY dispimppColumnLabel "Instant Messenger">
+<!ENTITY cardurlColumnLabel "Kontakt-URL">
+<!ENTITY dirPrefIdColumnLabel "DirPrefId">
+<!ENTITY kindColumnLabel "Typ">
+<!ENTITY revColumnLabel "Rev">
+<!ENTITY etagColumnLabel "Etag">
+
+<!ENTITY buttonNameLabel "Name">
+<!ENTITY buttonOrgLabel "Organisation">
+<!ENTITY buttonCategoriesLabel "Kategorien">
+<!ENTITY buttonAddressLabel "Adresse">
+<!ENTITY buttonPhoneLabel "Telefon">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonImppLabel "Instant Messenger">
+<!ENTITY buttonUrlLabel "URL">
+<!ENTITY buttonNoteLabel "Notizen">
+<!ENTITY buttonBirthdayLabel "Geburtstag">
+
+<!ENTITY saveButtonLabel "Speichern">
+<!ENTITY cancelButtonLabel "Abbrechen">
+
+<!ENTITY persGroupboxLabel "Persönliche Informationen">
+<!ENTITY orgGroupboxLabel "Berufliche Informationen">
+<!ENTITY categoriesGroupboxLabel "Kategorien">
+<!ENTITY adrGroupboxLabel "Adressen">
+<!ENTITY telGroupboxLabel "Telefon">
+<!ENTITY emailGroupboxLabel "Emails">
+<!ENTITY imppGroupboxLabel "Instant Messenger">
+<!ENTITY noteGroupboxLabel "Notizen">
+
+<!ENTITY availableCardsGroupboxLabel "Verfügbare Kontakte">
+<!ENTITY addedCardsGroupboxLabel "Liste der Kontakte">
+<!ENTITY buttonAppendToListLabel "Ersetzen">
+<!ENTITY buttonRemoveFromListLabel "Entfernen">
+<!ENTITY appendlistTreeLabel "Liste ersetzen">
+<!ENTITY deletelistTreeLabel "Aus Liste entfernen">
+
+<!ENTITY miscGroupboxLabel "Sonstiges">
+<!ENTITY othersGroupboxLabel "Anderes">
+<!ENTITY techGroupboxLabel "Technisches">
+<!ENTITY urlGroupboxLabel "URLs">
+<!ENTITY labelGroupboxLabel "Labels">
+<!ENTITY class1Label "Klasse">
+<!ENTITY geoLabel "Geo">
+<!ENTITY mailerLabel "Mailer">
+<!ENTITY agentLabel "Agent">
+<!ENTITY keyLabel "Schlüssel">
+<!ENTITY photoLocalURILabel "Lokales Foto">
+<!ENTITY logoLocalURILabel "Lokales Logo">
+<!ENTITY soundLocalURILabel "Lokaler Sound">
+<!ENTITY photoURILabel "Foto">
+<!ENTITY logoURILabel "Logo">
+<!ENTITY soundURILabel "Sound">
+<!ENTITY prodidLabel "Prodid">
+<!ENTITY sortstringLabel "Sortierbegriff">
+<!ENTITY uidLabel "Uid">
+<!ENTITY versionLabel "Version">
+<!ENTITY versionLabel1 "Version">
+<!ENTITY tzLabel "Zeitzone">
+
+<!ENTITY dirPrefIdLabel "dirPrefId">
+<!ENTITY cardurlLabel "Kontakt-URL">
+<!ENTITY revLabel "Rev">
+<!ENTITY etagLabel "Etag">
+
+<!ENTITY localizeaddressTreeLabel "Lokalisieren">
+<!ENTITY emailemailTreeLabel "Email entry">
+
+<!ENTITY copyCardTreeLabel "Eintrag kopieren">
+<!ENTITY editCardTreeLabel "Eintrag bearbeiten">
+<!ENTITY addCardTreeLabel "Eintrag hinzufügen">
+<!ENTITY deleteCardTreeLabel "Eintrag löschen">
+<!ENTITY moveUpCardTreeLabel "nach oben verschieben">
+<!ENTITY moveDownCardTreeLabel "nach unten verschieben">
+<!ENTITY displayOrHideHeadersLabel "Kopfzeilen anzeigen">
+
+<!ENTITY addImageCardFromFileLabel "Bild aus Datei hinzufügen">
+<!ENTITY addImageCardFromClipboardLabel "Bild aus der Zwischenablage hinzufügen">
+<!ENTITY addImageCardFromUrlLabel "Bild aus einer URL in der Zwischenablage hinzufügen">
+<!ENTITY saveImageCardLabel "Bild speichern">
+<!ENTITY deleteImageCardLabel "Bild löschen">
+
+<!ENTITY toEmailCardFromAccountsOrCatsLabel "Email an Kontakt verfassen (An / To)">
+<!ENTITY toEmailCardFromCardsLabel "Email an Kontakt verfassen (An / To)">
+<!ENTITY ccEmailCardFromAccountsOrCatsLabel "Email an Kontakt verfassen (Kopie / Cc)">
+<!ENTITY ccEmailCardFromCardsLabel "Email an Kontakt verfassen (Kopie / Cc)">
+<!ENTITY bccEmailCardFromAccountsOrCatsLabel "Email an Kontakt verfassen (Blindkopie / Bcc)">
+<!ENTITY bccEmailCardFromCardsLabel "Email an Kontakt verfassen (Blindkopie / Bcc)">
+<!ENTITY localizeCardFromCardsLabel "Lokalisieren">
+<!ENTITY copyCardFromAccountsOrCatsLabel "Kontakt kopieren">
+<!ENTITY copyCardFromCardsLabel "Kontakt kopieren">
+<!ENTITY pasteCardFromAccountsOrCatsLabel "Kontakt einfügen">
+<!ENTITY pasteCardFromCardsLabel "Kontakt einfügen">
+<!ENTITY exportCardToFileFromAccountsOrCatsLabel "Kontakt in eine Datei exportieren">
+<!ENTITY exportCardToDirFromAccountsOrCatsLabel "Kontakt in ein Verzeichnis exportieren">
+<!ENTITY exportCardToFileFromCardsLabel "Kontakt in eine Datei exportieren">
+<!ENTITY exportCardToDirFromCardsLabel "Kontakt in ein Verzeichnis exportieren">
+<!ENTITY importCardFromFileFromAccountsOrCatsLabel "Kontakt aus einer Datei importieren">
+<!ENTITY importCardFromDirFromAccountsOrCatsLabel "Kontakt aus einem Verzeichnis importieren">
+<!ENTITY removeCatFromAccountsOrCatsLabel "Kategorie entfernen">
+<!ENTITY enableOrDisableFromAccountsOrCatsLabel "Adressbuch aktivieren">
+<!ENTITY mergeCardsFromCardsLabel "Karten zusammenführen">
+<!ENTITY deleteCardFromCardsLabel "Kontakt löschen">
+<!ENTITY editAccountFromAccountsOrCatsLabel "Adressbuch bearbeiten">
+<!ENTITY syncAccountFromAccountsOrCatsLabel "Adressbuch synchronisieren">
+<!ENTITY removeAccountFromAccountsOrCatsLabel "Adressbuch schließen">
+
+<!ENTITY statusProgressInformationTooltip "Hier klicken, um das Protokoll anzuzeigen">

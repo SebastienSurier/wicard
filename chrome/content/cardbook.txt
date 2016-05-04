@@ -1,0 +1,26 @@
+cardbookAccounts : [[accountName, isContainer, isContainerOpen, isContainerEmpty, accountId, accountType (GOOGLE|APPLE|CARDDAV|FILE|CAT|CACHE), isContainerEnabled], ...]
+		file.leafName, , , , dirPrefId, FILE, true|false
+		contact.dirName, , , , dirPrefId, CARDDAV, true|false
+		Cards collected, , , , Collected, CACHE, true|false
+	--> used in master tree
+	if toggle is open should be of this form : [cat1, , , , accountId::cat1, CAT, false]
+
+cardbookAccountsCategories[accountId] : [cat1, cat2, cat3, ...]
+	--> categories : unique and not null
+	--> used in master tree
+	
+cardbookCards[accountId+"::"+uid] : Card
+
+cardbookDisplayCards[accountId+"::"+cat1] : [card1, card2, card3, ...]
+cardbookDisplayCards[accountId] : [card1, card2, card3, ...]
+
+cardbookCardSearch : [[texttosearch, aCard.dirPrefId+"::"+aCard.uid], ... ]
+
+cardbookCardEmails[accountId] : [[email, aCard.dirPrefId+"::"+aCard.uid], ... ]
+
+cardbookFileCacheCards[accountId+"::"+uid] : aFileName
+
+cardbookMailPopularityIndex[toto@mail.com] : 152
+
+
+address : [[["a", "a", "a", "aa", "a", "a", "a"], ["home", "work", "PREF"], "", []], [["as", "as", "as", "asd", "as", "as", "as"], ["home"], "", []]]

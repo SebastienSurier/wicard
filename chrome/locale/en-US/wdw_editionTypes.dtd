@@ -1,0 +1,6 @@
+<!ENTITY prefLabel "Preference">
+<!ENTITY prefWeightLabel "Preference value">
+<!ENTITY prefWeightTooltip "Prefs may have differents values between 1 to 100. For a normal use, kept it empty.">
+
+<!ENTITY typeLabel "Type">
+<!ENTITY typeTooltip "To change the available types, use Cardbook preferences.">

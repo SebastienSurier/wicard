@@ -1,0 +1,8 @@
+﻿.cardbookTreeChildrenAccountClass treechildren::-moz-tree-drop-feedback {
+	-moz-appearance: none !important;
+	background-color: #ffa47d !important;
+}
+.cardbookTreeChildrenAccountClass treechildren {
+}
+.cardbookTreeChildrenCardsClass treechildren {
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % emailDTD SYSTEM "chrome://cardbook/locale/wdw_emailEdition.dtd"> %emailDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+	<!ENTITY % typesDTD SYSTEM "chrome://cardbook/locale/wdw_editionTypes.dtd"> %typesDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="wdw_emailEdition.load();" resizable="true"
+	onclose="wdw_emailEdition.cancel();"
+	id="wdw_emailEdition" title="&wdw_emailEditionTitle;"
+	persist="screenX screenY width height" class="cardbookBackgroundColorClass"
+	style="min-width:400px;min-height:100px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_emailEdition.js"/>
+	<script src="cardbookUtils.js"/>
+	<script src="cardbookTypes.js"/>
+
+	<keyset id="wdw_emailEdition-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_emailEdition.cancel();"/>
+	</keyset>
+
+	<hbox flex="1">
+		<vbox flex="1">
+			<grid align="center" flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+	
+				<rows>
+					<row align="center">
+						<label value="&prefLabel;"/>
+						<checkbox id="prefCheckbox" align="center" onclick="cardbookTypes.changePrefWeight();"/>
+					</row>
+					<row align="center">
+						<label id="prefWeightLabel" value="&prefWeightLabel;" tooltiptext="&prefWeightTooltip;"/>
+						<textbox id="prefWeightTextBox"/>
+					</row>
+					<row align="center" flex="1">
+						<label value="&typeLabel;" tooltiptext="&typeTooltip;"/>
+						<listbox id="emailTypesListbox"/>
+					</row>
+					<row align="center">
+						<label value="&emailValueLabel;"/>
+						<textbox id="emailValueTextBox"/>
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+	</hbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_emailEdition.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_emailEdition.cancel();"/>
+	</hbox>
+</window>

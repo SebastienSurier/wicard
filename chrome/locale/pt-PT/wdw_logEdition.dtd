@@ -1,0 +1,6 @@
+<!ENTITY wdw_logEditionTitle "Vizualização de Log">
+
+<!ENTITY logEditionTreeLineLabel "Horario do evento">
+<!ENTITY flushLogEditionLabel "Limpar">
+<!ENTITY clipboardLogEditionLabel "Copia para clipboard">
+<!ENTITY cancelLogEditionLabel "OK">

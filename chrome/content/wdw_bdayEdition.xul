@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % bdayDTD SYSTEM "chrome://cardbook/locale/wdw_bdayEdition.dtd"> %bdayDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="wdw_bdayEdition.load();" resizable="true"
+	onclose="wdw_bdayEdition.cancel();"
+	id="wdw_bdayEdition" title="&wdw_bdayEditionTitle;"
+	persist="screenX screenY width height" class="cardbookBackgroundColorClass"
+	style="min-width:200px;min-height:50px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_bdayEdition.js"/>
+
+	<keyset id="wdw_bdayEdition-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_bdayEdition.cancel();"/>
+	</keyset>
+
+	<hbox flex="1">
+		<vbox flex="1">
+			<grid align="center" flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+				</columns>
+	
+				<rows>
+					<row align="center">
+						<label value="&bdayLabel;"/>
+						<textbox id="bdayTextBox"/>
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+	</hbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_bdayEdition.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_bdayEdition.cancel();"/>
+	</hbox>
+</window>

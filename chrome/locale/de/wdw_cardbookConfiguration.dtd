@@ -1,0 +1,120 @@
+<!ENTITY wdw_cardbookConfigurationWindowLabel "Cardbook-Einstellungen">
+
+<!ENTITY generalTabLabel "Allgemein">
+<!ENTITY buttonsTabLabel "Buttons">
+<!ENTITY editionTabLabel "Bearbeiten">
+<!ENTITY typesTabLabel "Typen">
+<!ENTITY customFieldsTabLabel "Benutzerdefinierte Felder">
+<!ENTITY listsTabLabel "Listen">
+<!ENTITY lookTabLabel "Aussehen">
+<!ENTITY syncTabLabel "Synchronisation">
+<!ENTITY emailTabLabel "Email">
+
+<!ENTITY integrationGroupboxLabel "Integration in Thunderbird">
+<!ENTITY autocompletionLabel "Autovervollständigung der Email-Adressen">
+<!ENTITY autocompletionAccesskey "A">
+<!ENTITY autocompletionTooltip "Erweitert die standardmäßige Autovervollständigung von Kontakten in Adressbüchern von Thunderbird um eine Autovervollständigung von Kontakten in Adressbüchern von Cardbook.">
+<!ENTITY exclusiveLabel "Einzige Quelle für Kontakte">
+<!ENTITY exclusiveAccesskey "E">
+<!ENTITY exclusiveTooltip "Falls deaktiviert, ermöglicht diese Einstellung die Zuordnung von Kontakten aus den Standardadressbüchern von Thunderbird für die Gelben Sterne, die Anzeigenamen und die Autovervollständigung.">
+<!ENTITY emailsCollectionLabel "Sammlung ausgehender Email-Adressen">
+<!ENTITY emailsCollectionAccesskey "S">
+<!ENTITY emailsCollectionTooltip "Erweitert die standardmäßige Sammlung ausgehender Email-Adressen von Thunderbird um eine Sammlung ausgehender Email-Adressen von Cardbook namens 'Gesammelte Karten'. Falls aktiviert, werden Email-Adressen, die in keinem Cardbook Adressbuch enthalten sind, zu 'Gesammelte Karten' hinzugefügt.">
+
+<!ENTITY logGroupboxLabel "Log">
+<!ENTITY debugModeLabel "Debug-Modus">
+<!ENTITY debugModeAccesskey "D">
+<!ENTITY debugModeTooltip "Im Debug-Modus werden mehr Log-Ausgaben erzeugt.">
+<!ENTITY statusInformationLineNumberLabel "Zeilenanzahl der Logdatei">
+<!ENTITY statusInformationLineNumberAccesskey "Z">
+
+<!ENTITY buttonsGroupboxLabel "Buttons">
+<!ENTITY buttonNameLabel "Name">
+<!ENTITY buttonNameAccesskey "N">
+<!ENTITY buttonOrgLabel "Org.">
+<!ENTITY buttonOrgAccesskey "O">
+<!ENTITY buttonCategoriesLabel "Kat.">
+<!ENTITY buttonCategoriesAccesskey "K">
+<!ENTITY buttonAddressLabel "Adresse">
+<!ENTITY buttonAddressAccesskey "A">
+<!ENTITY buttonPhoneLabel "Telefon">
+<!ENTITY buttonPhoneAccesskey "T">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonEmailAccesskey "E">
+<!ENTITY buttonImppLabel "Instant Messenger">
+<!ENTITY buttonImppAccesskey "I">
+<!ENTITY buttonUrlLabel "URL">
+<!ENTITY buttonUrlAccesskey "U">
+<!ENTITY buttonNoteLabel "Notizen">
+<!ENTITY buttonNoteAccesskey "Z">
+<!ENTITY buttonBirthdayLabel "Geburtstag">
+<!ENTITY buttonBirthdayAccesskey "G">
+
+<!ENTITY miscEdittingGroupboxLabel "Sonstiges">
+<!ENTITY cardCreationVersionLabel "Standardversion der VCard">
+<!ENTITY cardCreationVersionAccesskey "S">
+<!ENTITY preferEmailEditionLabel "Doppelklick auf die Email-Adresse zum Bearbeiten">
+<!ENTITY preferEmailEditionAccesskey "E">
+<!ENTITY preferAddressEditionLabel "Doppelklick auf die Adresse zum Bearbeiten">
+<!ENTITY preferAddressEditionAccesskey "A">
+<!ENTITY localizeEdittingGroupboxLabel "Lokalisieren">
+<!ENTITY localizeEngineLabel "Benutze">
+<!ENTITY localizeEngineAccesskey "B">
+<!ENTITY localizeEngineOpenStreetMapLabel "OpenStreetMap">
+<!ENTITY localizeEngineGoogleMapsLabel "Google Maps">
+<!ENTITY localizeEngineBingMapsLabel "Bing Maps">
+<!ENTITY localizeTargetLabel "Öffne Adresse">
+<!ENTITY localizeTargetAccesskey "Ö">
+<!ENTITY localizeTargetInLabel "Innerhalb Thunderbirds">
+<!ENTITY localizeTargetOutLabel "Außerhalb Thunderbirds">
+
+<!ENTITY typesGroupboxLabel "Typen">
+<!ENTITY typesCategoryAddressLabel "Adresse">
+<!ENTITY typesCategoryEmailLabel "Email">
+<!ENTITY typesCategoryImppLabel "Instant Messenger">
+<!ENTITY typesCategoryTelLabel "Telefon">
+<!ENTITY typesCategoryUrlLabel "URL">
+<!ENTITY addTypeLabel "Hinzufügen">
+<!ENTITY renameTypeLabel "Umbenennen">
+<!ENTITY deleteTypeLabel "Löschen">
+
+<!ENTITY customFieldsPanelLabel "Benutzerdefinierte Felder">
+<!ENTITY customNameGroupboxLabel "Name">
+<!ENTITY customOrgGroupboxLabel "Organisation">
+<!ENTITY customFieldName "Feldname">
+<!ENTITY customFieldLabel "Feldlabel">
+
+<!ENTITY listPanelLabel "Falls Ihr Server keine Kategorien unterstützt (z.B. Google, Apple, Zimbra, etc.), dann sind Listen eine gute Alternative, um Emails an Gruppen zu senden. VCard 3.0 hat keine native Unterstützung für Listen; stattdessen können Benutzerdefinierte Felder verwendet werden. Wenn Sie Listen in VCard 3.0 benutzen möchten, dann müssen Sie diese Felder definieren.">
+<!ENTITY listGroupboxLabel "Benutzerdefinierte Felder für Listen">
+<!ENTITY kindCustomLabel "Typ">
+<!ENTITY kindCustomAccesskey "T">
+<!ENTITY memberCustomLabel "Mitglied">
+<!ENTITY memberCustomAccesskey "M">
+
+<!ENTITY lookGroupboxLabel "Aussehen">
+<!ENTITY defaultLookLabel "Cardbook-Design (blau)">
+<!ENTITY defaultLookAccesskey "C">
+
+<!ENTITY panesViewGroupboxLabel "Layout der Anzeige">
+<!ENTITY panesViewClassical "Eine Spalte, zwei Zeilen (Klassische Ansicht)">
+<!ENTITY panesViewModern "Drei Spalten">
+
+<!ENTITY syncGroupboxLabel "Synchronisieren">
+<!ENTITY syncWarn "Änderungen können nur durch eine Synchronisation auf den Server übertragen werden.">
+<!ENTITY preferDiskLabel "Falls ein Kontakt lokal und auf dem Server geändert wurde: Lokale Version bevorzugen.">
+<!ENTITY preferDiskAccesskey "L">
+<!ENTITY autoSyncGroupboxLabel "Periodische Synchronisation">
+<!ENTITY autoSyncLabel "Periodische Synchronisation aktivieren">
+<!ENTITY autoSyncAccesskey "P">
+<!ENTITY autoSyncIntervalLabel "Intervall (Minuten)">
+<!ENTITY autoSyncIntervalAccesskey "I">
+<!ENTITY requestsGroupboxLabel "Anfragen">
+<!ENTITY requestsTimeoutLabel "Timeout (Sekunden)">
+<!ENTITY requestsTimeoutAccesskey "T">
+
+<!ENTITY miscEmailGroupboxLabel "Email-Versand">
+<!ENTITY preferEmailPrefLabel "Adressen mit dem Typ 'pref' bevorzugen">
+<!ENTITY preferEmailPrefAccesskey "P">
+<!ENTITY preferEmailPrefWarn "Ist keine Adresse mit dem Typ 'pref' vorhanden, so werden alle Adressen genutzt.">
+
+<!ENTITY cardbookRestartWarn "Diese Änderung benötigt einen Neustart des Cardbook-Plugins.">

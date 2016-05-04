@@ -1,0 +1,119 @@
+<!ENTITY wdw_cardbookConfigurationWindowLabel "Configuração Cardbook">
+
+<!ENTITY generalTabLabel "Geral">
+<!ENTITY buttonsTabLabel "Butões">
+<!ENTITY editionTabLabel "Edição">
+<!ENTITY typesTabLabel "Tipos">
+<!ENTITY customFieldsTabLabel "Campos customizaveis">
+<!ENTITY listsTabLabel "Listas">
+<!ENTITY lookTabLabel "Aspecto">
+<!ENTITY syncTabLabel "Sinc.">
+<!ENTITY emailTabLabel "Email">
+
+<!ENTITY integrationGroupboxLabel "Integração com Thunderbird">
+<!ENTITY autocompletionLabel "Usar o autocomplete do Cardbook">
+<!ENTITY autocompletionAccesskey "A">
+<!ENTITY autocompletionTooltip "Trocar o normal autocomplete pelo do carbook. Quando activado, os email serão provenientes do repositorio do cardbook ou os emails recolhidos.">
+<!ENTITY exclusiveLabel "Cardbook como fonte unica de contactos">
+<!ENTITY exclusiveAccesskey "U">
+<!ENTITY exclusiveTooltip "Se não seleccionado, a opção pertmite que sejam utilizados contactos das agendas do próprio Thunderbird.">
+<!ENTITY emailsCollectionLabel "Endereços recolhidos de emails enviados">
+<!ENTITY emailsCollectionAccesskey "C">
+<!ENTITY emailsCollectionTooltip "Adicionar endereços à coleção do cardbook. Quando activado, os emails que não existem no cardbook serão adicionados para uma agenda chamada 'Cartões recolhidos'.">
+
+<!ENTITY logGroupboxLabel "Log">
+<!ENTITY debugModeLabel "Modo debug">
+<!ENTITY debugModeAccesskey "M">
+<!ENTITY debugModeTooltip "Activar modo de debug para log.">
+<!ENTITY statusInformationLineNumberLabel "Número de linhas para o log">
+<!ENTITY statusInformationLineNumberAccesskey "N">
+
+<!ENTITY buttonNameLabel "Nome">
+<!ENTITY buttonNameAccesskey "N">
+<!ENTITY buttonOrgLabel "Org.">
+<!ENTITY buttonOrgAccesskey "O">
+<!ENTITY buttonCategoriesLabel "Cat.">
+<!ENTITY buttonCategoriesAccesskey "C">
+<!ENTITY buttonAddressLabel "Moradas">
+<!ENTITY buttonAddressAccesskey "M">
+<!ENTITY buttonPhoneLabel "Telefones">
+<!ENTITY buttonPhoneAccesskey "T">
+<!ENTITY buttonEmailLabel "Email">
+<!ENTITY buttonEmailAccesskey "E">
+<!ENTITY buttonImppLabel "MI">
+<!ENTITY buttonImppAccesskey "I">
+<!ENTITY buttonUrlLabel "URL">
+<!ENTITY buttonUrlAccesskey "U">
+<!ENTITY buttonNoteLabel "Nota">
+<!ENTITY buttonNoteAccesskey "A">
+<!ENTITY buttonBirthdayLabel "Aniversario">
+<!ENTITY buttonBirthdayAccesskey "S">
+
+<!ENTITY miscEdittingGroupboxLabel "Diversos">
+<!ENTITY cardCreationVersionLabel "Versão do VCard por omissão">
+<!ENTITY cardCreationVersionAccesskey "V">
+<!ENTITY preferEmailEditionLabel "Duplo click no email edita-o">
+<!ENTITY preferEmailEditionAccesskey "E">
+<!ENTITY preferAddressEditionLabel "Duplo click na morada edita-a">
+<!ENTITY preferAddressEditionAccesskey "M">
+<!ENTITY localizeEdittingGroupboxLabel "Localizar">
+<!ENTITY localizeEngineLabel "Usar">
+<!ENTITY localizeEngineAccesskey "U">
+<!ENTITY localizeEngineOpenStreetMapLabel "OpenStreetMap">
+<!ENTITY localizeEngineGoogleMapsLabel "Google Maps">
+<!ENTITY localizeEngineBingMapsLabel "Bing Maps">
+<!ENTITY localizeTargetLabel "Abrir morada">
+<!ENTITY localizeTargetAccesskey "A">
+<!ENTITY localizeTargetInLabel "dentro do Thunderbird">
+<!ENTITY localizeTargetOutLabel "fora do Thunderbird">
+
+<!ENTITY typesGroupboxLabel "Tipos">
+<!ENTITY typesCategoryAddressLabel "Moradas">
+<!ENTITY typesCategoryEmailLabel "Email">
+<!ENTITY typesCategoryImppLabel "IMPP">
+<!ENTITY typesCategoryTelLabel "Telefone">
+<!ENTITY typesCategoryUrlLabel "URL">
+<!ENTITY addTypeLabel "Adicionar">
+<!ENTITY renameTypeLabel "Renomear">
+<!ENTITY deleteTypeLabel "Apagar">
+
+<!ENTITY customFieldsPanelLabel "Definição de campos customizaveis.">
+<!ENTITY customNameGroupboxLabel "Nome">
+<!ENTITY customOrgGroupboxLabel "Organização">
+<!ENTITY customFieldName "Nome do campo">
+<!ENTITY customFieldLabel "Etiqueta do campo">
+
+<!ENTITY listPanelLabel "Se o servidor não suportar categorias (tal como Google, Apple, Zimbra ...), as listas são a melhor forma de enviar email para grupos de pessoas. VCard 3.0 não suporta nativamente listas mas pode ser conseguido com campos adicionais.">
+<!ENTITY listGroupboxLabel "Campos customizaveis para listas">
+<!ENTITY kindCustomLabel "Tipo">
+<!ENTITY kindCustomAccesskey "K">
+<!ENTITY memberCustomLabel "Membro">
+<!ENTITY memberCustomAccesskey "M">
+
+<!ENTITY lookGroupboxLabel "Estilo">
+<!ENTITY defaultLookLabel "Estilo Cardbook (azul)">
+<!ENTITY defaultLookAccesskey "C">
+
+<!ENTITY panesViewGroupboxLabel "Estilo de visualização">
+<!ENTITY panesViewClassical "Uma coluna, 2 colunas (vista classica)">
+<!ENTITY panesViewModern "3 colunas">
+
+<!ENTITY syncGroupboxLabel "Sinc.">
+<!ENTITY syncWarn "A Sincronização vai propagar as modificações para o servidor remoto e as modificações do servidor remoto para local.">
+<!ENTITY preferDiskLabel "Preferir modificações locais">
+<!ENTITY preferDiskAccesskey "I">
+<!ENTITY autoSyncGroupboxLabel "Sincronização periódica">
+<!ENTITY autoSyncLabel "Activar sincronização periódica">
+<!ENTITY autoSyncAccesskey "E">
+<!ENTITY autoSyncIntervalLabel "Intervalo para sincronização periódica em minutos">
+<!ENTITY autoSyncIntervalAccesskey "T">
+<!ENTITY requestsGroupboxLabel "Pedidos">
+<!ENTITY requestsTimeoutLabel "Timeout em segundos">
+<!ENTITY requestsTimeoutAccesskey "T">
+
+<!ENTITY miscEmailGroupboxLabel "Envio de emails">
+<!ENTITY preferEmailPrefLabel "Preferir emails marcados como PREFeridos">
+<!ENTITY preferEmailPrefAccesskey "W">
+<!ENTITY preferEmailPrefWarn "Se não existir nenhum PREFerido, a mensagem será enviada para todos os endereços de email.">
+
+<!ENTITY cardbookRestartWarn "Tem de fechar e abrir o Cardbook para que estas modificações tenham efeito.">

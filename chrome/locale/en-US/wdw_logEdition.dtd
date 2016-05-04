@@ -1,0 +1,6 @@
+<!ENTITY wdw_logEditionTitle "Log viewer">
+
+<!ENTITY logEditionTreeLineLabel "Timestamp Event">
+<!ENTITY flushLogEditionLabel "Flush">
+<!ENTITY clipboardLogEditionLabel "Copy to clipboard">
+<!ENTITY cancelLogEditionLabel "OK">

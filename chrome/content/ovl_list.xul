@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay>
+
+<overlay id="ovl_cardbookautocomplete"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script src="chrome://cardbook/content/ovl_list.js"/>
+	<script src="chrome://cardbook/content/cardbookUtils.js"/>
+
+</overlay>

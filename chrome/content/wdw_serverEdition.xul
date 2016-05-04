@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % serverDTD SYSTEM "chrome://cardbook/locale/wdw_serverEdition.dtd"> %serverDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+	onload="wdw_serverEdition.load();" resizable="true"
+	onclose="wdw_serverEdition.cancel();"
+	id="wdw_serverEdition" title="&wdw_serverEditionTitle;"
+	persist="screenX screenY width height" class="cardbookBackgroundColorClass"
+	style="min-width:500px;min-height:150px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_serverEdition.js"/>
+
+	<keyset id="wdw_serverEdition-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_serverEdition.cancel();"/>
+	</keyset>
+
+	<hbox flex="1">
+		<vbox flex="1">
+			<grid align="center" flex="1">
+				<columns>
+					<column/>
+					<column flex="1"/>
+					<column/>
+				</columns>
+	
+				<rows>
+					<row align="center">
+						<label id="serverNameLabel" value="&serverNameLabel;"/>
+						<textbox id="serverNameTextBox"/>
+					</row>
+					<row align="center">
+						<label id="serverTypeLabel" value="&serverTypeLabel;"/>
+						<textbox id="serverTypeTextBox" disabled="true"/>
+					</row>
+					<row align="center">
+						<label id="serverUrlLabel" value="&serverUrlLabel;"/>
+						<textbox id="serverUrlTextBox" disabled="true"/>
+					</row>
+					<row align="center">
+						<label id="serverUserLabel" value="&serverUserLabel;"/>
+						<textbox id="serverUserTextBox" disabled="true"/>
+					</row>
+					<row align="center">
+						<label value="&serverColorLabel;" control="cardbook-color"/>
+						<hbox align="center">
+							<html:input id="serverColorInput"
+								class="small-margin"
+								type="color"/>
+						</hbox>
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+	</hbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_serverEdition.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_serverEdition.cancel();"/>
+	</hbox>
+</window>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % noteDTD SYSTEM "chrome://cardbook/locale/wdw_noteEdition.dtd"> %noteDTD;
+	<!ENTITY % buttonsDTD SYSTEM "chrome://cardbook/locale/wdw_editionButtons.dtd"> %buttonsDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="wdw_noteEdition.load();" resizable="true"
+	onclose="wdw_noteEdition.cancel();"
+	id="wdw_noteEdition" title="&wdw_noteEditionTitle;"
+	persist="screenX screenY width height" class="cardbookBackgroundColorClass"
+	style="min-width:400px;min-height:100px;">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+
+	<script src="wdw_noteEdition.js"/>
+
+	<keyset id="wdw_noteEdition-keys">
+		<key keycode="VK_ESCAPE" oncommand="wdw_noteEdition.cancel();"/>
+	</keyset>
+
+	<hbox flex="1">
+		<label value="&noteLabel;"/>
+		<textbox id="noteTextBox" flex="1" multiline="true" wrap="virtual"/>
+	</hbox>
+
+	<hbox>
+		<spacer flex="1"/>
+		<button id="saveEditionLabel" label="&saveEditionLabel;" accesskey="&saveEditionAccesskey;" oncommand="wdw_noteEdition.save();"/>
+		<button id="cancelEditionLabel" label="&cancelEditionLabel;" accesskey="&cancelEditionAccesskey;" oncommand="wdw_noteEdition.cancel();"/>
+	</hbox>
+</window>

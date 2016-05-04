@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://cardbook/skin/cardbookButtons.css" type="text/css"?>
+<?xml-stylesheet href="chrome://cardbook/skin/cardbookCheckboxes.css" type="text/css"?>
+<?xml-stylesheet href="chrome://cardbook/skin/cardbookTreeChildrens.css" type="text/css"?>
+<?xml-stylesheet href="chrome://cardbook/skin/cardbookTreeCols.css" type="text/css"?>
+<!DOCTYPE window [
+	<!ENTITY % cardbookDTD SYSTEM "chrome://cardbook/locale/wdw_cardbook.dtd"> %cardbookDTD;
+	<!ENTITY % typesDTD SYSTEM "chrome://cardbook/locale/wdw_editionTypes.dtd"> %typesDTD;
+	<!ENTITY % namesDTD SYSTEM "chrome://cardbook/locale/wdw_nameEdition.dtd"> %namesDTD;
+	<!ENTITY % bdayDTD SYSTEM "chrome://cardbook/locale/wdw_bdayEdition.dtd"> %bdayDTD;
+	<!ENTITY % orgDTD SYSTEM "chrome://cardbook/locale/wdw_orgEdition.dtd"> %orgDTD;
+	<!ENTITY % addressDTD SYSTEM "chrome://cardbook/locale/wdw_adrEdition.dtd"> %addressDTD;
+	<!ENTITY % telDTD SYSTEM "chrome://cardbook/locale/wdw_telEdition.dtd"> %telDTD;
+	<!ENTITY % emailDTD SYSTEM "chrome://cardbook/locale/wdw_emailEdition.dtd"> %emailDTD;
+	<!ENTITY % imppDTD SYSTEM "chrome://cardbook/locale/wdw_imppEdition.dtd"> %imppDTD;
+	<!ENTITY % urlDTD SYSTEM "chrome://cardbook/locale/wdw_urlEdition.dtd"> %urlDTD;
+	<!ENTITY % logDTD SYSTEM "chrome://cardbook/locale/wdw_logEdition.dtd"> %logDTD;
+	<!ENTITY % configurationDTD SYSTEM "chrome://cardbook/locale/wdw_cardbookConfiguration.dtd"> %configurationDTD;
+]>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	id="wdw_cardbook" title="&wdw_cardbookWindowLabel;"
+	persist="width height screenX screenY sizemode"
+	onload="wdw_cardbook.loadFirstWindow();" resizable="true">
+	
+	<stringbundleset id="stringbundleset">
+		<stringbundle
+			id="cardbook-strings"
+			src="chrome://cardbook/locale/cardbook.properties"/>
+	</stringbundleset>
+	
+	<script src="ovl_cardbook.js"/>
+	<script src="wdw_cardbook.js"/>
+	<script src="cardbookSynchronization.js"/>
+	<script src="cardbookUtils.js"/>
+	<script src="wdw_log.js"/>
+	<script src="cardbookCardParser.js"/>
+	<script src="cardbookDirTree.js"/>
+	<script src="uuid.js"/>
+
+	<toolbox id="cardbook-toolbox">
+		<menubar id="cardbook-menubar">
+			<menu id="cardbookAccountMenu" label="&cardbookAccountMenuLabel;">
+				<menupopup onpopupshowing="wdw_cardbook.cardbookAccountMenuContextShowing();">
+					<menuitem id="cardbookAccountMenuAddServer" label="&cardbookAccountMenuAddServerLabel;" oncommand="wdw_cardbook.addAddressbook();"/>
+					<menuitem id="cardbookAccountMenuEditServer" label="&cardbookAccountMenuEditServerLabel;" oncommand="wdw_cardbook.editAddressbook();"/>
+					<menuitem id="cardbookAccountMenuCloseServer" label="&cardbookAccountMenuCloseServerLabel;" oncommand="wdw_cardbook.removeAddressbook();"/>
+					<menuseparator/>
+					<menuitem id="cardbookAccountMenuEnableOrDisableAddressbook" label="&cardbookAccountMenuEnableOrDisableAddressbookLabel;" oncommand="wdw_cardbook.enableOrDisableAddressbook();"/>
+					<menuseparator/>
+					<menuitem id="cardbookAccountMenuSyncs" label="&cardbookAccountMenuSyncsLabel;" oncommand="wdw_cardbook.syncAccounts();"/>
+					<menuitem id="cardbookAccountMenuSync" label="&cardbookAccountMenuSyncLabel;" oncommand="wdw_cardbook.syncAccountFromAccountsOrCats();"/>
+				</menupopup>
+			</menu>
+			<menu id="cardbookToolsMenu" label="&cardbookToolsMenuLabel;">
+				<menupopup onpopupshowing="wdw_cardbook.cardbookToolsMenuContextShowing();">
+					<menuitem id="cardbookToolsMenuExportToFile" label="&cardbookToolsMenuExportToFileLabel;" oncommand="wdw_cardbook.exportCardsFromAccountsOrCats(this);"/>
+					<menuitem id="cardbookToolsMenuImportFromFile" label="&cardbookToolsMenuImportFromFileLabel;" oncommand="wdw_cardbook.importCardsFromFile();"/>
+					<menuseparator/>
+					<menuitem id="cardbookToolsMenuExportToDir" label="&cardbookToolsMenuExportToDirLabel;" oncommand="wdw_cardbook.exportCardsFromAccountsOrCats(this);"/>
+					<menuitem id="cardbookToolsMenuImportFromDir" label="&cardbookToolsMenuImportFromDirLabel;" oncommand="wdw_cardbook.importCardsFromDir();"/>
+					<menuseparator/>
+					<menuitem id="cardbookToolsMenuLog" label="&wdw_logEditionTitle;" oncommand="wdw_cardbook.openLogEdition();"/>
+					<menuseparator/>
+					<menuitem id="cardbookToolsMenuOptions" label="&wdw_cardbookConfigurationWindowLabel;" oncommand="wdw_cardbook.openOptionsEdition();"/>
+				</menupopup>
+			</menu>
+		</menubar>
+
+		<toolbar id="cardbook-toolbar">
+			<toolbarbutton id="cardbookToolbarAddServerButton"
+				class="toolbarbutton-1"
+				label="&cardbookToolbarAddServerButtonLabel;"
+				tooltiptext="&cardbookToolbarAddServerButtonTooltip;"
+				oncommand="wdw_cardbook.addAddressbook();"/>
+			<toolbarseparator />
+			<toolbarbutton id="cardbookToolbarSyncButton"
+				class="toolbarbutton-1"
+				label="&cardbookToolbarSyncButtonLabel;"
+				tooltiptext="&cardbookToolbarSyncButtonTooltip;"
+				oncommand="wdw_cardbook.syncAccounts();"/>
+			<toolbarseparator />
+			<toolbarbutton id="cardbookToolbarCreateUserButton"
+				class="toolbarbutton-1"
+				label="&cardbookToolbarCreateUserButtonLabel;"
+				tooltiptext="&cardbookToolbarCreateUserButtonTooltip;"
+				oncommand="wdw_cardbook.createCard();"/>
+			<toolbarseparator />
+			<toolbaritem id="searchBox"
+				title="toolbaritem-search"
+				class="toolbaritem-noline chromeclass-toolbar-additional">
+				<textbox id="searchInput"
+					type="search" class="cardbookBackgroundColorClass"
+					oncommand="wdw_cardbook.search();"/>
+			</toolbaritem>
+		</toolbar>
+	</toolbox>
+
+	<menupopup id="addressTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
+		<menuitem id="localizeaddressTree" label="&localizeaddressTreeLabel;" oncommand="wdw_cardbook.localizeCardFromTree(this);"/>
+		<menuseparator/>
+		<menuitem id="copyaddressTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="editaddressTree" label="&editCardTreeLabel;" oncommand="wdw_cardbook.editCardTree(this);"/>
+		<menuitem id="addaddressTree" label="&addCardTreeLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+		<menuitem id="deleteaddressTree" label="&deleteCardTreeLabel;" oncommand="wdw_cardbook.deleteCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="moveUpaddressTree" label="&moveUpCardTreeLabel;" oncommand="wdw_cardbook.moveUpCardTree(this);"/>
+		<menuitem id="moveDownaddressTree" label="&moveDownCardTreeLabel;" oncommand="wdw_cardbook.moveDownCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeadersaddressTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="telTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
+		<menuitem id="copytelTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="edittelTree" label="&editCardTreeLabel;" oncommand="wdw_cardbook.editCardTree(this);"/>
+		<menuitem id="addtelTree" label="&addCardTreeLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+		<menuitem id="deletetelTree" label="&deleteCardTreeLabel;" oncommand="wdw_cardbook.deleteCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="moveUptelTree" label="&moveUpCardTreeLabel;" oncommand="wdw_cardbook.moveUpCardTree(this);"/>
+		<menuitem id="moveDowntelTree" label="&moveDownCardTreeLabel;" oncommand="wdw_cardbook.moveDownCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeaderstelTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="emailTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
+		<menuitem id="emailemailTree" label="&emailemailTreeLabel;" oncommand="wdw_cardbook.emailCardFromTree(this);"/>
+		<menuseparator/>
+		<menuitem id="copyemailTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="editemailTree" label="&editCardTreeLabel;" oncommand="wdw_cardbook.editCardTree(this);"/>
+		<menuitem id="addemailTree" label="&addCardTreeLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+		<menuitem id="deleteemailTree" label="&deleteCardTreeLabel;" oncommand="wdw_cardbook.deleteCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="moveUpemailTree" label="&moveUpCardTreeLabel;" oncommand="wdw_cardbook.moveUpCardTree(this);"/>
+		<menuitem id="moveDownemailTree" label="&moveDownCardTreeLabel;" oncommand="wdw_cardbook.moveDownCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeadersemailTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="imppTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
+		<menuitem id="copyimppTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="editimppTree" label="&editCardTreeLabel;" oncommand="wdw_cardbook.editCardTree(this);"/>
+		<menuitem id="addimppTree" label="&addCardTreeLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+		<menuitem id="deleteimppTree" label="&deleteCardTreeLabel;" oncommand="wdw_cardbook.deleteCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="moveUpimppTree" label="&moveUpCardTreeLabel;" oncommand="wdw_cardbook.moveUpCardTree(this);"/>
+		<menuitem id="moveDownimppTree" label="&moveDownCardTreeLabel;" oncommand="wdw_cardbook.moveDownCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeadersimppTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="urlTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
+		<menuitem id="copyurlTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="editurlTree" label="&editCardTreeLabel;" oncommand="wdw_cardbook.editCardTree(this);"/>
+		<menuitem id="addurlTree" label="&addCardTreeLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+		<menuitem id="deleteurlTree" label="&deleteCardTreeLabel;" oncommand="wdw_cardbook.deleteCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="moveUpurlTree" label="&moveUpCardTreeLabel;" oncommand="wdw_cardbook.moveUpCardTree(this);"/>
+		<menuitem id="moveDownurlTree" label="&moveDownCardTreeLabel;" oncommand="wdw_cardbook.moveDownCardTree(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeadersurlTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="availableCardsTreeContextMenu" onpopupshowing="wdw_cardbook.changeDisplayOrHideHeadersLabel(this);">
+		<menuitem id="appendlistavailableCardsTreeMenu" label="&appendlistTreeLabel;" oncommand="wdw_cardbook.modifyLists(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeadersavailableCardsTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="addedCardsTreeContextMenu" onpopupshowing="wdw_cardbook.changeDisplayOrHideHeadersLabel(this);">
+		<menuitem id="deletelistaddedCardsTreeMenu" label="&deletelistTreeLabel;" oncommand="wdw_cardbook.modifyLists(this);"/>
+		<menuseparator/>
+		<menuitem id="displayOrHideHeadersaddedCardsTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
+	</menupopup>
+
+	<menupopup id="accountsOrCatsTreeContextMenu" onpopupshowing="wdw_cardbook.accountsOrCatsTreeContextShowing();">
+		<menuitem id="toEmailCardsFromAccountsOrCats" label="&toEmailCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
+		<menuitem id="ccEmailCardsFromAccountsOrCats" label="&ccEmailCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
+		<menuitem id="bccEmailCardsFromAccountsOrCats" label="&bccEmailCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
+		<menuseparator/>
+		<menuitem id="copyCardsFromAccountsOrCats" label="&copyCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.copyCardsFromAccountsOrCats();"/>
+		<menuitem id="pasteCardsFromAccountsOrCats" label="&pasteCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.pasteCards();"/>
+		<menuseparator/>
+		<menuitem id="exportCardsToFileFromAccountsOrCats" label="&exportCardToFileFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.exportCardsFromAccountsOrCats(this);"/>
+		<menuitem id="importCardsFromFileFromAccountsOrCats" label="&importCardFromFileFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.importCardsFromFile();"/>
+		<menuseparator/>
+		<menuitem id="exportCardsToDirFromAccountsOrCats" label="&exportCardToDirFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.exportCardsFromAccountsOrCats(this);"/>
+		<menuitem id="importCardsFromDirFromAccountsOrCats" label="&importCardFromDirFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.importCardsFromDir();"/>
+		<menuseparator/>
+		<menuitem id="removeCatFromAccountsOrCats" label="&removeCatFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.removeCategory();"/>
+		<menuseparator/>
+		<menuitem id="enableOrDisableFromAccountsOrCats" label="&enableOrDisableFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.enableOrDisableAddressbook();"/>
+		<menuseparator/>
+		<menuitem id="editAccountFromAccountsOrCats" label="&editAccountFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.editAddressbook();"/>
+		<menuitem id="syncAccountFromAccountsOrCats" label="&syncAccountFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.syncAccountFromAccountsOrCats();"/>
+		<menuitem id="removeAccountFromAccountsOrCats" label="&removeAccountFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.removeAddressbook();"/>
+	</menupopup>
+
+	<menupopup id="cardsTreeContextMenu" onpopupshowing="wdw_cardbook.cardsTreeContextShowing();">
+		<menuitem id="toEmailCardsFromCards" label="&toEmailCardFromCardsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
+		<menuitem id="ccEmailCardsFromCards" label="&ccEmailCardFromCardsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
+		<menuitem id="bccEmailCardsFromCards" label="&bccEmailCardFromCardsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
+		<menuseparator/>
+		<menuitem id="localizeCardsFromCards" label="&localizeCardFromCardsLabel;" oncommand="wdw_cardbook.localizeCardsFromCards(this);"/>
+		<menuseparator/>
+		<menuitem id="copyCardsFromCards" label="&copyCardFromCardsLabel;" oncommand="wdw_cardbook.copyCardsFromCards();"/>
+		<menuitem id="pasteCardsFromCards" label="&pasteCardFromCardsLabel;" oncommand="wdw_cardbook.pasteCards();"/>
+		<menuseparator/>
+		<menuitem id="exportCardsToFileFromCards" label="&exportCardToFileFromCardsLabel;" oncommand="wdw_cardbook.exportCardsFromCards(this);"/>
+		<menuitem id="exportCardsToDirFromCards" label="&exportCardToDirFromCardsLabel;" oncommand="wdw_cardbook.exportCardsFromCards(this);"/>
+		<menuseparator/>
+		<menuitem id="mergeCardsFromCards" label="&mergeCardsFromCardsLabel;" oncommand="wdw_cardbook.mergeCards();"/>
+		<menuseparator/>
+		<menuitem id="deleteCardsFromCards" label="&deleteCardFromCardsLabel;" oncommand="wdw_cardbook.deleteCards();"/>
+	</menupopup>
+
+	<menupopup id="imageCardContextMenu" onpopupshowing="wdw_cardbook.imageCardContextShowing();">
+		<menuitem id="addImageCardFromFile" label="&addImageCardFromFileLabel;" oncommand="wdw_cardbook.addImageCardFromFile();"/>
+		<menuitem id="addImageCardFromClipboard" label="&addImageCardFromClipboardLabel;" oncommand="wdw_cardbook.addImageCardFromClipboard();"/>
+		<menuitem id="addImageCardFromUrl" label="&addImageCardFromUrlLabel;" oncommand="wdw_cardbook.addImageCardFromUrl();"/>
+		<menuitem id="saveImageCard" label="&saveImageCardLabel;" oncommand="wdw_cardbook.saveImageCard();"/>
+		<menuitem id="deleteImageCard" label="&deleteImageCardLabel;" oncommand="wdw_cardbook.deleteImageCard();"/>
+	</menupopup>
+
+	<hbox flex="1">
+		<vbox id="leftPaneVbox" persist="width collapsed">
+			<tree id="accountsOrCatsTree"
+				class="cardbookTreeChildrenAccountClass"
+				seltype="single"
+				style="min-width: 150px;"
+				flex="1" editable="true"
+				persist="width"
+				hidecolumnpicker="true" onkeyup="wdw_cardbook.selectAccountOrCatInNoSearch();" onkeydown="wdw_cardbook.selectAccountOrCatInNoSearch();">
+				<treecols>
+					<treecol id="accountEnabled" type="checkbox" editable="true" hideheader="true" width="17" tooltiptext="&enableAccountsTooltip;"/>
+					<treecol id="accountColor" editable="false" hideheader="true" width="16" tooltiptext="&colorAccountsTooltip;"/>
+					<treecol id="accountName"
+						flex="1"
+						primary="true"
+						label="&accountsOrCatsTreeLabel;"
+						crop="center"
+						persist="width"/>
+					<treecol id="accountId" persist="width ordinal hidden" hidden="true"/>
+					<treecol id="accountType" persist="width ordinal hidden" hidden="true"/>
+				</treecols>
+				<treechildren id="accountsOrCatsTreeChildren" ondragstart="wdw_cardbook.startDrag(event, this);" ondrop="wdw_cardbook.dragCards(event);"
+							 context="accountsOrCatsTreeContextMenu" onclick="wdw_cardbook.selectAccountOrCatInNoSearch();" ondblclick="wdw_cardbook.editAddressbook();"/>
+			</tree>
+		</vbox>
+
+		<splitter id="dirTreeSplitter" collapse="before" persist="state">
+			<grippy/>
+		</splitter>
+		
+		<vbox flex="1">
+			<hbox id="rightPaneUpHbox" flex="1" persist="width height collapsed">
+				<tree id="cardsTree" class="cardbookTreeChildrenCardsClass" flex="1" enableColumnDrag="true" persist="height sortDirection sortResource" sortDirection="ascending" sortResource="lastname" onclick="wdw_cardbook.selectCard();" onkeyup="wdw_cardbook.selectCard();" onkeydown="wdw_cardbook.selectCard();">
+					<treecols>
+						<treecol id="dispn" label="&dispnColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="lastname" label="&lastnameColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="firstname" label="&firstnameColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="othername" label="&othernameColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="prefixname" label="&prefixnameColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="suffixname" label="&suffixnameColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="fn" label="&fnColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="nickname" label="&nicknameColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="bday" label="&bdayColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispadr" label="&dispadrColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="disphomeadr" label="&disphomeadrColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispworkadr" label="&dispworkadrColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="disptel" label="&disptelColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="disphometel" label="&disphometelColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispworktel" label="&dispworktelColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispcelltel" label="&dispcelltelColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispemail" label="&dispemailColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="disphomeemail" label="&disphomeemailColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispworkemail" label="&dispworkemailColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="mailer" label="&mailerColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="tz" label="&tzColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="geo" label="&geoColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="title" label="&titleColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="role" label="&roleColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="org" label="&orgColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="categories" label="&categoriesColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="note" label="&noteColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="prodid" label="&prodidColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="sortstring" label="&sortstringColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="uid" label="&uidColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispurl" label="&dispurlColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="version" label="&versionColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="class1" label="&class1ColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dispimpp" label="&dispimppColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="dirPrefId" label="&dirPrefIdColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="kind" label="&kindColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="rev" label="&revColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="cardurl" label="&cardurlColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+						<splitter class="tree-splitter"/>
+						<treecol id="etag" label="&etagColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" hidden="true" onclick="wdw_cardbook.sortCardsTreeCol(this);" class="sortDirectionIndicator" sortDirection="ascending"/>
+					</treecols>
+					<treechildren id="cardsTreeChildren" context="cardsTreeContextMenu" ondragstart="wdw_cardbook.startDrag(event, this);" ondblclick="wdw_cardbook.emailCardsFromCards(this);"/>
+				</tree>
+			</hbox>
+			
+			<splitter id="resultsSplitter" collapse="after" persist="state">
+				<grippy/>
+			</splitter>
+	
+			<hbox id="rightPaneDownHbox" flex="1" context="" persist="width height collapsed">
+				<vbox flex="1">
+					<vbox>
+						<hbox>
+							<button flex="1" class="cardbookButtonClass" id="buttonName" label="&buttonNameLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonOrg" label="&buttonOrgLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonCategories" label="&buttonCategoriesLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonAddress" label="&buttonAddressLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonPhone" label="&buttonPhoneLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonEmail" label="&buttonEmailLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonImpp" label="&buttonImppLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonUrl" label="&buttonUrlLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonNote" label="&buttonNoteLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<button flex="1" class="cardbookButtonClass" id="buttonBirthday" label="&buttonBirthdayLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
+							<spacer flex="2"/>
+							<button flex="1" class="cardbookButtonClass" id="saveButton" label="&saveButtonLabel;" oncommand="wdw_cardbook.saveCard();"/>
+							<button flex="1" class="cardbookButtonClass" id="cancelButton" label="&cancelButtonLabel;" oncommand="wdw_cardbook.cancelCard();"/>
+						</hbox>
+					</vbox>
+		
+					<tabbox flex="1" class="cardbookBackgroundColorClass">
+						
+						<tabs>
+							<tab label="&generalTabLabel;"/>
+							<tab label="&listTabLabel;"/>
+							<tab label="&technicalTabLabel;"/>
+							<tab label="&vcardTabLabel;"/>
+						</tabs>
+						
+						<tabpanels flex="1">
+							<tabpanel orient="vertical">
+								<hbox flex="1">
+									<vbox align="center" width="170px">
+										<hbox id="imageBox" align="center" height="170px">
+											<html:img id="imageForSizing" hidden="true"/>
+											<image id="defaultCardImage" context="imageCardContextMenu" ondblclick="wdw_cardbook.addImageCardFromFile();"/>
+										</hbox>
+										<hbox id="versionBox">
+											<groupbox id="versionGroupbox" width="170px">
+												<caption label="&versionLabel1;"/>
+												<hbox>
+													<radiogroup id="versionRadiogroup" orient="vertical">
+														<radio value="3.0" label="3.0"/>
+														<radio value="4.0" label="4.0"/>
+													</radiogroup>
+												</hbox>
+											</groupbox>
+										</hbox>
+										<hbox id="noteBox" flex="1">
+											<groupbox id="noteGroupbox" flex="1">
+												<caption label="&noteGroupboxLabel;"/>
+												<hbox flex="1">
+													<textbox id="noteTextBox" flex="1" multiline="true" wrap="virtual" onblur="wdw_cardbook.adjustFields();" ondblclick="wdw_cardbook.addCardInfo(this);"/>
+												</hbox>
+											</groupbox>
+										</hbox>
+									</vbox>
+									
+									<vbox flex="1">
+										<hbox id="persBox">
+											<groupbox id="persGroupbox" flex="1">
+												<caption label="&persGroupboxLabel;"/>
+												<hbox flex="1" align="center">
+													<grid align="center" flex="1">
+														<columns>
+															<column/>
+															<column flex="1"/>
+														</columns>
+											
+														<rows>
+															<row id="fnRow" align="center">
+																<label id="fnLabel" value="&fnLabel;"/>
+																<textbox id="fnTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="lastnameRow" align="center">
+																<label id="lastnameLabel" value="&lastnameLabel;"/>
+																<textbox id="lastnameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="firstnameRow" align="center">
+																<label id="firstnameLabel" value="&firstnameLabel;"/>
+																<textbox id="firstnameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="othernameRow" align="center">
+																<label id="othernameLabel" value="&othernameLabel;"/>
+																<textbox id="othernameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="prefixnameRow" align="center">
+																<label id="prefixnameLabel" value="&prefixnameLabel;"/>
+																<textbox id="prefixnameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="suffixnameRow" align="center">
+																<label id="suffixnameLabel" value="&suffixnameLabel;"/>
+																<textbox id="suffixnameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="nicknameRow" align="center">
+																<label id="nicknameLabel" value="&nicknameLabel;"/>
+																<textbox id="nicknameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="bdayRow" align="center">
+																<label value="&bdayLabel;"/>
+																<textbox id="bdayTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="customField1NameRow" align="center">
+																<label id="customField1NameLabel"/>
+																<textbox id="customField1NameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="customField2NameRow" align="center">
+																<label id="customField2NameLabel"/>
+																<textbox id="customField2NameTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+														</rows>
+													</grid>
+												</hbox>
+											</groupbox>
+										</hbox>
+		
+										<hbox id="orgBox">
+											<groupbox id="orgGroupbox" flex="1">
+												<caption label="&orgGroupboxLabel;"/>
+												<hbox flex="1" align="center">
+													<grid align="center" flex="1">
+														<columns>
+															<column/>
+															<column flex="1"/>
+														</columns>
+											
+														<rows>
+															<row id="orgRow" align="center">
+																<label id="orgLabel" value="&orgLabel;"/>
+																<textbox id="orgTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="titleRow" align="center">
+																<label id="titleLabel" value="&titleLabel;"/>
+																<textbox id="titleTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="roleRow" align="center">
+																<label id="roleLabel" value="&roleLabel;"/>
+																<textbox id="roleTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="customField1OrgRow" align="center">
+																<label id="customField1OrgLabel"/>
+																<textbox id="customField1OrgTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+															<row id="customField2OrgRow" align="center">
+																<label id="customField2OrgLabel"/>
+																<textbox id="customField2OrgTextBox" onblur="wdw_cardbook.adjustFields();"/>
+															</row>
+														</rows>
+													</grid>
+												</hbox>
+											</groupbox>
+										</hbox>
+		
+										<hbox id="categoriesBox">
+											<groupbox id="categoriesGroupbox" flex="1">
+												<caption label="&categoriesGroupboxLabel;"/>
+												<vbox id="categoriesVbox" flex="1">
+												</vbox>
+											</groupbox>
+										</hbox>
+		
+										<hbox id="adrBox" flex="1">
+											<groupbox id="adrGroupbox" flex="1">
+												<caption label="&adrGroupboxLabel;"/>
+												<tree id="addressTree" class="cardbookTreeChildrenCardClass" flex="1" seltype="single" enableColumnDrag="true">
+													<treecols id="addressTreeCols">
+														<treecol id="addressPref" label="&prefLabel;" type="checkbox" persist="width ordinal hidden" style="text-align:center"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="addressPrefWeight" label="&prefWeightLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="addressType" label="&typeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="postOffice" label="&adrPostOfficeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="extendedAddr" label="&adrExtendedAddrLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="street" label="&adrStreetLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="locality" label="&adrLocalityLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="region" label="&adrRegionLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="postalCode" label="&adrPostalCodeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="country" label="&adrCountryLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+													</treecols>
+													<treechildren id="addressTreeChildren" context="addressTreeContextMenu" ondblclick="wdw_cardbook.chooseActionTree(this);"/>
+												</tree>
+											</groupbox>
+										</hbox>
+									</vbox>
+									
+									<vbox flex="1">
+										<hbox id="telBox" flex="1">
+											<groupbox id="telGroupbox" flex="1">
+												<caption label="&telGroupboxLabel;"/>
+												<tree id="telTree" class="cardbookTreeChildrenCardClass" flex="1" seltype="single" enableColumnDrag="true">
+													<treecols id="telTreeCols">
+														<treecol id="telPref" label="&prefLabel;" type="checkbox" persist="width ordinal hidden" style="text-align:center"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="telPrefWeight" label="&prefWeightLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="telType" label="&typeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="telValue" label="&telValueLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+													</treecols>
+													<treechildren id="telTreeChildren" context="telTreeContextMenu" ondblclick="wdw_cardbook.editCardTree(this);"/>
+												</tree>
+											</groupbox>
+										</hbox>
+						
+										<hbox id="emailBox" flex="1">
+											<groupbox id="emailGroupbox" flex="1">
+												<caption label="&emailGroupboxLabel;"/>
+												<tree id="emailTree" class="cardbookTreeChildrenCardClass" flex="1" seltype="single" enableColumnDrag="true">
+													<treecols id="emailTreeCols">
+														<treecol id="emailPref" label="&prefLabel;" type="checkbox" persist="width ordinal hidden" style="text-align:center"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="emailPrefWeight" label="&prefWeightLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="emailType" label="&typeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="emailValue" label="&emailValueLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+													</treecols>
+													<treechildren id="emailTreeChildren" context="emailTreeContextMenu" ondblclick="wdw_cardbook.chooseActionTree(this);"/>
+												</tree>
+											</groupbox>
+										</hbox>
+						
+										<hbox id="imppBox" flex="1">
+											<groupbox id="imppGroupbox" flex="1">
+												<caption label="&imppGroupboxLabel;"/>
+												<tree id="imppTree" class="cardbookTreeChildrenCardClass" flex="1" seltype="single" enableColumnDrag="true">
+													<treecols id="imppTreeCols">
+														<treecol id="imppPref" label="&prefLabel;" type="checkbox" persist="width ordinal hidden" style="text-align:center"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="imppPrefWeight" label="&prefWeightLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="imppType" label="&typeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="imppValue" label="&imppValueLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+													</treecols>
+													<treechildren id="imppTreeChildren" context="imppTreeContextMenu" ondblclick="wdw_cardbook.editCardTree(this);"/>
+												</tree>
+											</groupbox>
+										</hbox>
+		
+										<hbox id="urlBox" flex="1">
+											<groupbox id="urlGroupbox" flex="1">
+												<caption label="&urlGroupboxLabel;"/>
+												<tree id="urlTree" class="cardbookTreeChildrenCardClass" flex="1" seltype="single" enableColumnDrag="true">
+													<treecols id="urlTreeCols">
+														<treecol id="urlPref" label="&prefLabel;" type="checkbox" persist="width ordinal hidden" style="text-align:center"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="urlPrefWeight" label="&prefWeightLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="urlType" label="&typeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="urlValue" label="&urlValueLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
+													</treecols>
+													<treechildren id="urlTreeChildren" context="urlTreeContextMenu" ondblclick="wdw_cardbook.editCardTree(this);"/>
+												</tree>
+											</groupbox>
+										</hbox>
+									</vbox>
+								</hbox>
+							</tabpanel>
+		
+							<tabpanel orient="vertical">
+								<vbox flex="1">
+									<hbox align="center">
+										<label value="&kindColumnLabel;"/>
+										<textbox id="kindTextBox" onblur="wdw_cardbook.adjustFields();"/>
+									</hbox>
+									<hbox flex="1">
+										<vbox flex="1">
+											<groupbox id="availableCardsGroupbox" flex="1">
+												<caption label="&availableCardsGroupboxLabel;"/>
+												<textbox id="searchAvailableCardsInput"
+													type="search" class="cardbookBackgroundColorClass"
+													oncommand="wdw_cardbook.searchAvailableCards(null);"/>
+												<tree id="availableCardsTree" class="cardbookTreeChildrenCardClass" flex="1" enableColumnDrag="true" persist="height sortDirection sortResource" sortDirection="ascending" sortResource="availableCardsFn">
+													<treecols id="availableCardsTreeCols">
+														<treecol id="availableCardsFn" label="&fnColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortListTreeCol(null, this, null);" class="sortDirectionIndicator" sortDirection="ascending"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="availableCardsUid" label="&uidColumnLabel;" flex="1" persist="width ordinal hidden" hidden="true" style="text-align:left" onclick="wdw_cardbook.sortListTreeCol(null, this, null);" class="sortDirectionIndicator" sortDirection="ascending"/>
+													</treecols>
+													<treechildren id="availableCardsTreeChildren" context="availableCardsTreeContextMenu" ondblclick="wdw_cardbook.modifyLists(this);"/>
+												</tree>
+											</groupbox>
+										</vbox>
+										<vbox flex="1" align="center">
+											<hbox flex="1" align="center">
+												<vbox flex="1" align="center">
+													<button class="cardbookButtonClass" id="appendlistavailableCardsTreeButton" label="&buttonAppendToListLabel;" oncommand="wdw_cardbook.modifyLists(this);"/>
+													<button class="cardbookButtonClass" id="deletelistaddedCardsTreeButton" label="&buttonRemoveFromListLabel;" oncommand="wdw_cardbook.modifyLists(this);"/>
+												</vbox>
+											</hbox>
+										</vbox>
+										<vbox flex="1">
+											<groupbox id="addedCardsGroupbox" flex="1">
+												<caption label="&addedCardsGroupboxLabel;"/>
+												<tree id="addedCardsTree" class="cardbookTreeChildrenCardClass" flex="1" enableColumnDrag="true" persist="height sortDirection sortResource" sortDirection="ascending" sortResource="addedCardsFn">
+													<treecols id="addedCardsTreeCols">
+														<treecol id="addedCardsFn" label="&fnColumnLabel;" flex="1" persist="width ordinal hidden" style="text-align:left" onclick="wdw_cardbook.sortListTreeCol(null, this, null);" class="sortDirectionIndicator" sortDirection="ascending"/>
+														<splitter class="tree-splitter"/>
+														<treecol id="addedCardsUid" label="&uidColumnLabel;" flex="1" persist="width ordinal hidden" hidden="true" style="text-align:left" onclick="wdw_cardbook.sortListTreeCol(null, this, null);" class="sortDirectionIndicator" sortDirection="ascending"/>
+													</treecols>
+													<treechildren id="addedCardsTreeChildren" context="addedCardsTreeContextMenu" ondblclick="wdw_cardbook.modifyLists(this);"/>
+												</tree>
+											</groupbox>
+										</vbox>
+									</hbox>
+								</vbox>
+							</tabpanel>
+								
+							<tabpanel orient="vertical">
+								<vbox id="miscBox">
+									<groupbox id="miscGroupbox" flex="1">
+										<caption label="&miscGroupboxLabel;"/>
+										<hbox flex="1" align="center">
+											<grid align="center" flex="1">
+												<columns>
+													<column/>
+													<column flex="1"/>
+												</columns>
+									
+												<rows>
+													<row id="mailerRow" align="center">
+														<label id="mailerLabel" value="&mailerLabel;"/>
+														<textbox id="mailerTextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="geoRow" align="center">
+														<label id="geoLabel" value="&geoLabel;"/>
+														<textbox id="geoTextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="sortstringRow" align="center">
+														<label id="sortstringLabel" value="&sortstringLabel;"/>
+														<textbox id="sortstringTextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="class1Row" align="center">
+														<label id="class1Label" value="&class1Label;"/>
+														<textbox id="class1TextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="tzRow" align="center">
+														<label id="tzLabel" value="&tzLabel;"/>
+														<textbox id="tzTextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="agentRow" align="center">
+														<label id="agentLabel" value="&agentLabel;"/>
+														<textbox id="agentTextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="keyRow" align="center">
+														<label id="keyLabel" value="&keyLabel;"/>
+														<textbox id="keyTextBox" onblur="wdw_cardbook.adjustFields();"/>
+													</row>
+													<row id="photoLocalURIRow" align="center">
+														<label id="photoLocalURILabel" value="&photoLocalURILabel;"/>
+														<textbox id="photoLocalURITextBox" readonly="true"/>
+													</row>
+													<row id="photoURIRow" align="center">
+														<label id="photoURILabel" value="&photoURILabel;"/>
+														<textbox id="photoURITextBox" readonly="true"/>
+													</row>
+													<row id="logoLocalURIRow" align="center">
+														<label id="logoLocalURILabel" value="&logoLocalURILabel;"/>
+														<textbox id="logoLocalURITextBox" readonly="true"/>
+													</row>
+													<row id="logoURIRow" align="center">
+														<label id="logoURILabel" value="&logoURILabel;"/>
+														<textbox id="logoURITextBox" readonly="true"/>
+													</row>
+													<row id="soundLocalURIRow" align="center">
+														<label id="soundLocalURILabel" value="&soundLocalURILabel;"/>
+														<textbox id="soundLocalURITextBox" readonly="true"/>
+													</row>
+													<row id="soundURIRow" align="center">
+														<label id="soundURILabel" value="&soundURILabel;"/>
+														<textbox id="soundURITextBox" readonly="true"/>
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</groupbox>
+								</vbox>
+										
+								<vbox id="techBox">
+									<groupbox id="techGroupbox" flex="1">
+										<caption label="&techGroupboxLabel;"/>
+										<hbox flex="1" align="center">
+											<grid align="center" flex="1">
+												<columns>
+													<column/>
+													<column flex="1"/>
+												</columns>
+									
+												<rows>
+													<row id="dirPrefIdRow" align="center">
+														<label id="dirPrefIdLabel" value="&dirPrefIdLabel;"/>
+														<textbox id="dirPrefIdTextBox" readonly="true"/>
+													</row>
+													<row id="versionRow" align="center">
+														<label id="versionLabel" value="&versionLabel;"/>
+														<textbox id="versionTextBox" readonly="true"/>
+													</row>
+													<row id="prodidRow" align="center">
+														<label id="prodidLabel" value="&prodidLabel;"/>
+														<textbox id="prodidTextBox" readonly="true"/>
+													</row>
+													<row id="uidRow" align="center">
+														<label id="uidLabel" value="&uidLabel;"/>
+														<textbox id="uidTextBox" readonly="true"/>
+													</row>
+													<row id="cardurlRow" align="center">
+														<label id="cardurlLabel" value="&cardurlLabel;"/>
+														<textbox id="cardurlTextBox" readonly="true"/>
+													</row>
+													<row id="revRow" align="center">
+														<label id="revLabel" value="&revLabel;"/>
+														<textbox id="revTextBox" readonly="true"/>
+													</row>
+													<row id="etagRow" align="center">
+														<label id="etagLabel" value="&etagLabel;"/>
+														<textbox id="etagTextBox" readonly="true"/>
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</groupbox>
+								</vbox>
+										
+								<vbox id="othersBox" flex="1">
+									<groupbox id="othersGroupbox" flex="1">
+										<caption label="&othersGroupboxLabel;"/>
+										<hbox flex="1">
+											<textbox id="othersTextBox" flex="1" multiline="true" wrap="virtual" readonly="true"/>
+										</hbox>
+									</groupbox>
+								</vbox>
+							</tabpanel>
+
+							<tabpanel orient="vertical">
+								<textbox id="vcardTextBox" flex="1" multiline="true" wrap="virtual" readonly="true"/>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</vbox>
+			</hbox>
+		</vbox>
+	</hbox>
+	<statusbar>
+		<statusbarpanel id="statusInformation" crop="none"/>
+		<spacer flex="1"/>
+		<statusbarpanel id="statusProgressInformation" onclick="wdw_cardbook.openLogEdition();" tooltiptext="&statusProgressInformationTooltip;" crop="end"/>
+		<progressmeter id="statusProgessValue" mode="determined" value="0"/>
+	</statusbar>
+</window>

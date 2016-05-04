@@ -1,0 +1,7 @@
+<!ENTITY wdw_serverEditionTitle "Propriedades da agenda">
+
+<!ENTITY serverNameLabel "Nome">
+<!ENTITY serverTypeLabel "Tipo">
+<!ENTITY serverUserLabel "Utilizador">
+<!ENTITY serverUrlLabel "URL">
+<!ENTITY serverColorLabel "Cor">
