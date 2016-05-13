@@ -39,6 +39,7 @@
 	<script src="cardbookCardParser.js"/>
 	<script src="cardbookDirTree.js"/>
 	<script src="uuid.js"/>
+	<script src="cardbookImap.js"/>
 
 	<toolbox id="cardbook-toolbox">
 		<menubar id="cardbook-menubar">
@@ -97,7 +98,8 @@
 			</toolbaritem>
 		</toolbar>
 	</toolbox>
-
+	
+	<!-- Onglet général, menupopup tableau d'adresse d'un contact  -->
 	<menupopup id="addressTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
 		<menuitem id="localizeaddressTree" label="&localizeaddressTreeLabel;" oncommand="wdw_cardbook.localizeCardFromTree(this);"/>
 		<menuseparator/>
@@ -113,6 +115,7 @@
 		<menuitem id="displayOrHideHeadersaddressTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- Onglet général, menupopup tableau de numero de téléphone d'un contact  -->
 	<menupopup id="telTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
 		<menuitem id="copytelTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
 		<menuseparator/>
@@ -126,6 +129,7 @@
 		<menuitem id="displayOrHideHeaderstelTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- Onglet général, menupopup tableau d'email d'un contact  -->
 	<menupopup id="emailTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
 		<menuitem id="emailemailTree" label="&emailemailTreeLabel;" oncommand="wdw_cardbook.emailCardFromTree(this);"/>
 		<menuseparator/>
@@ -141,6 +145,7 @@
 		<menuitem id="displayOrHideHeadersemailTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- Onglet général, menupopup tableau d'impp d'un contact  -->
 	<menupopup id="imppTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
 		<menuitem id="copyimppTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
 		<menuseparator/>
@@ -154,6 +159,7 @@
 		<menuitem id="displayOrHideHeadersimppTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- Onglet général, menupopup tableau d'url d'un contact  -->
 	<menupopup id="urlTreeContextMenu" onpopupshowing="wdw_cardbook.cardTreeContextShowing(this);">
 		<menuitem id="copyurlTree" label="&copyCardTreeLabel;" oncommand="wdw_cardbook.copyCardTree(this);"/>
 		<menuseparator/>
@@ -167,18 +173,21 @@
 		<menuitem id="displayOrHideHeadersurlTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- Onglet liste, menupopup tableau contacts disponibles  -->
 	<menupopup id="availableCardsTreeContextMenu" onpopupshowing="wdw_cardbook.changeDisplayOrHideHeadersLabel(this);">
 		<menuitem id="appendlistavailableCardsTreeMenu" label="&appendlistTreeLabel;" oncommand="wdw_cardbook.modifyLists(this);"/>
 		<menuseparator/>
 		<menuitem id="displayOrHideHeadersavailableCardsTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- Onglet liste, menupopup tableau contacts disponibles  -->
 	<menupopup id="addedCardsTreeContextMenu" onpopupshowing="wdw_cardbook.changeDisplayOrHideHeadersLabel(this);">
 		<menuitem id="deletelistaddedCardsTreeMenu" label="&deletelistTreeLabel;" oncommand="wdw_cardbook.modifyLists(this);"/>
 		<menuseparator/>
 		<menuitem id="displayOrHideHeadersaddedCardsTree" label="&displayOrHideHeadersLabel;" oncommand="wdw_cardbook.displayOrHideHeaders();"/>
 	</menupopup>
 
+	<!-- menupopup tableau de compte  -->
 	<menupopup id="accountsOrCatsTreeContextMenu" onpopupshowing="wdw_cardbook.accountsOrCatsTreeContextShowing();">
 		<menuitem id="toEmailCardsFromAccountsOrCats" label="&toEmailCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
 		<menuitem id="ccEmailCardsFromAccountsOrCats" label="&ccEmailCardFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
@@ -202,6 +211,7 @@
 		<menuitem id="removeAccountFromAccountsOrCats" label="&removeAccountFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.removeAddressbook();"/>
 	</menupopup>
 
+	<!-- menupopup tableau de contact  -->
 	<menupopup id="cardsTreeContextMenu" onpopupshowing="wdw_cardbook.cardsTreeContextShowing();">
 		<menuitem id="toEmailCardsFromCards" label="&toEmailCardFromCardsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
 		<menuitem id="ccEmailCardsFromCards" label="&ccEmailCardFromCardsLabel;" oncommand="wdw_cardbook.emailCardsFromCards(this);"/>
@@ -220,6 +230,7 @@
 		<menuitem id="deleteCardsFromCards" label="&deleteCardFromCardsLabel;" oncommand="wdw_cardbook.deleteCards();"/>
 	</menupopup>
 
+	<!-- Onglet général, menupopup image d'un contact  -->
 	<menupopup id="imageCardContextMenu" onpopupshowing="wdw_cardbook.imageCardContextShowing();">
 		<menuitem id="addImageCardFromFile" label="&addImageCardFromFileLabel;" oncommand="wdw_cardbook.addImageCardFromFile();"/>
 		<menuitem id="addImageCardFromClipboard" label="&addImageCardFromClipboardLabel;" oncommand="wdw_cardbook.addImageCardFromClipboard();"/>
@@ -259,6 +270,7 @@
 		</splitter>
 		
 		<vbox flex="1">
+			<!-- tableau des contacts -->
 			<hbox id="rightPaneUpHbox" flex="1" persist="width height collapsed">
 				<tree id="cardsTree" class="cardbookTreeChildrenCardsClass" flex="1" enableColumnDrag="true" persist="height sortDirection sortResource" sortDirection="ascending" sortResource="lastname" onclick="wdw_cardbook.selectCard();" onkeyup="wdw_cardbook.selectCard();" onkeydown="wdw_cardbook.selectCard();">
 					<treecols>
@@ -347,10 +359,10 @@
 			<splitter id="resultsSplitter" collapse="after" persist="state">
 				<grippy/>
 			</splitter>
-	
 			<hbox id="rightPaneDownHbox" flex="1" context="" persist="width height collapsed">
 				<vbox flex="1">
 					<vbox>
+						<!-- panel des buttons -->
 						<hbox>
 							<button flex="1" class="cardbookButtonClass" id="buttonName" label="&buttonNameLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
 							<button flex="1" class="cardbookButtonClass" id="buttonOrg" label="&buttonOrgLabel;" oncommand="wdw_cardbook.addCardInfo(this);"/>
@@ -378,13 +390,17 @@
 						</tabs>
 						
 						<tabpanels flex="1">
+							<!-- panel general -->
 							<tabpanel orient="vertical">
 								<hbox flex="1">
+									<!-- colonne 1/3 -->
 									<vbox align="center" width="170px">
+										<!-- champ de la photo d'un contact  -->
 										<hbox id="imageBox" align="center" height="170px">
 											<html:img id="imageForSizing" hidden="true"/>
 											<image id="defaultCardImage" context="imageCardContextMenu" ondblclick="wdw_cardbook.addImageCardFromFile();"/>
 										</hbox>
+										<!-- champ version de la vcard d'un contact  -->
 										<hbox id="versionBox">
 											<groupbox id="versionGroupbox" width="170px">
 												<caption label="&versionLabel1;"/>
@@ -396,6 +412,7 @@
 												</hbox>
 											</groupbox>
 										</hbox>
+										<!-- champ note d'un contact  -->
 										<hbox id="noteBox" flex="1">
 											<groupbox id="noteGroupbox" flex="1">
 												<caption label="&noteGroupboxLabel;"/>
@@ -406,7 +423,9 @@
 										</hbox>
 									</vbox>
 									
+									<!-- colonne 2/3 -->
 									<vbox flex="1">
+										<!-- champ informations personnelles d'un contact  -->
 										<hbox id="persBox">
 											<groupbox id="persGroupbox" flex="1">
 												<caption label="&persGroupboxLabel;"/>
@@ -463,7 +482,7 @@
 												</hbox>
 											</groupbox>
 										</hbox>
-		
+										<!-- champ informations professionnelles d'un contact  -->
 										<hbox id="orgBox">
 											<groupbox id="orgGroupbox" flex="1">
 												<caption label="&orgGroupboxLabel;"/>
@@ -500,7 +519,7 @@
 												</hbox>
 											</groupbox>
 										</hbox>
-		
+										<!-- champ categorie d'un contact  -->
 										<hbox id="categoriesBox">
 											<groupbox id="categoriesGroupbox" flex="1">
 												<caption label="&categoriesGroupboxLabel;"/>
@@ -508,7 +527,7 @@
 												</vbox>
 											</groupbox>
 										</hbox>
-		
+										<!-- tableau d'adresse d'un contact  -->
 										<hbox id="adrBox" flex="1">
 											<groupbox id="adrGroupbox" flex="1">
 												<caption label="&adrGroupboxLabel;"/>
@@ -519,10 +538,6 @@
 														<treecol id="addressPrefWeight" label="&prefWeightLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
 														<splitter class="tree-splitter"/>
 														<treecol id="addressType" label="&typeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
-														<splitter class="tree-splitter"/>
-														<treecol id="postOffice" label="&adrPostOfficeLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
-														<splitter class="tree-splitter"/>
-														<treecol id="extendedAddr" label="&adrExtendedAddrLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
 														<splitter class="tree-splitter"/>
 														<treecol id="street" label="&adrStreetLabel;" flex="1" persist="width ordinal hidden" style="text-align:left"/>
 														<splitter class="tree-splitter"/>
@@ -540,7 +555,9 @@
 										</hbox>
 									</vbox>
 									
+									<!-- colonne 2/3 -->
 									<vbox flex="1">
+										<!-- tableau de numero de telephone d'un contact  -->
 										<hbox id="telBox" flex="1">
 											<groupbox id="telGroupbox" flex="1">
 												<caption label="&telGroupboxLabel;"/>
@@ -558,7 +575,7 @@
 												</tree>
 											</groupbox>
 										</hbox>
-						
+										<!-- tableau d'email d'un contact  -->
 										<hbox id="emailBox" flex="1">
 											<groupbox id="emailGroupbox" flex="1">
 												<caption label="&emailGroupboxLabel;"/>
@@ -576,7 +593,7 @@
 												</tree>
 											</groupbox>
 										</hbox>
-						
+										<!-- tableau d'impp d'un contact  -->
 										<hbox id="imppBox" flex="1">
 											<groupbox id="imppGroupbox" flex="1">
 												<caption label="&imppGroupboxLabel;"/>
@@ -594,7 +611,7 @@
 												</tree>
 											</groupbox>
 										</hbox>
-		
+										<!-- tableau d'url d'un contact  -->
 										<hbox id="urlBox" flex="1">
 											<groupbox id="urlGroupbox" flex="1">
 												<caption label="&urlGroupboxLabel;"/>
@@ -615,14 +632,16 @@
 									</vbox>
 								</hbox>
 							</tabpanel>
-		
+							<!-- panel liste -->
 							<tabpanel orient="vertical">
 								<vbox flex="1">
+									<!-- champ type -->
 									<hbox align="center">
 										<label value="&kindColumnLabel;"/>
 										<textbox id="kindTextBox" onblur="wdw_cardbook.adjustFields();"/>
 									</hbox>
 									<hbox flex="1">
+										<!-- colonne 1/3, tableau contacts disponibles -->
 										<vbox flex="1">
 											<groupbox id="availableCardsGroupbox" flex="1">
 												<caption label="&availableCardsGroupboxLabel;"/>
@@ -639,6 +658,7 @@
 												</tree>
 											</groupbox>
 										</vbox>
+										<!-- colonne 2/3, boutons -->
 										<vbox flex="1" align="center">
 											<hbox flex="1" align="center">
 												<vbox flex="1" align="center">
@@ -647,6 +667,7 @@
 												</vbox>
 											</hbox>
 										</vbox>
+										<!-- colonne 3/3, tableau listes des contacts -->
 										<vbox flex="1">
 											<groupbox id="addedCardsGroupbox" flex="1">
 												<caption label="&addedCardsGroupboxLabel;"/>
@@ -663,7 +684,7 @@
 									</hbox>
 								</vbox>
 							</tabpanel>
-								
+							<!-- panel technique -->
 							<tabpanel orient="vertical">
 								<vbox id="miscBox">
 									<groupbox id="miscGroupbox" flex="1">
@@ -788,8 +809,9 @@
 									</groupbox>
 								</vbox>
 							</tabpanel>
-
+							<!-- panel VCard -->
 							<tabpanel orient="vertical">
+								<button flex="1" label="Création de la VCard imap" oncommand="cardbookImap.test();"/>
 								<textbox id="vcardTextBox" flex="1" multiline="true" wrap="virtual" readonly="true"/>
 							</tabpanel>
 						</tabpanels>
@@ -798,6 +820,7 @@
 			</hbox>
 		</vbox>
 	</hbox>
+	<!-- statusbar -->
 	<statusbar>
 		<statusbarpanel id="statusInformation" crop="none"/>
 		<spacer flex="1"/>

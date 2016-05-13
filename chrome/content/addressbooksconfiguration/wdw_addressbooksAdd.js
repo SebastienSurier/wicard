@@ -34,6 +34,7 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 				page.next = 'locationComputerPage';
 			} else {
 				page.next = 'locationNetworkPage';
+				cardbookImap.searchAccounts();
 			}
 		},
 
@@ -101,7 +102,33 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 			document.getElementById('locationNetworkPagePassword').value = "";
 			
 			var type = document.getElementById('locationNetworkPageType').selectedItem.value;
-			if (type == 'GOOGLE') {
+			if (type == 'IMAP') {
+				document.getElementById('locationNetworkPageImapAccountLabel').disabled=false;
+				document.getElementById('locationNetworkPageImapAccount').disabled=false;
+				document.getElementById('locationNetworkPageImapAccount').setAttribute('required', 'true');
+				document.getElementById('locationNetworkPageImapFolderLabel').disabled=false;
+				document.getElementById('locationNetworkPageImapFolder').disabled=false;
+				document.getElementById('locationNetworkPageImapFolder').setAttribute('required', 'true');
+				document.getElementById('locationNetworkPageUriLabel').disabled=true;
+				document.getElementById('locationNetworkPageURI').disabled=true;
+				document.getElementById('locationNetworkPageURI').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageUsernameLabel').disabled=true;
+				document.getElementById('locationNetworkPageUsername').disabled=true;
+				document.getElementById('locationNetworkPageUsername').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPagePasswordLabel').disabled=true;
+				document.getElementById('locationNetworkPagePassword').disabled=true;
+				document.getElementById('locationNetworkPagePassword').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPagePasswordCheckBox').disabled=true;
+			} else if (type == 'GOOGLE') {
+				document.getElementById('locationNetworkPageImapAccountLabel').disabled=true;
+				document.getElementById('locationNetworkPageImapAccount').disabled=true;
+				document.getElementById('locationNetworkPageImapAccount').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageImapFolderLabel').disabled=true;
+				document.getElementById('locationNetworkPageImapFolder').disabled=true;
+				document.getElementById('locationNetworkPageImapFolder').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageUsernameLabel').disabled=false;
+				document.getElementById('locationNetworkPageUsername').disabled=false;
+				document.getElementById('locationNetworkPageUsername').setAttribute('required', 'true');
 				document.getElementById('locationNetworkPageUriLabel').disabled=true;
 				document.getElementById('locationNetworkPageURI').disabled=true;
 				document.getElementById('locationNetworkPageURI').setAttribute('required', 'false');
@@ -110,6 +137,15 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 				document.getElementById('locationNetworkPagePassword').setAttribute('required', 'false');
 				document.getElementById('locationNetworkPagePasswordCheckBox').disabled=true;
 			} else if (type == 'APPLE') {
+				document.getElementById('locationNetworkPageImapAccountLabel').disabled=true;
+				document.getElementById('locationNetworkPageImapAccount').disabled=true;
+				document.getElementById('locationNetworkPageImapAccount').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageImapFolderLabel').disabled=true;
+				document.getElementById('locationNetworkPageImapFolder').disabled=true;
+				document.getElementById('locationNetworkPageImapFolder').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageUsernameLabel').disabled=false;
+				document.getElementById('locationNetworkPageUsername').disabled=false;
+				document.getElementById('locationNetworkPageUsername').setAttribute('required', 'true');
 				document.getElementById('locationNetworkPageUriLabel').disabled=true;
 				document.getElementById('locationNetworkPageURI').disabled=true;
 				document.getElementById('locationNetworkPageURI').setAttribute('required', 'false');
@@ -118,6 +154,15 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 				document.getElementById('locationNetworkPagePassword').setAttribute('required', 'true');
 				document.getElementById('locationNetworkPagePasswordCheckBox').disabled=false;
 			} else {
+				document.getElementById('locationNetworkPageImapAccountLabel').disabled=true;
+				document.getElementById('locationNetworkPageImapAccount').disabled=true;
+				document.getElementById('locationNetworkPageImapAccount').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageImapFolderLabel').disabled=true;
+				document.getElementById('locationNetworkPageImapFolder').disabled=true;
+				document.getElementById('locationNetworkPageImapFolder').setAttribute('required', 'false');
+				document.getElementById('locationNetworkPageUsernameLabel').disabled=false;
+				document.getElementById('locationNetworkPageUsername').disabled=false;
+				document.getElementById('locationNetworkPageUsername').setAttribute('required', 'true');
 				document.getElementById('locationNetworkPageUriLabel').disabled=false;
 				document.getElementById('locationNetworkPageURI').disabled=false;
 				document.getElementById('locationNetworkPageURI').setAttribute('required', 'true');
@@ -157,7 +202,10 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 			var type = document.getElementById('locationNetworkPageType').selectedItem.value;
 			var username = document.getElementById('locationNetworkPageUsername').value;
 			var password = document.getElementById('locationNetworkPagePassword').value;
-			if (type == 'GOOGLE') {
+			if (type = 'IMAP') {
+				//TODO IMAP en construction
+				var url = cardbookImap.getUrl();
+			} else if (type == 'GOOGLE') {
 				var url = cardbookRepository.cardbookgdata.GOOGLE_API;
 			} else if (type == 'APPLE') {
 				var url = cardbookRepository.APPLE_API;
@@ -172,7 +220,19 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 
 			cardbookUtils.jsInclude(["chrome://cardbook/content/uuid.js"]);
 			var dirPrefId = new UUID() + "";
-			if (type == 'GOOGLE') {
+			if (type = 'IMAP') {
+				//TODO IMAP en construction
+				cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
+				let cardbookPrefService = new cardbookPreferenceService(dirPrefId);
+				cardbookPrefService.setId(dirPrefId);
+				cardbookPrefService.setUrl(url);
+				cardbookSynchronization.initURLValidation(dirPrefId);
+				cardbookRepository.cardbookServerSyncRequest[dirPrefId]++;
+				console.log('wdw_addressbooksAdd IMAP');
+				wdw_cardbooklog.updateStatusProgressInformation('wdw_addressbooksAdd IMAP');
+				//wdw_addressbooksAdd.waitForDiscoveryFinished(dirPrefId);
+
+			} else if (type == 'GOOGLE') {
 				cardbookSynchronization.initRefreshToken(dirPrefId);
 				cardbookRepository.cardbookServerSyncRequest[dirPrefId]++;
 				var connection = {connUser: username, connPrefId: dirPrefId, connDescription: wdw_addressbooksAdd.gValidateDescription};
@@ -342,7 +402,9 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 			var password = document.getElementById('locationNetworkPagePassword').value;
 			var name = document.getElementById('namePageName').value;
 			var color = document.getElementById('serverColorInput').value;
-			if (wdw_addressbooksAdd.gType == 'GOOGLE') {
+			if (wdw_addressbooksAdd.gType == 'IMAP') {
+				wdw_cardbooklog.updateStatusProgressInformation('gtype = IMAP');
+			} else if (wdw_addressbooksAdd.gType == 'GOOGLE') {
 				var url = cardbookRepository.cardbookgdata.GOOGLE_API;
 				wdw_addressbooksAdd.gFinishParams.push([wdw_addressbooksAdd.gTypeFile, wdw_addressbooksAdd.gFile, url, name, username, color]);
 			} else if (wdw_addressbooksAdd.gType == 'APPLE') {
@@ -376,12 +438,13 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 
 		cancelWizard: function () {
 			wdw_addressbooksAdd.gType = "";
+			console.log('TEST : cancelWizard');
 			wdw_addressbooksAdd.closeWizard();
 		},
 
 		closeWizard: function () {
 			window.arguments[0].serverCallback(wdw_addressbooksAdd.gType, wdw_addressbooksAdd.gFinishParams);
-		},
+		}
 
 	};
 

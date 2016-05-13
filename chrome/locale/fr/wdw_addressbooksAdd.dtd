@@ -22,7 +22,11 @@
 <!ENTITY locationNetworkPage.carddav.label "CardDAV">
 <!ENTITY locationNetworkPage.google.label "Google">
 <!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.imap.label "Imap">
 <!ENTITY locationNetworkPage.connection.label "Connection">
+<!ENTITY locationNetworkPage.imapAccount.label "Compte">
+<!ENTITY locationNetworkPage.imapFolder.label "Dossier IMAP">
+<!ENTITY locationNetworkPage.imapFolder.description "Pour un type Imap, séléctionnez un dossier de synchronisation.">
 <!ENTITY locationNetworkPage.uri.description "Pour un type CardDAV, entrez l'URL de votre carnet d'adresses distant. Vous pouvez utiliser une URL partielle (par exemple : http(s)://carddav.example.org). Pour un type Google, ce champ ne doit pas être rempli.">
 <!ENTITY locationNetworkPage.uri.label "URL">
 <!ENTITY locationNetworkPage.credentials.description "Entrez les identifiants de connection. Pour un type Google, l'utilisateur doit être votre email Google.">

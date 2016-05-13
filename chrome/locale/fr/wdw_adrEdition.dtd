@@ -1,7 +1,5 @@
 <!ENTITY wdw_adrEditionTitle "Modification d'Adresse">
 
-<!ENTITY adrPostOfficeLabel "Office postal">
-<!ENTITY adrExtendedAddrLabel "Appartement">
 <!ENTITY adrStreetLabel "Rue">
 <!ENTITY adrLocalityLabel "Localité">
 <!ENTITY adrRegionLabel "Région">

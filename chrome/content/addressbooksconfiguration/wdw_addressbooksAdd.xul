@@ -27,9 +27,11 @@
 	<script src="chrome://cardbook/content/wdw_log.js"/>
 	<script src="chrome://cardbook/content/cardbookPasswordManager.js"/>
 	<script src="chrome://cardbook/content/cardbookSynchronization.js"/>
+	<script src="chrome://cardbook/content/cardbookImap.js"/>
 	<script src="wdw_newGoogleToken.js"/>
 	<script src="wdw_addressbooksAdd.js"/>
 
+	<!-- premiere page local/distant -->
    <wizardpage pageid="initialPage"
 			next="locationComputerPage"
 			label="&wizard.label;"
@@ -42,14 +44,16 @@
 			<radio value="remote" label="&initialpage.network.label;"/>
 		</radiogroup>
    </wizardpage>
-
+	
+	<!-- deuxieme page carnet local -->
    <wizardpage pageid="locationComputerPage"
 			next="namePage"
 			label="&wizard.label;"
 			description="&locationComputerPage.wizard.description;"
 			onpageshow="wdw_addressbooksAdd.checkRequired();"
 			onpageadvanced="wdw_addressbooksAdd.locationComputerPageTypeAdvance();">
-
+		
+		<!-- partie haute -->
 		<groupbox flex="1">
 			<caption label="&locationComputerPage.type.label;"/>
 			<grid flex="1">
@@ -69,7 +73,8 @@
 				</rows>
 			</grid>
 		</groupbox>
-
+		
+		<!-- partie basse  -->
 		<groupbox flex="1">
 			<caption label="&locationComputerPage.uri.label;"/>
 			<grid flex="1">
@@ -91,14 +96,16 @@
 			</grid>
 		</groupbox>
    </wizardpage>
-
+	
+	<!-- deuxieme page carnet distant -->
    <wizardpage pageid="locationNetworkPage"
 			next="namePage"
 			label="&wizard.label;"
 			description="&locationNetworkPage.wizard.description;"
 			onpageshow="wdw_addressbooksAdd.checklocationNetwork();"
 			onpageadvanced="wdw_addressbooksAdd.locationNetworkPageTypeAdvance();">
-
+		
+		<!-- partie haute -->
 		<groupbox flex="1">
 			<caption label="&locationNetworkPage.type.label;"/>
 			<grid flex="1">
@@ -111,7 +118,8 @@
 					<row align="center">
 						<label value="&locationNetworkPage.type.label;"/>
 						<radiogroup id="locationNetworkPageType" onselect="wdw_addressbooksAdd.locationNetworkPageTypeSelect();">
-							<radio value="CARDDAV" label="&locationNetworkPage.carddav.label;" selected="true"/>
+							<radio value="IMAP" label="&locationNetworkPage.imap.label;"  selected="true"/>
+							<radio value="CARDDAV" label="&locationNetworkPage.carddav.label;"/>
 							<radio value="GOOGLE" label="&locationNetworkPage.google.label;"/>
 							<radio value="APPLE" label="&locationNetworkPage.apple.label;"/>
 						</radiogroup>
@@ -119,7 +127,8 @@
 				</rows>
 			</grid>
 		</groupbox>
-
+		
+		<!-- partie basse -->
 		<groupbox flex="1" id="locationNetworkPageUriGroupbox">
 			<caption label="&locationNetworkPage.connection.label;"/>
 			<grid flex="1">
@@ -129,6 +138,20 @@
 					<column/>
 				</columns>
 				<rows>
+					<description>&locationNetworkPage.imapFolder.description;</description>
+					<row align="center">
+						<label id="locationNetworkPageImapAccountLabel" value="&locationNetworkPage.imapAccount.label;"/>
+						<menulist id="locationNetworkPageImapAccount" displayformat="verbose" sizetopopup="pref" onselect="cardbookImap.searchFolders(this.selectedIndex);">
+							<menupopup id="locationNetworkPageImapAccountPopup"/>
+	                  	</menulist>
+	                </row>
+	                <row>
+						<label id="locationNetworkPageImapFolderLabel" value="&locationNetworkPage.imapFolder.label;"/>
+						<menulist id="locationNetworkPageImapFolder" displayformat="verbose" sizetopopup="pref" onselect="cardbookImap.saveSync(this.selectedIndex);">
+							<menupopup id="locationNetworkPageImapFolderPopup"/>
+	                  	</menulist>
+					</row>
+					<separator class="groove-thin"/>
 					<description>&locationNetworkPage.uri.description;</description>
 					<row align="center">
 						<label id="locationNetworkPageUriLabel" value="&locationNetworkPage.uri.label;"/>
@@ -139,7 +162,7 @@
 					<separator class="groove-thin"/>
 					<description>&locationNetworkPage.credentials.description;</description>
 					<row align="center">
-						<label value="&usernameLabel;"/>
+						<label id="locationNetworkPageUsernameLabel" value="&usernameLabel;"/>
 						<textbox id="locationNetworkPageUsername"
 							required="true"
 							oninput="wdw_addressbooksAdd.locationNetworkPageTextboxInput();"/>
@@ -158,7 +181,7 @@
 			<hbox>
 				<spacer flex="1"/>
 				<textbox id="resultValidation" flex="1" hidden="true" disabled="true"/>
-				<button id="validateButton" label="&locationNetworkPage.validatebutton.label;" oncommand="wdw_addressbooksAdd.validateURL()"/>
+				<button id="validateButton" label="&locationNetworkPage.validatebutton.label;" oncommand="wdw_addressbooksAdd.validateURL();"/>
 			</hbox>
 		</groupbox>
 	</wizardpage>

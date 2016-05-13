@@ -956,6 +956,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
 						}
 						cardbookUtils.formatStringForOutput("cardCreatedOK", [myCurrentDirPrefIdName, aModifiedCard.fn]);
+						cardbookImap.writeModification(aModifiedCard, "CREATE");
 					// Existing card
 					} else {
 						cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
@@ -986,6 +987,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
 						}
 						cardbookUtils.formatStringForOutput("cardUpdatedOK", [myCurrentDirPrefIdName, aModifiedCard.fn]);
+						cardbookImap.writeModification(aModifiedCard, "UPDATE");
 					}
 				}
 			}
@@ -1059,6 +1061,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 						cardbookRepository.removeCardFromRepository(listOfSelectedCard[i], false);
 					}
 					cardbookUtils.formatStringForOutput("cardDeletedOK", [myDirPrefIdName, listOfSelectedCard[i].fn]);
+					cardbook.writeModification(listOfSelectedCard[i], "DELETE");
 				}
 				
 				listOfFileToRewrite = cardbookRepository.arrayUnique(listOfFileToRewrite);
