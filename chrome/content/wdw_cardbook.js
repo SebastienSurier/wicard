@@ -914,21 +914,28 @@ if ("undefined" == typeof(wdw_cardbook)) {
 		saveCard: function (aCard) {
 			try {
 				if (aCard != null && aCard !== undefined && aCard != "") {
+					wdw_cardbooklog.updateStatusProgressInformation("save card if");
 					var aModifiedCard = aCard;
 				} else {
+					wdw_cardbooklog.updateStatusProgressInformation("save card else");
 					var aModifiedCard = cardbookUtils.getModifiedCard();
 				}
 				if (cardbookUtils.validateCategories(aModifiedCard)) {
-					cardbookUtils.updateRev(aModifiedCard);
+					cardbookUtils.updateRev(aModifiedCard); // maj date 
 					// New card
 					if (aModifiedCard.uid == "") {
+						wdw_cardbooklog.updateStatusProgressInformation("no uid = new card");
 						if (cardbookRepository.cardbookSearchMode === "SEARCH") {
 							cardbookUtils.formatStringForOutput("cardCreationInSearchMode");
 							return;
 						}
 						var myTree = document.getElementById('accountsOrCatsTree');
 						var myCurrentAccountId = myTree.view.getCellText(myTree.currentIndex, {id: "accountId"});
+						wdw_cardbooklog.updateStatusProgressInformation("saveCard=" + JSON.stringify(myCurrentAccountId));
+
 						var myCurrentDirPrefId = cardbookUtils.getAccountId(myCurrentAccountId);
+						wdw_cardbooklog.updateStatusProgressInformation("saveCard=" + JSON.stringify(myCurrentDirPrefId));
+
 						cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
 						var cardbookPrefService = new cardbookPreferenceService(myCurrentDirPrefId);
 						var myCurrentDirPrefIdName = cardbookPrefService.getName();
@@ -946,11 +953,17 @@ if ("undefined" == typeof(wdw_cardbook)) {
 						}
 
 						if (myCurrentDirPrefIdType === "CACHE") {
+							wdw_cardbooklog.updateStatusProgressInformation("saveCard CACHE");
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
 						} else if (myCurrentDirPrefIdType === "FILE") {
+							wdw_cardbooklog.updateStatusProgressInformation("saveCard FILE");
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW");
 							cardbookSynchronization.writeCardsToFile(myCurrentDirPrefIdUrl, cardbookRepository.cardbookDisplayCards[aModifiedCard.dirPrefId], true);
+						} else if (myCurrentDirPrefIdType === "IMAP") {
+							wdw_cardbooklog.updateStatusProgressInformation("saveCard IMAP");
+							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
 						} else {
+							wdw_cardbooklog.updateStatusProgressInformation("saveCard ELSE");
 							cardbookUtils.addTagCreated(aModifiedCard);
 							cardbookUtils.addEtag(aModifiedCard, "0");
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
@@ -1053,7 +1066,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 							cardbookRepository.removeCardFromRepository(listOfSelectedCard[i], true);
 						}
 						listOfFileToRewrite.push(listOfSelectedCard[i].dirPrefId);
-					} else if (myDirPrefIdType === "CACHE") {
+					} else if (myDirPrefIdType === "CACHE" || myDirPrefIdType === "IMAP") {
 						cardbookRepository.removeCardFromRepository(listOfSelectedCard[i], true);
 					} else {
 						cardbookUtils.addTagDeleted(listOfSelectedCard[i]);
@@ -1837,16 +1850,20 @@ if ("undefined" == typeof(wdw_cardbook)) {
 		},
 		
 		createAddressbook: function (aFinishAction, aFinishParams) {
-			if (aFinishAction === "GOOGLE" || aFinishAction === "CARDDAV" || aFinishAction === "APPLE") {
+			if (aFinishAction === "IMAP" || aFinishAction === "GOOGLE" || aFinishAction === "CARDDAV" || aFinishAction === "APPLE") {
 				wdw_cardbook.setNoSearchMode();
 				cardbookSynchronization.nullifyMultipleOperations();
 				for (var i = 0; i < aFinishParams.length; i++) {
-					var serverId = new UUID() + "";
+					if (aFinishAction === "IMAP")
+						var serverId = cardbookRepository.cardbookImapCardsId;
+					else 
+						var serverId = new UUID() + "";
 					wdw_cardbook.addAccountToWindow(serverId, aFinishParams[i][3], aFinishAction, aFinishParams[i][2], aFinishParams[i][4], aFinishParams[i][5], true, true);
 					wdw_cardbook.loadCssRules();
 					cardbookSynchronization.initSync(serverId);
 					wdw_cardbook.windowControlShowing();
 					cardbookSynchronization.syncAccount(serverId);
+					wdw_cardbooklog.updateStatusProgressInformation('createAddressbook= ' + serverId);
 				}
 			} else if (aFinishAction === "FILE") {
 				wdw_cardbook.setNoSearchMode();

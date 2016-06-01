@@ -72,6 +72,8 @@ var cardbookRepository = {
 	cardbookUncategorizedCards : "",
 	cardbookCollectedCards : "",
 	cardbookCollectedCardsId : "Collected",
+	cardbookImapCards : "",
+	cardbookImapCardsId : "ImapBook",
 	
 	cardbookMailPopularityFile : "mailPopularityIndex.txt",
 
@@ -367,7 +369,6 @@ var cardbookRepository = {
 			cacheDir.append("mediacache");
 			cacheDir.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0774);
 		}
-		
 		cardbookRepository.cardbookAccounts.push([aAccountName, true, aAccountExpanded, true, aAccountId, aAccountType, aAccountEnabled]);
 		cardbookRepository.cardbookDisplayCards[aAccountId] = [];
 		cardbookRepository.cardbookAccountsCategories[aAccountId] = [];
@@ -612,6 +613,7 @@ var cardbookRepository = {
 	},
 
 	addCardToDisplay: function(aCard) {
+		wdw_cardbooklog.updateStatusProgressInformation("addCardToDisplay=" + JSON.stringify(aCard));
 		cardbookRepository.cardbookDisplayCards[aCard.dirPrefId].push(aCard);
 		if (aCard.categories.length != 0) {
 			for (let j = 0; j < aCard.categories.length; j++) {

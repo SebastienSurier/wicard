@@ -798,6 +798,7 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 			}
 			var aListOfFileName = [];
 			aListOfFileName = cardbookSynchronization.getFilesFromDir(aDir.path);
+			wdw_cardbooklog.updateStatusProgressInformation("loadDir=" + aDir.path);
 			for (var i = 0; i < aListOfFileName.length; i++) {
 				var myFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
 				myFile.initWithPath(aDir.path);
@@ -814,6 +815,7 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 						try {
 							var myCard = new cardbookCardParser(fileContent, "", "", myDirPrefId);
 							cardbookRepository.cardbookFileRequest[myDirPrefId]++;
+							wdw_cardbooklog.updateStatusProgressInformation("loadDir=" + myFile.path);
 							cardbookSynchronization.loadFileBackground(myFile, aTarget, aDirPrefId, aMode, aCallBack);
 						}
 						catch (e) {
@@ -1713,6 +1715,17 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 								cardbookUtils.jsInclude(["chrome://cardbook/content/collected/ovl_collected.js"]);
 								ovl_collected.addAccountToCollected(cardbookRepository.cardbookCollectedCardsId);
 							}
+						} else if (myPrefType === "IMAP") {
+							cardbookRepository.cardbookDirRequest[myPrefId]++;
+							var myDir = cardbookRepository.getLocalDirectory();
+							myDir.append(cardbookRepository.cardbookImapCardsId);
+							cardbookSynchronization.loadDir(myDir, "", myPrefId, "INITIAL");
+							var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+							var emailsCollection = prefs.getComplexValue("extensions.cardbook.emailsCollection", Components.interfaces.nsISupportsString).data;
+							if (emailsCollection == "init") {
+								cardbookUtils.jsInclude(["chrome://cardbook/content/collected/ovl_collected.js"]);
+								ovl_collected.addAccountToCollected(cardbookRepository.cardbookImapCardsId);
+							}
 						}
 						cardbookSynchronization.waitForSyncFinished(myPrefId, myPrefName);
 					}
@@ -1721,8 +1734,13 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 				var emailsCollection = prefs.getComplexValue("extensions.cardbook.emailsCollection", Components.interfaces.nsISupportsString).data;
 				if (emailsCollection == "init") {
 					cardbookUtils.jsInclude(["chrome://cardbook/content/uuid.js", "chrome://cardbook/content/collected/ovl_collected.js"]);
-					ovl_collected.addCollectedAccount();
-					ovl_collected.loadCollectedAccount();
+					if (myPrefType === "IMAP") {
+						ovl_collected.addImapAccount();
+						ovl_collected.loadImapAccount();
+					} else {
+						ovl_collected.addCollectedAccount();
+						ovl_collected.loadCollectedAccount();
+					}
 				}
 			}
 			
@@ -1784,11 +1802,15 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 										cardbookRepository.removeCardFromRepository(myOldCard, true);
 									}
 									if (myPrefIdType === "CACHE") {
+										wdw_cardbooklog.updateStatusProgressInformation("synchro=" + aFile.leafName);
 										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
 									} else if (myPrefIdType === "FILE") {
 										myCard.cardurl = "";
 										cardbookRepository.addCardToRepository(myCard, aMode);
+									} else if (myPrefIdType === "IMAP") {
+										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
 									}
+
 								} else {
 									cardbookSynchronization.importCard(myCard, aTarget);
 									delete myCard;
@@ -1985,7 +2007,7 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 		writeCardsToFile: function (aFileName, aListofCard, aMediaConversion) {
 			try {
 				var output = cardbookUtils.getDataForUpdatingFile(aListofCard, aMediaConversion);
-
+				wdw_cardbooklog.updateStatusProgressInformation("writeCardsToFile=" + aFileName);
 				cardbookSynchronization.writeContentToFile(aFileName, output, "UTF8");
 			}
 			catch (e) {

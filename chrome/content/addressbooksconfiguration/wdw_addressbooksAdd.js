@@ -228,6 +228,10 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 				cardbookPrefService.setUrl(url);
 				cardbookSynchronization.initURLValidation(dirPrefId);
 				cardbookRepository.cardbookServerSyncRequest[dirPrefId]++;
+				document.getElementById('resultValidation').value = strBundle.GetStringFromName("ValidationOKLabel");
+				wdw_addressbooksAdd.gValidateURL = true;
+				document.getElementById('addressbook-wizard').canAdvance = true;
+								
 				console.log('wdw_addressbooksAdd IMAP');
 				wdw_cardbooklog.updateStatusProgressInformation('wdw_addressbooksAdd IMAP');
 				//wdw_addressbooksAdd.waitForDiscoveryFinished(dirPrefId);
@@ -403,7 +407,8 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 			var name = document.getElementById('namePageName').value;
 			var color = document.getElementById('serverColorInput').value;
 			if (wdw_addressbooksAdd.gType == 'IMAP') {
-				wdw_cardbooklog.updateStatusProgressInformation('gtype = IMAP');
+				var url = cardbookImap.getUrl();
+				wdw_addressbooksAdd.gFinishParams.push([wdw_addressbooksAdd.gTypeFile, wdw_addressbooksAdd.gFile, url, name, username, color]);
 			} else if (wdw_addressbooksAdd.gType == 'GOOGLE') {
 				var url = cardbookRepository.cardbookgdata.GOOGLE_API;
 				wdw_addressbooksAdd.gFinishParams.push([wdw_addressbooksAdd.gTypeFile, wdw_addressbooksAdd.gFile, url, name, username, color]);
@@ -443,6 +448,7 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 		},
 
 		closeWizard: function () {
+			// addAddressbook in wdw_cardbook.js
 			window.arguments[0].serverCallback(wdw_addressbooksAdd.gType, wdw_addressbooksAdd.gFinishParams);
 		}
 

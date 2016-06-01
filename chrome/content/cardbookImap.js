@@ -15,11 +15,11 @@ if ("undefined" == typeof(cardbookImap)) {
 					console.log(' detection CREATE');
 					wdw_cardbooklog.updateStatusProgressInformation('detection CREATE');
 					break;
-					case "UPDATE":
+				case "UPDATE":
 					console.log('detection UPDATE');
 					wdw_cardbooklog.updateStatusProgressInformation('detection UPDATE');
 					break;
-					case "DELETE":
+				case "DELETE":
 					console.log('detection DELETE');
 					wdw_cardbooklog.updateStatusProgressInformation('detection DELETE');
 					break;
@@ -159,16 +159,21 @@ if ("undefined" == typeof(cardbookImap)) {
 		saveSync: function(index) {
 			cardbookImap.syncFolder = cardbookImap.imapFolders[index];
 			wdw_cardbooklog.updateStatusProgressInformation("saveSync = " + cardbookImap.syncFolder + " - " + cardbookImap.syncAccount);
-			document.getElementById('validateButton').disabled = false;
+			var cacheDir = cardbookRepository.getLocalDirectory();
+			wdw_cardbooklog.updateStatusProgressInformation("cacheDir = " + cacheDir);
+			//document.getElementById('validateButton').disabled = false;
+			wdw_addressbooksAdd.checklocationNetwork();
 			wdw_cardbooklog.updateStatusProgressInformation('createMsg 0');
 			//var cache = window.caches;
-			//cache.setItem('syncFolder', JSON.stringify(cardbookImap.syncFolder));
-			wdw_cardbooklog.updateStatusProgressInformation(JSON.stringify(cardbookImap.syncFolder.folderURL));
+			//localStorage.setItem('syncFolder', JSON.stringify(cardbookImap.syncFolder));
+			//wdw_cardbooklog.updateStatusProgressInformation(JSON.stringify(cardbookImap.syncFolder.folderURL));
+			//cardbookImap.writeFile(JSON.stringify(cardbookImap.syncFolder.folderURL));
+			//cardbookImap.reaeFile();
 			//cardbookImap.createMsg();
 		},
 
 		// creer notre message 
-		createMsg: function () {
+		createMsg: function () { 
 			Components.utils.import("resource:///modules/mailServices.js");
 			wdw_cardbooklog.updateStatusProgressInformation('createMsg 1' + cardbookImap.syncFolder.username);
 			var params = Components.classes["@mozilla.org/messengercompose/composeparams;1"].createInstance(Components.interfaces.nsIMsgComposeParams);

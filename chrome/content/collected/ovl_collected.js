@@ -54,6 +54,23 @@ if ("undefined" == typeof(ovl_collected)) {
 				 }
 			}
 		},
+
+		loadImapAccount: function () {
+			Components.utils.import("resource:///modules/jsmime.jsm");
+			var contactManager = Components.classes["@mozilla.org/abmanager;1"].getService(Components.interfaces.nsIAbManager);
+			var contacts = contactManager.directories;
+			while ( contacts.hasMoreElements() ) {
+				var contact = contacts.getNext().QueryInterface(Components.interfaces.nsIAbDirectory);
+				 if (contact.dirPrefId == "ldap_2.servers.history") {
+					var abCardsEnumerator = contact.childCards;
+					while (abCardsEnumerator.hasMoreElements()) {
+						var abCard = abCardsEnumerator.getNext();
+						abCard = abCard.QueryInterface(Components.interfaces.nsIAbCard);
+						ovl_collected.addCardFromEmail(cardbookRepository.cardbookImapCardsId, jsmime.headerparser.decodeRFC2047Words(abCard.getProperty("DisplayName","")) + " <" + abCard.getProperty("PrimaryEmail","") + ">");
+					}
+				 }
+			}
+		},
 				
 		removeAccountFromCollected: function (aDirPrefId) {
 			var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
@@ -101,6 +118,26 @@ if ("undefined" == typeof(ovl_collected)) {
 			
 			ovl_collected.addAccountToCollected(cardbookRepository.cardbookCollectedCardsId);
 			cardbookRepository.addAccountToRepository(cardbookRepository.cardbookCollectedCardsId, cardbookRepository.cardbookCollectedCards, "CACHE", true, true);
+			cardbookMailPopularity.removeMailPopularity();
+		},
+
+		addImapAccount: function() {
+			var cacheDir = cardbookRepository.getLocalDirectory();
+			cacheDir.append(cardbookRepository.cardbookImapCardsId);
+	
+			cardbookRepository.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
+			let cardbookPrefService = new cardbookPreferenceService(cardbookRepository.cardbookImapCardsId);
+			cardbookPrefService.setId(cardbookRepository.cardbookImapCardsId);
+			cardbookPrefService.setName(cardbookRepository.cardbookImapCards);
+			cardbookPrefService.setType("IMAP");
+			cardbookPrefService.setUrl(cacheDir.path);
+			cardbookPrefService.setUser("");
+			cardbookPrefService.setColor("#A8C2E1");
+			cardbookPrefService.setEnabled(true);
+			cardbookPrefService.setExpanded(true);
+			
+			ovl_collected.addAccountToCollected(cardbookRepository.cardbookImapCardsId);
+			cardbookRepository.addAccountToRepository(cardbookRepository.cardbookImapCardsId, cardbookRepository.cardbookImapCards, "IMAP", true, true);
 			cardbookMailPopularity.removeMailPopularity();
 		}
 		
