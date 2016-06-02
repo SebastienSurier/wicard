@@ -22,7 +22,11 @@
 <!ENTITY locationNetworkPage.carddav.label "CardDAV">
 <!ENTITY locationNetworkPage.google.label "Google">
 <!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.imap.label "Imap">
 <!ENTITY locationNetworkPage.connection.label "Verbindung">
+<!ENTITY locationNetworkPage.imapAccount.label "Compte">
+<!ENTITY locationNetworkPage.imapFolder.label "Dossier IMAP">
+<!ENTITY locationNetworkPage.imapFolder.description "Pour un type Imap, séléctionnez un dossier de synchronisation.">
 <!ENTITY locationNetworkPage.uri.description "Adresse für das CardDAV-Adressbuch. Sie können versuchen, Teil-URLs anzugeben (z.B. http(s)://carddav.example.org). Für Google-Adressbücher muss keine URL angegeben werden.">
 <!ENTITY locationNetworkPage.uri.label "URL">
 <!ENTITY locationNetworkPage.credentials.description "Zugangsdaten für das Adressbuch. Für Google-Adressbücher sollte der Benutzername der Email-Adresse entsprechen.">

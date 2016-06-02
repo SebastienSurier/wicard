@@ -22,7 +22,11 @@
 <!ENTITY locationNetworkPage.carddav.label "CardDAV">
 <!ENTITY locationNetworkPage.google.label "Google">
 <!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.imap.label "Imap">
 <!ENTITY locationNetworkPage.connection.label "Ligação">
+<!ENTITY locationNetworkPage.imapAccount.label "Compte">
+<!ENTITY locationNetworkPage.imapFolder.label "Dossier IMAP">
+<!ENTITY locationNetworkPage.imapFolder.description "Pour un type Imap, séléctionnez un dossier de synchronisation.">
 <!ENTITY locationNetworkPage.uri.description "Para CardDAV, insira o URL da agenda remota. Deve tentar usar um URL deste tipo (ex: http(s)://carddav.example.org). Para agenda do Google, não coloque nada neste campo.">
 <!ENTITY locationNetworkPage.uri.label "URL">
 <!ENTITY locationNetworkPage.credentials.description "Coloque as credenciais de acesso à agenda. Para a agenda da Google, o username deverá ser o seu email Google.">
