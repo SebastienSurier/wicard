@@ -468,7 +468,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			try {
 				var aListOfCards = [];
 				aListOfCards.push(card);
-				wdw_cardbook.deleteCards(aListOfCards, "FROMIMAP");
+				wdw_cardbook.deleteCards(aListOfCards);
 			} catch (e) {
 				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.deleteCard error : " + e);
 			}
