@@ -781,6 +781,33 @@ if ("undefined" == typeof(cardbookUtils)) {
 			return false;
 		},
 
+		searchTagUpdated: function(aCard) {
+			for (var i = 0; i < aCard.others.length; i++) {
+				if (aCard.others[i].indexOf("X-THUNDERBIRD-MODIFICATION:UPDATED") >= 0) {
+					return true;
+				}
+			}
+			return false;
+		},
+
+		searchTagDeleted: function(aCard) {
+			for (var i = 0; i < aCard.others.length; i++) {
+				if (aCard.others[i].indexOf("X-THUNDERBIRD-MODIFICATION:DELETED") >= 0) {
+					return true;
+				}
+			}
+			return false;
+		},
+
+		searchTagFromImapSync: function(aCard) {
+			for (var i = 0; i < aCard.others.length; i++) {
+				if (aCard.others[i].indexOf("X-THUNDERBIRD-MODIFICATION:FROMIMAPSYNC") >= 0) {
+					return true;
+				}
+			}
+			return false;
+		},
+
 		addTagCreated: function(aCard) {
 			cardbookUtils.nullifyTagModification(aCard);
 			aCard.others.push("X-THUNDERBIRD-MODIFICATION:CREATED");
@@ -794,6 +821,11 @@ if ("undefined" == typeof(cardbookUtils)) {
 		addTagDeleted: function(aCard) {
 			cardbookUtils.nullifyTagModification(aCard);
 			aCard.others.push("X-THUNDERBIRD-MODIFICATION:DELETED");
+		},
+
+		addTagFromImapSync: function(aCard) {
+			cardbookUtils.nullifyTagModification(aCard);
+			aCard.others.push("X-THUNDERBIRD-MODIFICATION:FROMIMAPSYNC");
 		},
 
 		nullifyTagModification: function(aCard) {

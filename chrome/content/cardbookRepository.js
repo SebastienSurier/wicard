@@ -613,7 +613,6 @@ var cardbookRepository = {
 	},
 
 	addCardToDisplay: function(aCard) {
-		wdw_cardbooklog.updateStatusProgressInformation("addCardToDisplay=" + JSON.stringify(aCard));
 		cardbookRepository.cardbookDisplayCards[aCard.dirPrefId].push(aCard);
 		if (aCard.categories.length != 0) {
 			for (let j = 0; j < aCard.categories.length; j++) {

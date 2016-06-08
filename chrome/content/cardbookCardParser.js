@@ -26,6 +26,7 @@ cardbookCardParser.prototype = {
 		this.updated = false;
 		this.deleted = false;
 		this.created = false;
+		this.fromImapSync = false;
 
 		this.lastname = "";
 		this.firstname = "";
@@ -459,6 +460,9 @@ cardbookCardParser.prototype = {
 									break;
 								case "DELETED":
 									this.deleted = true;
+									break;
+								case "FROMIMAPSYNC":
+									this.fromImapSync = true;
 									break;
 								default:
 									break;

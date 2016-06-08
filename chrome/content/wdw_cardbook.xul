@@ -31,6 +31,7 @@
 			src="chrome://cardbook/locale/cardbook.properties"/>
 	</stringbundleset>
 	
+	<script src="cardbookImap.js"/>
 	<script src="ovl_cardbook.js"/>
 	<script src="wdw_cardbook.js"/>
 	<script src="cardbookSynchronization.js"/>
@@ -39,7 +40,7 @@
 	<script src="cardbookCardParser.js"/>
 	<script src="cardbookDirTree.js"/>
 	<script src="uuid.js"/>
-	<script src="cardbookImap.js"/>
+	
 
 	<toolbox id="cardbook-toolbox">
 		<menubar id="cardbook-menubar">
@@ -811,7 +812,6 @@
 							</tabpanel>
 							<!-- panel VCard -->
 							<tabpanel orient="vertical">
-								<button flex="1" label="Création de la VCard imap" oncommand="cardbookImap.test();"/>
 								<textbox id="vcardTextBox" flex="1" multiline="true" wrap="virtual" readonly="true"/>
 							</tabpanel>
 						</tabpanels>
