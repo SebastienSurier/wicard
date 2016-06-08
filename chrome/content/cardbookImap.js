@@ -192,6 +192,10 @@ if ("undefined" == typeof(cardbookImap)) {
 			wdw_cardbooklog.updateStatusProgressInformation('displayFolders');
 		}, 
 
+		getUrl: function() {
+			 return cardbookImap.syncImapFolder.folderURL;
+		},
+
 		// enregistre dans l'objet le compte et le dossier selctionnés
 		saveSync: function(index) {
 			cardbookImap.syncImapFolder = cardbookImap.imapFolders[index];
