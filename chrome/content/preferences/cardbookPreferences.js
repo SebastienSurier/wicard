@@ -348,6 +348,15 @@ cardbookPreferenceService.prototype = {
         this._setBoolPref("expanded", expanded);
     },
 
+    getLastImapSync: function () {
+    	let lastImapSync = this._getPref("lastImapSync");
+        return lastImapSync;
+    }, 
+
+    setLastImapSync: function (lastImapSync) {
+        this._setPref("lastImapSync", lastImapSync);
+    },
+
    getColor: function () {
         let color = this._getPref("color");
         if (color != null && color !== undefined && color != "") {

@@ -796,9 +796,9 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 			} else {
 				var myDirPrefId = cardbookUtils.getAccountId(aTarget);
 			}
+			wdw_cardbooklog.updateStatusProgressInformation('LOADDIR=' + aDir + " - " + aDir.path); 
 			var aListOfFileName = [];
 			aListOfFileName = cardbookSynchronization.getFilesFromDir(aDir.path);
-			wdw_cardbooklog.updateStatusProgressInformation("loadDir=" + aDir.path);
 			for (var i = 0; i < aListOfFileName.length; i++) {
 				var myFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
 				myFile.initWithPath(aDir.path);
@@ -815,8 +815,8 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 						try {
 							var myCard = new cardbookCardParser(fileContent, "", "", myDirPrefId);
 							cardbookRepository.cardbookFileRequest[myDirPrefId]++;
-							wdw_cardbooklog.updateStatusProgressInformation("loadDir=" + myFile.path);
 							cardbookSynchronization.loadFileBackground(myFile, aTarget, aDirPrefId, aMode, aCallBack);
+
 						}
 						catch (e) {
 							var consoleService = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
@@ -1802,7 +1802,6 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 										cardbookRepository.removeCardFromRepository(myOldCard, true);
 									}
 									if (myPrefIdType === "CACHE") {
-										wdw_cardbooklog.updateStatusProgressInformation("synchro=" + aFile.leafName);
 										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
 									} else if (myPrefIdType === "FILE") {
 										myCard.cardurl = "";
