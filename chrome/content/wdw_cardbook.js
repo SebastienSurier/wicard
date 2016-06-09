@@ -154,17 +154,9 @@ if ("undefined" == typeof(wdw_cardbook)) {
 				var myTree = document.getElementById('accountsOrCatsTree');
 				var myPrefId = cardbookUtils.getAccountId(myTree.view.getCellText(myTree.currentIndex, {id: "accountId"}));
 				var myPrefName = cardbookUtils.getPrefNameFromPrefId(myPrefId);
-				if (myPrefId === cardbookRepository.cardbookImapCardsId) {
-					wdw_cardbooklog.updateStatusProgressInformation('syncAccountFromAccountsOrCats 1');
-					cardbookImap.syncAccount();
-					wdw_cardbooklog.updateStatusProgressInformation('syncAccountFromAccountsOrCats 2');
-				} else {
-					cardbookSynchronization.initSync(myPrefId);
-					wdw_cardbook.windowControlShowing();
-					cardbookSynchronization.syncAccount(myPrefId);
-					wdw_cardbooklog.updateStatusProgressInformation('else');
-				}
-				
+				cardbookSynchronization.initSync(myPrefId);
+				wdw_cardbook.windowControlShowing();
+				cardbookSynchronization.syncAccount(myPrefId);
 			}
 			catch (e) {
 				wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.syncAccountFromAccountsOrCats error : " + e);
@@ -1991,6 +1983,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 				}
 			}
 			wdw_cardbook.refreshAccountsInDirTree();
+			wdw_cardbooklog.updateStatusProgressInformation("4");
 		},
 
 		enableOrDisableAddressbook: function (aDirPrefId, aValue) {

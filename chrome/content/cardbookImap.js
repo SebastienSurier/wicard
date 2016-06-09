@@ -223,7 +223,7 @@ if ("undefined" == typeof(cardbookImap)) {
 
 			wdw_cardbooklog.updateStatusProgressInformation("messageId = " + composeFields.messageId);
 			  
-			var attachment = Components.classes["@mozilla.org/messengercompose/attachment;1"].createInstance(Components.interfaces.nsIMsgAttachment);
+			//var attachment = Components.classes["@mozilla.org/messengercompose/attachment;1"].createInstance(Components.interfaces.nsIMsgAttachment);
 			//attachment.url = "Users/Seb/Desktop/C7177945-3070-0001-3FA5-11EACA901E4A.vcf";
 			//attachment.url = path + uidCard+".vcf";
 
@@ -242,30 +242,28 @@ if ("undefined" == typeof(cardbookImap)) {
 			msgInit.SendMsg(Components.interfaces.nsIMsgCompDeliverMode.SaveAsDraft, identity.defaultIdentity, identity.key, null, null);
 			wdw_cardbooklog.updateStatusProgressInformation('createMsg');
 			lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); //TYPE_REPEATING_SLACK
 		},
 
 		// deplace le message du draft vers notre repertoire selectionné
 		moveMsgToFolder: function() {
 			// msg, srcFolder /*draft*/
-			
-			var msg = cardbookImap.draftFolder.messages;
-			while (msg.hasMoreElements()) {
-				
-				var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
-				var tab = unMsg.subject.split(" : ");
-				if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
-					wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg pour la synchro = ' + unMsg.subject);
-					var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
-					messages.appendElement(unMsg, false);
-				    // move the message
-				    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
-				} else {
-					wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
+				var msg = cardbookImap.draftFolder.messages;
+				while (msg.hasMoreElements()) {
+					
+					var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
+					var tab = unMsg.subject.split(" : ");
+					if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
+						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg pour la synchro = ' + unMsg.subject);
+						var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
+						messages.appendElement(unMsg, false);
+					    // move the message
+					    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
+					} else {
+						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
+					}
+					wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 2');
 				}
-				wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 2');
-			}
-			
 		},    
 
 		getMsgBody: function(aMessageHeader)  {  
@@ -342,7 +340,7 @@ if ("undefined" == typeof(cardbookImap)) {
 
 						wdw_cardbooklog.updateStatusProgressInformation('Avant' + cacheDir.path);
 						cardbookImap.readModification(cardMsg);
-						cardbookImap.removeTmpDir(tmpPath);
+						//cardbookImap.removeTmpDir(tmpPath);
 					}
 					
 					
