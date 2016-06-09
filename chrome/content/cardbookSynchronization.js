@@ -1591,8 +1591,11 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 							var connection = {connPrefId: aPrefId, connPrefIdType: myPrefIdType, connUrl: myPrefIdUrl, connDescription: myPrefIdName};
 							cardbookSynchronization.discoverPhase1(connection, "SYNCSERVER", params);
 						}
-						cardbookSynchronization.waitForSyncFinished(aPrefId, myPrefIdName);
+					} else if (myPrefIdType === "IMAP") {
+						wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.syncAccount : Sync Imap");
+						cardbookImap.syncAccount();
 					}
+					cardbookSynchronization.waitForSyncFinished(aPrefId, myPrefIdName);
 				}
 			}
 			catch (e) {
