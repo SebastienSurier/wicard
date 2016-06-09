@@ -221,9 +221,9 @@ if ("undefined" == typeof(cardbookImap)) {
   			composeFields.subject = objet + " card : Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name;
 			composeFields.body = JSON.stringify(card);
 
-			wdw_cardbooklog.updateStatusProgressInformation("messageId = " + composeFields.messageId);
+			wdw_cardbooklog.updateStatusProgressInformation("TEST" +JSON.stringify(card) +"messageId = " + composeFields.body);
 			  
-			var attachment = Components.classes["@mozilla.org/messengercompose/attachment;1"].createInstance(Components.interfaces.nsIMsgAttachment);
+			//var attachment = Components.classes["@mozilla.org/messengercompose/attachment;1"].createInstance(Components.interfaces.nsIMsgAttachment);
 			//attachment.url = "Users/Seb/Desktop/C7177945-3070-0001-3FA5-11EACA901E4A.vcf";
 			//attachment.url = path + uidCard+".vcf";
 
@@ -275,6 +275,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			messenger.messageServiceFromURI(uri).streamMessage(uri, listener, null, null, false, "");  
 			var folder = aMessageHeader.folder;  
 			var txt = folder.getMsgTextFromStream(listener.inputStream, aMessageHeader.Charset, 65536, 32768, false, true, { });  
+			wdw_cardbooklog.updateStatusProgressInformation("getMsgBody = " + txt);
 			var tab = txt.split("\\r\\n");
 			var texte = "";
 			for (var i = 0; i < tab.length; i++) {
@@ -342,7 +343,7 @@ if ("undefined" == typeof(cardbookImap)) {
 
 						wdw_cardbooklog.updateStatusProgressInformation('Avant' + cacheDir.path);
 						cardbookImap.readModification(cardMsg);
-						cardbookImap.removeTmpDir(tmpPath);
+						//cardbookImap.removeTmpDir(tmpPath);
 					}
 					
 					
