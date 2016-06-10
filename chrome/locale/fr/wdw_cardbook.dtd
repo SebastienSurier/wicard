@@ -164,6 +164,7 @@
 <!ENTITY importCardFromFileFromAccountsOrCatsLabel "Importer des contacts depuis un fichier">
 <!ENTITY importCardFromDirFromAccountsOrCatsLabel "Importer des contacts depuis un répertoire">
 <!ENTITY removeCatFromAccountsOrCatsLabel "Supprimer la catégorie">
+<!ENTITY rebuildFromAccountsOrCatsLabel "Reconstruire le carnet d'adresses">
 <!ENTITY enableOrDisableFromAccountsOrCatsLabel "Activer le carnet d'adresses">
 <!ENTITY mergeCardsFromCardsLabel "Fusionner les contacts">
 <!ENTITY deleteCardFromCardsLabel "Supprimer le contact">

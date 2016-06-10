@@ -22,7 +22,11 @@
 <!ENTITY locationNetworkPage.carddav.label "CardDAV">
 <!ENTITY locationNetworkPage.google.label "Google">
 <!ENTITY locationNetworkPage.apple.label "Apple">
+<!ENTITY locationNetworkPage.imap.label "Imap">
 <!ENTITY locationNetworkPage.connection.label "Connection">
+<!ENTITY locationNetworkPage.imapAccount.label "Compte">
+<!ENTITY locationNetworkPage.imapFolder.label "Dossier IMAP">
+<!ENTITY locationNetworkPage.imapFolder.description "Pour un type Imap, séléctionnez un dossier de synchronisation.">
 <!ENTITY locationNetworkPage.uri.description "For a CardDAV type, enter the URL of your remote address book. You may try to use a partial URL (example : http(s)://carddav.example.org). For a Google address book, don't specify this field.">
 <!ENTITY locationNetworkPage.uri.label "URL">
 <!ENTITY locationNetworkPage.credentials.description "Enter the credentials for accessing your address book. For a Google address book, the username should be your Google email.">
