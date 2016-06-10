@@ -205,6 +205,7 @@
 		<menuseparator/>
 		<menuitem id="removeCatFromAccountsOrCats" label="&removeCatFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.removeCategory();"/>
 		<menuseparator/>
+		<menuitem id="rebuildFromAccountsOrCats" label="&rebuildFromAccountsOrCatsLabel;" oncommand="cardbookImap.rebuildAddressbook();"/>
 		<menuitem id="enableOrDisableFromAccountsOrCats" label="&enableOrDisableFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.enableOrDisableAddressbook();"/>
 		<menuseparator/>
 		<menuitem id="editAccountFromAccountsOrCats" label="&editAccountFromAccountsOrCatsLabel;" oncommand="wdw_cardbook.editAddressbook();"/>
