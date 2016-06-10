@@ -796,7 +796,6 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 			} else {
 				var myDirPrefId = cardbookUtils.getAccountId(aTarget);
 			}
-			wdw_cardbooklog.updateStatusProgressInformation('LOADDIR=' + aDir + " - " + aDir.path); 
 			var aListOfFileName = [];
 			aListOfFileName = cardbookSynchronization.getFilesFromDir(aDir.path);
 			for (var i = 0; i < aListOfFileName.length; i++) {
@@ -1591,8 +1590,11 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 							var connection = {connPrefId: aPrefId, connPrefIdType: myPrefIdType, connUrl: myPrefIdUrl, connDescription: myPrefIdName};
 							cardbookSynchronization.discoverPhase1(connection, "SYNCSERVER", params);
 						}
-						cardbookSynchronization.waitForSyncFinished(aPrefId, myPrefIdName);
+					} else if (myPrefIdType === "IMAP") {
+						wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.syncAccount : Sync Imap");
+						cardbookImap.syncAccount(null, false);
 					}
+					cardbookSynchronization.waitForSyncFinished(aPrefId, myPrefIdName);
 				}
 			}
 			catch (e) {
@@ -1807,6 +1809,8 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 										myCard.cardurl = "";
 										cardbookRepository.addCardToRepository(myCard, aMode);
 									} else if (myPrefIdType === "IMAP") {
+										// cardbookUtils.jsInclude(["chrome://cardbook/content/cardbookImap.js"]);
+										// cardbookImap.writeModification(myCard, "CREATE");
 										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
 									}
 

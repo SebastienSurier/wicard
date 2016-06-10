@@ -241,12 +241,7 @@ if ("undefined" == typeof(wdw_mergeCards)) {
 		},
 		
 		isValueNew: function (aListOfValue) {
-			var length1 = aListOfValue.length;
-			var length2 = cardbookRepository.arrayUnique(aListOfValue).length;
-			if (length1 != length2) {
-				return false;
-			}
-			return true;
+			return (aListOfValue.length === cardbookRepository.arrayUnique(aListOfValue).length);
 		},
 
 		load: function () {
