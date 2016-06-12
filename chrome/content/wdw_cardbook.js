@@ -1006,7 +1006,8 @@ if ("undefined" == typeof(wdw_cardbook)) {
 
 							// if aCard and aModifiedCard have the same cached medias
 							cardbookUtils.changeMediaFromFileToContent(aModifiedCard);
-							wdw_cardbook.removeCardFromWindow(myOldCard, true);
+							if (myOldCard !== undefined)
+								wdw_cardbook.removeCardFromWindow(myOldCard, true);
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
 							
 						} else {
@@ -1212,6 +1213,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 
 		importCardsFromFile: function () {
 			try {
+				cardbookImap.test();
 				var myTree = document.getElementById('accountsOrCatsTree');
 				var myTarget = myTree.view.getCellText(myTree.currentIndex, {id: "accountId"});
 				cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
@@ -1892,8 +1894,8 @@ if ("undefined" == typeof(wdw_cardbook)) {
 					wdw_cardbook.loadCssRules();
 					cardbookSynchronization.initSync(serverId);
 					wdw_cardbook.windowControlShowing();
+					cardbookImap.rebuildAddressbook();
 					cardbookSynchronization.syncAccount(serverId);
-					wdw_cardbooklog.updateStatusProgressInformation('createAddressbook= ' + serverId);
 				}
 			} else if (aFinishAction === "FILE") {
 				wdw_cardbook.setNoSearchMode();
