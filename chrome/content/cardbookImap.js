@@ -15,39 +15,6 @@ if ("undefined" == typeof(cardbookImap)) {
 		/** BEGIN : Use to add addressbook Imap **/
 		/*****************************************/
 
-		loadSyncData: function(url) {
-			wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.loadSyncData');
-			cardbookImap.getAccounts();
-			for (var i = 0; i < cardbookImap.imapAccounts.length; i++) {
-				var acctMgr = Components.classes["@mozilla.org/messenger/account-manager;1"]
-                        .getService(Components.interfaces.nsIMsgAccountManager);
-            	var accounts = acctMgr.accounts;
-	            if (accounts.queryElementAt) {
-				  // Gecko 17+
-					for (var j = 0; j < accounts.length; j++) {
-					    var account = accounts.queryElementAt(j, Components.interfaces.nsIMsgAccount);
-					    if (account.incomingServer.localStoreType === "imap") {
-					    	var rootFolder = account.incomingServer.rootFolder; 
-							if (rootFolder.hasSubFolders) {
-								var subFolders = rootFolder.subFolders; 
-								while(subFolders.hasMoreElements()) {
-									var folder = subFolders.getNext().QueryInterface(Components.interfaces.nsIMsgFolder);
-									if (folder.getFlag(0x00000400)) {
-										cardbookImap.draftFolder = folder;
-									}
-									if ((folder.folderURL+"/") === url) {
-										cardbookImap.syncImapFolder = folder;
-										cardbookImap.syncImapAccount = cardbookImap.imapAccounts[i];
-
-									}
-								}
-							}
-						}
-					}
-				}
-			} 
-		},
-
 		// rempli le tableau 'imapAccounts' avec les comptes trouvés
 		getAccounts: function() {
 			cardbookImap.imapAccounts = [];
@@ -90,22 +57,32 @@ if ("undefined" == typeof(cardbookImap)) {
 				    var account = accounts.queryElementAt(i, Components.interfaces.nsIMsgAccount);
 				    if (account.incomingServer.localStoreType === "imap" && account.incomingServer.username === cardbookImap.imapAccounts[accountIndex].incomingServer.username) {
 				    	var rootFolder = account.incomingServer.rootFolder; 
-						if (rootFolder.hasSubFolders) {
-							var subFolders = rootFolder.subFolders; 
-							while(subFolders.hasMoreElements()) {
-								var folder = subFolders.getNext().QueryInterface(Components.interfaces.nsIMsgFolder);
-								cardbookImap.imapFolders.push(folder);
-								if (folder.getFlag(0x00000400)) {
-									cardbookImap.draftFolder = folder;
-								}
-							}
-						}
+				    	cardbookImap.exploreFolder(rootFolder, null, i);
+
 				    }
 				}
 			} else {
 				wdw_cardbooklog.updateStatusProgressInformation('ERROR : Gecko < 17');
 			}
 			cardbookImap.displayFolders();
+		},
+
+		exploreFolder(rootFolder, url, i) {
+			if (rootFolder.hasSubFolders) {
+				var subFolders = rootFolder.subFolders; 
+				while(subFolders.hasMoreElements()) {
+					var folder = subFolders.getNext().QueryInterface(Components.interfaces.nsIMsgFolder);
+					cardbookImap.exploreFolder(folder, url, i);
+					cardbookImap.imapFolders.push(folder);
+					if (folder.getFlag(0x00000400)) {
+						cardbookImap.draftFolder = folder;
+					}
+					if (url !== null && (folder.folderURL+"/") === url) {
+						cardbookImap.syncImapFolder = folder;
+						cardbookImap.syncImapAccount = cardbookImap.imapAccounts[i];
+					}
+				}
+			}
 		},
 
 		// modifie le xul pour afficher la liste des comptes 
@@ -169,7 +146,25 @@ if ("undefined" == typeof(cardbookImap)) {
 		/** END : Use to add addressbook Imap **/
 		/***************************************/
 
-
+		loadSyncData: function(url) {
+					wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.loadSyncData');
+					cardbookImap.getAccounts();
+					for (var i = 0; i < cardbookImap.imapAccounts.length; i++) {
+						var acctMgr = Components.classes["@mozilla.org/messenger/account-manager;1"]
+		                        .getService(Components.interfaces.nsIMsgAccountManager);
+		            	var accounts = acctMgr.accounts;
+			            if (accounts.queryElementAt) {
+						  // Gecko 17+
+							for (var j = 0; j < accounts.length; j++) {
+							    var account = accounts.queryElementAt(j, Components.interfaces.nsIMsgAccount);
+							    if (account.incomingServer.localStoreType === "imap") {
+							    	var rootFolder = account.incomingServer.rootFolder; 
+									cardbookImap.exploreFolder(rootFolder, url, i);
+								}
+							}
+						}
+					} 
+				},
 
 
 		/***********************************/
@@ -186,6 +181,8 @@ if ("undefined" == typeof(cardbookImap)) {
 			cardbookImap.loadSyncData(dirPrefIdUrl);
 			var cacheDir = cardbookRepository.getLocalDirectory();
 			cacheDir.append(aCard.dirPrefId);
+
+			aCard.photo = {types: [], value: "", localURI: "", URI: "", extension: ""};
 
 			var card = cardbookUtils.cardToVcardData(aCard, true);
 			wdw_cardbooklog.updateStatusProgressInformation(JSON.stringify(aCard));
@@ -221,7 +218,7 @@ if ("undefined" == typeof(cardbookImap)) {
 
 		// creer notre message et l'envoie dans le brouillon
 		createMsg: function(objet, path, uidCard, card) { 
-			wdw_cardbooklog.updateStatusProgressInformation("createMsg");
+			wdw_cardbooklog.updateStatusProgressInformation("createMsg" + JSON.stringify(card));
 
 			Components.utils.import("resource:///modules/mailServices.js");
 			var params = Components.classes["@mozilla.org/messengercompose/composeparams;1"].createInstance(Components.interfaces.nsIMsgComposeParams);
@@ -232,7 +229,9 @@ if ("undefined" == typeof(cardbookImap)) {
   			composeFields.characterSet = 'UTF-8';
   			composeFields.messageId = objet + " " + uidCard;
   			composeFields.subject = objet + " card : Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name;
-			composeFields.body = JSON.stringify(card);
+			var body = JSON.stringify(card);
+			body = body.split(" ").join("@");
+			composeFields.body = body;
 
 
 			  
@@ -251,30 +250,36 @@ if ("undefined" == typeof(cardbookImap)) {
 			securityInfo.requireEncryptMessage=false;
 			securityInfo.signMessage=false; 
 			
-			var msgInit = MailServices.compose.initCompose(params);
+			var msgInit = MailServices.compose.initCompose(params);  //nsIMsgCompose
 			var identity = MailServices.accounts.FindAccountForServer(cardbookImap.syncImapAccount.incomingServer.rootFolder.server);
 			msgInit.SendMsg(Components.interfaces.nsIMsgCompDeliverMode.SaveAsDraft, identity.defaultIdentity, identity.key, null, null);
 			lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 60000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); //TYPE_ONE_SHOT TYPE_REPEATING_SLACK
+			//lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); //TYPE_ONE_SHOT TYPE_REPEATING_SLACK
 		},
 
 		// deplace le message du draft vers notre repertoire selectionné
 		moveMsgToFolder: function() {
-			wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder');
-			var msg = cardbookImap.draftFolder.messages;
-			while (msg.hasMoreElements()) {
-				
-				var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
-				var tab = unMsg.subject.split(" : ");
-				if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
-					wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg pour la synchro = ' + unMsg.subject);
-					var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
-					messages.appendElement(unMsg, false);
-				    // move the message
-				    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
-				} else {
-					wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
+			wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder' + cardbookImap.draftFolder.folderURL);
+			try {
+				var msg = cardbookImap.draftFolder.messages;
+				while (msg.hasMoreElements()) {
+					
+					var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
+					var tab = unMsg.subject.split(" : ");
+					if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
+						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg pour la synchro = ' + unMsg.subject);
+						var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
+						messages.appendElement(unMsg, false);
+						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 ' + JSON.stringify(messages));
+					    // move the message
+					    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
+					} else {
+						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
+					}
 				}
+		
+			} catch(e) {
+				wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.moveMsgToFolder error : " + e);
 			}
 		},    
 
@@ -292,7 +297,8 @@ if ("undefined" == typeof(cardbookImap)) {
 				texte = texte + tab[i] + "\r\n";
 			}
 			texte = texte.split("\"").join("");
-			//wdw_cardbooklog.updateStatusProgressInformation("getMsgBody = " + JSON.stringify(texte));
+			texte = texte.split("@").join(" ");
+			wdw_cardbooklog.updateStatusProgressInformation("getMsgBody = " + JSON.stringify(texte));
 			return texte;
 		}, 
 
@@ -304,7 +310,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			var dirPrefIdUrl = cardbookPrefService.getUrl();  // imap dir
 			var date = new Date();
 			var lastImapSync = cardbookPrefService.getLastImapSync();
-			cardbookPrefService.setLastImapSync(date.getTime());
+			//cardbookPrefService.setLastImapSync(date.getTime());
 			cardbookImap.loadSyncData(dirPrefIdUrl);
 
 			var messages = cardbookImap.syncImapFolder.messages;
@@ -501,7 +507,7 @@ if ("undefined" == typeof(cardbookImap)) {
 
 		fusionCard: function(cardLocal, cardMsg) {
 			var conflict = 0;
-			wdw_cardbooklog.updateStatusProgressInformation("fusionCard= " + JSON.stringify(cardLocal.adr));
+			wdw_cardbooklog.updateStatusProgressInformation("fusionCard= " + JSON.stringify(cardLocal.tel) + " - " + JSON.stringify(cardMsg.tel));
 			cardMsg.fn = ""; // le nom affiché reste propre à l'ordinateur local
 			
 			if (cardLocal.lastname !== "" && cardMsg.lastname !== "" && cardLocal.lastname !== cardMsg.lastname) {
@@ -590,44 +596,66 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 
 			// les tableaux //
-			if (cardLocal.tel !== [] && cardMsg.tel !== [] && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) {
-				// conflit
-				conflict++;
+			if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) {
+				cardbookImap.fusionArray(cardLocal.tel, cardMsg.tel);
+				if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) 
+					conflict++;
 			} else {
 				cardLocal.tel = cardMsg.tel;
 				cardMsg.tel = [];
 			}
-			if (cardLocal.categories !== [] && cardMsg.categories !== [] && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) {
-				// conflit
-				conflict++;
+			if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) {
+				cardbookImap.fusionArray(cardLocal.categories, cardMsg.categories);
+				if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) 
+					conflict++;
 			} else {
 				cardLocal.categories = cardMsg.categories;
 				cardMsg.categories = [];
 			}
-			if (cardLocal.email !== [] && cardMsg.email !== [] && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email)) {
-				// conflit
-				conflict++;
+			if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email)) {
+				cardbookImap.fusionArray(cardLocal.email, cardMsg.email);
+				if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email))
+					conflict++;
 			} else {
 				cardLocal.email = cardMsg.email;
 				cardMsg.email = [];
 			}
-			if (cardLocal.adr !== [] && cardMsg.adr !== [] && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr)) {
-				// conflit
-				conflict++;
+			if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr)) {
+				//cardbookImap.fusionArray(cardLocal.adr, cardMsg.adr);
+				var array = [];
+				for (var i = 0; i < cardLocal.adr.length; i++) {
+					for (var j = 0; j < cardMsg.adr.length; j++) {
+						if (JSON.stringify(cardLocal.adr[i]) === JSON.stringify(cardMsg.adr[j])) {
+							//cardMsg.adr.splice(j, 1);
+							array.push(cardLocal.adr[i]);
+						} else {
+							array.push(cardMsg.adr[j]);
+							//cardMsg.adr.splice(j, 1);
+						} 
+
+					}
+				}
+				cardLocal.adr = array;
+				arrayMsg = [];
+				wdw_cardbooklog.updateStatusProgressInformation('TEST' + JSON.stringify(cardMsg.adr));
+				if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr))
+					conflict++;
 			} else {
 				cardLocal.adr = cardMsg.adr;
 				cardMsg.adr = [];
 			}
-			if (cardLocal.impp !== [] && cardMsg.impp !== [] && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp)) {
-				// conflit
-				conflict++;
+			if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp)) {
+				cardbookImap.fusionArray(cardLocal.impp, cardMsg.impp);
+				if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp))
+					conflict++;
 			} else {
 				cardLocal.impp = cardMsg.impp;
 				cardMsg.impp = [];
 			}
-			if (cardLocal.url !== [] && cardMsg.url !== [] && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url)) {
-				// conflit
-				conflict++;
+			if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url)) {
+				cardbookImap.fusionArray(cardLocal.url, cardMsg.url);
+				if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url))
+					conflict++;
 			} else {
 				cardLocal.url = cardMsg.url;
 				cardMsg.url = [];
@@ -635,6 +663,25 @@ if ("undefined" == typeof(cardbookImap)) {
 
 			return (conflict > 0);
 
+		},
+
+		fusionArray: function(arrayLocal, arrayMsg) {
+			var array = [];
+			for (var i = 0; i < arrayLocal.length; i++) {
+				for (var j = 0; j < arrayMsg.length; j++) {
+					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) {
+						//arrayMsg.splice(j, 1);
+						array.push(arrayLocal[i]);
+					} else {
+						array.push(arrayMsg[j]);
+						//arrayMsg.splice(j, 1);
+					} 
+
+				}
+			}
+			arrayLocal = array;
+			arrayMsg = [];
+			arrayMsg.push("TEST");
 		},
 
 		affectChange: function(cardLocal, cardOut) {

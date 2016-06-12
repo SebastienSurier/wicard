@@ -1808,13 +1808,16 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 									} else if (myPrefIdType === "FILE") {
 										myCard.cardurl = "";
 										cardbookRepository.addCardToRepository(myCard, aMode);
-									} else if (myPrefIdType === "IMAP") {
-										//cardbookUtils.jsInclude(["chrome://cardbook/content/cardbookImap.js"]);
-										//cardbookImap.writeModification(myCard, "CREATE");
+									} else {
+										wdw_cardbooklog.updateStatusProgressInformation("TEST 0"); 
 										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
+									
 									}
 
 								} else {
+									if (myPrefIdType === "IMAP") {
+										cardbookImap.writeModification(myCard, "CREATE");
+									}
 									cardbookSynchronization.importCard(myCard, aTarget);
 									delete myCard;
 								}
@@ -1849,7 +1852,7 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 
 		loadFileBackground: function (aFile, aTarget, aFileId, aMode, aCallBack) {
 			lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookSynchronization.loadFile(aFile, aTarget, aFileId, aMode, aCallBack)} }, 1000, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) {cardbookSynchronization.loadFile(aFile, aTarget, aFileId, aMode, aCallBack)} }, 1000, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
 		},
 
 		importCard: function (aCard, aTarget) {
