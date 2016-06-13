@@ -1809,8 +1809,8 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 										myCard.cardurl = "";
 										cardbookRepository.addCardToRepository(myCard, aMode);
 									} else if (myPrefIdType === "IMAP") {
-										// cardbookUtils.jsInclude(["chrome://cardbook/content/cardbookImap.js"]);
-										// cardbookImap.writeModification(myCard, "CREATE");
+										//cardbookUtils.jsInclude(["chrome://cardbook/content/cardbookImap.js"]);
+										//cardbookImap.writeModification(myCard, "CREATE");
 										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
 									}
 

@@ -1,6 +1,6 @@
 
 
-if ("undefined" == typeof(cardbookImap)) {
+if ("undefined" === typeof(cardbookImap)) {
 	var cardbookImap = {
 		imapAccounts : [],
 		imapFolders : [],

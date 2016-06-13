@@ -39,6 +39,7 @@
 	<script src="cardbookCardParser.js"/>
 	<script src="cardbookDirTree.js"/>
 	<script src="uuid.js"/>
+    <script src="carbookImap.js"/>
 
 	<toolbox id="cardbook-toolbox">
 		<menubar id="cardbook-menubar">
