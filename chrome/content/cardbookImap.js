@@ -47,7 +47,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			cardbookImap.imapFolders = [];
 			cardbookImap.syncImapAccount = cardbookImap.imapAccounts[accountIndex];
 
-			
 			var acctMgr = Components.classes["@mozilla.org/messenger/account-manager;1"]
                         .getService(Components.interfaces.nsIMsgAccountManager);
             var accounts = acctMgr.accounts;
@@ -58,7 +57,6 @@ if ("undefined" == typeof(cardbookImap)) {
 				    if (account.incomingServer.localStoreType === "imap" && account.incomingServer.username === cardbookImap.imapAccounts[accountIndex].incomingServer.username) {
 				    	var rootFolder = account.incomingServer.rootFolder; 
 				    	cardbookImap.exploreFolder(rootFolder, null, i);
-
 				    }
 				}
 			} else {
@@ -94,7 +92,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			var docfrag = document.createDocumentFragment();
 
 
-			//vide le memupopup
+			// vide le memupopup
 			while(menupopup.hasChildNodes())
   				menupopup.removeChild(menupopup.firstChild);
 
@@ -116,7 +114,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			var menulist = document.getElementById('locationNetworkPageImapFolder');
 			var docfrag = document.createDocumentFragment();
 
-			//vide le memupopup
+			// vide le memupopup
 			while(menupopup.hasChildNodes())
   				menupopup.removeChild(menupopup.firstChild);
 
@@ -139,41 +137,45 @@ if ("undefined" == typeof(cardbookImap)) {
 
 		// enregistre dans l'objet le compte et le dossier selctionnés
 		saveSync: function(index) {
-			cardbookImap.syncImapFolder = cardbookImap.imapFolders[index];
+			cardbookImap.syncImapFolder = cardbookImap.imapFolders[index]; 
 			wdw_addressbooksAdd.checklocationNetwork();
 		},
 		/***************************************/
 		/** END : Use to add addressbook Imap **/
 		/***************************************/
 
+
 		loadSyncData: function(url) {
-					wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.loadSyncData');
-					cardbookImap.getAccounts();
-					for (var i = 0; i < cardbookImap.imapAccounts.length; i++) {
-						var acctMgr = Components.classes["@mozilla.org/messenger/account-manager;1"]
-		                        .getService(Components.interfaces.nsIMsgAccountManager);
-		            	var accounts = acctMgr.accounts;
-			            if (accounts.queryElementAt) {
-						  // Gecko 17+
-							for (var j = 0; j < accounts.length; j++) {
-							    var account = accounts.queryElementAt(j, Components.interfaces.nsIMsgAccount);
-							    if (account.incomingServer.localStoreType === "imap") {
-							    	var rootFolder = account.incomingServer.rootFolder; 
-									cardbookImap.exploreFolder(rootFolder, url, i);
-								}
-							}
+			wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.loadSyncData');
+			cardbookImap.getAccounts();
+			for (var i = 0; i < cardbookImap.imapAccounts.length; i++) {
+				var acctMgr = Components.classes["@mozilla.org/messenger/account-manager;1"]
+                        .getService(Components.interfaces.nsIMsgAccountManager);
+            	var accounts = acctMgr.accounts;
+	            if (accounts.queryElementAt) {
+				  // Gecko 17+
+					for (var j = 0; j < accounts.length; j++) {
+					    var account = accounts.queryElementAt(j, Components.interfaces.nsIMsgAccount);
+					    if (account.incomingServer.localStoreType === "imap") {
+					    	var rootFolder = account.incomingServer.rootFolder; 
+							cardbookImap.exploreFolder(rootFolder, url, i);
 						}
-					} 
-				},
+					}
+				}
+			} 
+		},
 
 
 		/***********************************/
 		/** BEGIN : Use to sync with Imap **/
 		/***********************************/
 
-		// permettra d'ecrire un message en fonction de la modification subit
+		/************************/
+		/** Write modification **/
+		/************************/
+
+		// permet d'ecrire un message en fonction de la modification subit
 		writeModification: function(aCard, modification) {
-			
 			var myPrefId = cardbookUtils.getAccountId(cardbookRepository.cardbookImapCardsId);
 			var cardbookPrefService = new cardbookPreferenceService(myPrefId);
 			var dirPrefIdName = cardbookPrefService.getName();
@@ -181,11 +183,8 @@ if ("undefined" == typeof(cardbookImap)) {
 			cardbookImap.loadSyncData(dirPrefIdUrl);
 			var cacheDir = cardbookRepository.getLocalDirectory();
 			cacheDir.append(aCard.dirPrefId);
-
-			aCard.photo = {types: [], value: "", localURI: "", URI: "", extension: ""};
-
 			var card = cardbookUtils.cardToVcardData(aCard, true);
-			wdw_cardbooklog.updateStatusProgressInformation(JSON.stringify(aCard));
+
 			switch (modification) {
 				case "CREATE":
 					wdw_cardbooklog.updateStatusProgressInformation('detection CREATE');
@@ -209,13 +208,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 		},
 
-
-		removeTmpDir: function(path) {
-			var tmpDir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsIFile);
-			tmpDir.initWithPath(path);
-			tmpDir.remove(true);
-		},
-
 		// creer notre message et l'envoie dans le brouillon
 		createMsg: function(objet, path, uidCard, card) { 
 			wdw_cardbooklog.updateStatusProgressInformation("createMsg" + JSON.stringify(card));
@@ -230,19 +222,8 @@ if ("undefined" == typeof(cardbookImap)) {
   			composeFields.messageId = objet + " " + uidCard;
   			composeFields.subject = objet + " card : Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name;
 			var body = JSON.stringify(card);
-			body = body.split(" ").join("@");
+			body = body.split(" ").join("@###@");
 			composeFields.body = body;
-
-
-			  
-			//var attachment = Components.classes["@mozilla.org/messengercompose/attachment;1"].createInstance(Components.interfaces.nsIMsgAttachment);
-			//attachment.url = "Users/Seb/Desktop/C7177945-3070-0001-3FA5-11EACA901E4A.vcf";
-			//attachment.url = path + uidCard+".vcf";
-
-			// attachment.name = "test.vcf";
-			// composeFields.addAttachment(attachment);
-			//wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.createMsg= ' + url);
-
 			composeFields.bodyIsAsciiOnly = true;
 			composeFields.forcePlainText = true;
 			composeFields.attachVCard = false;
@@ -254,7 +235,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			var identity = MailServices.accounts.FindAccountForServer(cardbookImap.syncImapAccount.incomingServer.rootFolder.server);
 			msgInit.SendMsg(Components.interfaces.nsIMsgCompDeliverMode.SaveAsDraft, identity.defaultIdentity, identity.key, null, null);
 			lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-			//lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); //TYPE_ONE_SHOT TYPE_REPEATING_SLACK
+			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); //TYPE_ONE_SHOT TYPE_REPEATING_SLACK
 		},
 
 		// deplace le message du draft vers notre repertoire selectionné
@@ -277,31 +258,12 @@ if ("undefined" == typeof(cardbookImap)) {
 						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
 					}
 				}
-		
 			} catch(e) {
 				wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.moveMsgToFolder error : " + e);
 			}
-		},    
+		},   
 
-		getMsgBody: function(aMessageHeader)  {  
-			var messenger = Components.classes["@mozilla.org/messenger;1"].createInstance(Components.interfaces.nsIMessenger);  
-			var listener = Components.classes["@mozilla.org/network/sync-stream-listener;1"].createInstance(Components.interfaces.nsISyncStreamListener);  
-			var uri = aMessageHeader.folder.getUriForMsg(aMessageHeader);  
-			messenger.messageServiceFromURI(uri).streamMessage(uri, listener, null, null, false, "");  
-			var folder = aMessageHeader.folder;  
-			var txt = folder.getMsgTextFromStream(listener.inputStream, aMessageHeader.Charset, 65536, 32768, false, true, { });  
-			//wdw_cardbooklog.updateStatusProgressInformation("getMsgBody = " + txt);
-			var tab = txt.split("\\r\\n");
-			var texte = "";
-			for (var i = 0; i < tab.length; i++) {
-				texte = texte + tab[i] + "\r\n";
-			}
-			texte = texte.split("\"").join("");
-			texte = texte.split("@").join(" ");
-			wdw_cardbooklog.updateStatusProgressInformation("getMsgBody = " + JSON.stringify(texte));
-			return texte;
-		}, 
-
+		// Synchronise le carnet d'adresse 
 		syncAccount: function(stopTime, rebuild) {
 			wdw_cardbooklog.updateStatusProgressInformation('SyncAccount Imap');
 			var myPrefId = cardbookUtils.getAccountId(cardbookRepository.cardbookImapCardsId);
@@ -367,6 +329,19 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 		}, 
 
+		// supprime le répertoire temporaire
+		removeTmpDir: function(path) {
+			var tmpDir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsIFile);
+			tmpDir.initWithPath(path);
+			tmpDir.remove(true);
+		}, 
+
+
+
+		/***********************/
+		/** Read modification **/
+		/***********************/
+
 		// permet de lire un message recu
 		readModification: function(cardMsg, rebuild) {
 
@@ -377,8 +352,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			var isFound = false;
 			var cardLocal;
 			
-			wdw_cardbooklog.updateStatusProgressInformation("readModification= "+ modification + " - uid= " + uidMsg);
-
 			if (uidMsg != null && uidMsg !== undefined && uidMsg != "") {
 				cardLocal = cardbookImap.searchCard(uidMsg);
 
@@ -387,7 +360,6 @@ if ("undefined" == typeof(cardbookImap)) {
 
 				switch (modification) {
 					case "CREATE":
-						console.log(' read CREATE');
 						wdw_cardbooklog.updateStatusProgressInformation('read CREATE');
 						if (!isFound) {
 							wdw_cardbooklog.updateStatusProgressInformation("il faut ajouter la card ici");
@@ -399,7 +371,6 @@ if ("undefined" == typeof(cardbookImap)) {
 						break;
 					
 					case "UPDATE":
-						console.log('read UPDATE');
 						wdw_cardbooklog.updateStatusProgressInformation('read UPDATE');
 						if (isFound) {
 							wdw_cardbooklog.updateStatusProgressInformation("il faut fusionner les card ici");
@@ -420,7 +391,6 @@ if ("undefined" == typeof(cardbookImap)) {
 						break;
 					
 					case "DELETE":
-						console.log('read DELETE');
 						wdw_cardbooklog.updateStatusProgressInformation('read DELETE');
 						if (isFound) {
 							wdw_cardbooklog.updateStatusProgressInformation("il faut supprimer la card ici");
@@ -432,7 +402,6 @@ if ("undefined" == typeof(cardbookImap)) {
 						break;
 					
 					default:
-						console.log('ERREUR cardbookImap');
 						wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.readModification error. : erreur recuperation type de modification');
 						break;
 				}
@@ -441,8 +410,26 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 		},
 
+		// recupere le corp du message 
+		getMsgBody: function(aMessageHeader)  {  
+			var messenger = Components.classes["@mozilla.org/messenger;1"].createInstance(Components.interfaces.nsIMessenger);  
+			var listener = Components.classes["@mozilla.org/network/sync-stream-listener;1"].createInstance(Components.interfaces.nsISyncStreamListener);  
+			var uri = aMessageHeader.folder.getUriForMsg(aMessageHeader);  
+			messenger.messageServiceFromURI(uri).streamMessage(uri, listener, null, null, false, "");  
+			var folder = aMessageHeader.folder;  
+			var txt = folder.getMsgTextFromStream(listener.inputStream, aMessageHeader.Charset, 65536, 32768, false, true, { });  
+			var tab = txt.split("\\r\\n");
+			var texte = "";
+			for (var i = 0; i < tab.length; i++) {
+				texte = texte + tab[i] + "\r\n";
+			}
+			texte = texte.split("\"").join("");
+			texte = texte.split("@###@").join(" ");
+			wdw_cardbooklog.updateStatusProgressInformation("getMsgBody = " + JSON.stringify(texte));
+			return texte;
+		}, 
 
-
+		// cherche une card avec son uid
 		searchCard: function(uid) {
 			var card = "";
 			for (var i = 0; i < cardbookRepository.cardbookDisplayCards[cardbookRepository.cardbookImapCardsId].length; i++) {
@@ -458,6 +445,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 			return "";
 		}, 
+
 
 		createCard: function(cardMsg) {
 			try {
@@ -505,6 +493,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 		},
 
+		// permet la fusion de 2 cards
 		fusionCard: function(cardLocal, cardMsg) {
 			var conflict = 0;
 			wdw_cardbooklog.updateStatusProgressInformation("fusionCard= " + JSON.stringify(cardLocal.tel) + " - " + JSON.stringify(cardMsg.tel));
@@ -597,7 +586,8 @@ if ("undefined" == typeof(cardbookImap)) {
 
 			// les tableaux //
 			if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) {
-				cardbookImap.fusionArray(cardLocal.tel, cardMsg.tel);
+				 cardLocal.tel = cardbookImap.fusionArray(cardLocal.tel, cardMsg.tel);
+				 cardMsg.tel  = [];
 				if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) 
 					conflict++;
 			} else {
@@ -605,7 +595,8 @@ if ("undefined" == typeof(cardbookImap)) {
 				cardMsg.tel = [];
 			}
 			if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) {
-				cardbookImap.fusionArray(cardLocal.categories, cardMsg.categories);
+				cardLocal.categories = cardbookImap.fusionArray(cardLocal.categories, cardMsg.categories);
+				cardMsg.categories  = [];
 				if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) 
 					conflict++;
 			} else {
@@ -613,7 +604,8 @@ if ("undefined" == typeof(cardbookImap)) {
 				cardMsg.categories = [];
 			}
 			if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email)) {
-				cardbookImap.fusionArray(cardLocal.email, cardMsg.email);
+				cardLocal.email = cardbookImap.fusionArray(cardLocal.email, cardMsg.email);
+				cardMsg.email  = [];
 				if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email))
 					conflict++;
 			} else {
@@ -621,22 +613,22 @@ if ("undefined" == typeof(cardbookImap)) {
 				cardMsg.email = [];
 			}
 			if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr)) {
-				//cardbookImap.fusionArray(cardLocal.adr, cardMsg.adr);
-				var array = [];
-				for (var i = 0; i < cardLocal.adr.length; i++) {
-					for (var j = 0; j < cardMsg.adr.length; j++) {
-						if (JSON.stringify(cardLocal.adr[i]) === JSON.stringify(cardMsg.adr[j])) {
-							//cardMsg.adr.splice(j, 1);
-							array.push(cardLocal.adr[i]);
-						} else {
-							array.push(cardMsg.adr[j]);
-							//cardMsg.adr.splice(j, 1);
-						} 
-
-					}
-				}
-				cardLocal.adr = array;
-				arrayMsg = [];
+				cardLocal.adr = cardbookImap.fusionArray(cardLocal.adr, cardMsg.adr);
+				cardMsg.adr = [];
+				// var array = [];
+				// for (var i = 0; i < cardLocal.adr.length; i++) {
+				// 	for (var j = 0; j < cardMsg.adr.length; j++) {
+				// 		if (JSON.stringify(cardLocal.adr[i]) === JSON.stringify(cardMsg.adr[j])) {
+				// 			//cardMsg.adr.splice(j, 1);
+				// 			array.push(cardLocal.adr[i]);
+				// 		} else {
+				// 			array.push(cardMsg.adr[j]);
+				// 			//cardMsg.adr.splice(j, 1);
+				// 		} 
+				// 	}
+				// }
+				// cardLocal.adr = array;
+				// arrayMsg = [];
 				wdw_cardbooklog.updateStatusProgressInformation('TEST' + JSON.stringify(cardMsg.adr));
 				if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr))
 					conflict++;
@@ -645,7 +637,8 @@ if ("undefined" == typeof(cardbookImap)) {
 				cardMsg.adr = [];
 			}
 			if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp)) {
-				cardbookImap.fusionArray(cardLocal.impp, cardMsg.impp);
+				cardLocal.impp = cardbookImap.fusionArray(cardLocal.impp, cardMsg.impp);
+				cardMsg.impp = [];
 				if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp))
 					conflict++;
 			} else {
@@ -653,7 +646,8 @@ if ("undefined" == typeof(cardbookImap)) {
 				cardMsg.impp = [];
 			}
 			if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url)) {
-				cardbookImap.fusionArray(cardLocal.url, cardMsg.url);
+				cardLocal.url = cardbookImap.fusionArray(cardLocal.url, cardMsg.url);
+				cardMsg.url = [];
 				if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url))
 					conflict++;
 			} else {
@@ -665,6 +659,7 @@ if ("undefined" == typeof(cardbookImap)) {
 
 		},
 
+		// permet la fusion de 2 tableaux
 		fusionArray: function(arrayLocal, arrayMsg) {
 			var array = [];
 			for (var i = 0; i < arrayLocal.length; i++) {
@@ -675,13 +670,10 @@ if ("undefined" == typeof(cardbookImap)) {
 					} else {
 						array.push(arrayMsg[j]);
 						//arrayMsg.splice(j, 1);
-					} 
-
+					}
 				}
 			}
-			arrayLocal = array;
-			arrayMsg = [];
-			arrayMsg.push("TEST");
+			return array;
 		},
 
 		affectChange: function(cardLocal, cardOut) {
@@ -705,6 +697,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			cardLocal.url = cardOut.url;
 		},
 
+		// permet de reconstruire le carnet d'adresse 
 		rebuildAddressbook: function() {
 			wdw_cardbooklog.updateStatusProgressInformation('rebuildAddressbook');
 			var aListOfCards = [];
@@ -725,14 +718,9 @@ if ("undefined" == typeof(cardbookImap)) {
 
 			cardbookPrefService.setLastImapSync("1111111111111");
 			var lastImapSync = cardbookPrefService.getLastImapSync();
-			//lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-			//lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.syncAccount(stopTime);} }, 5000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); 
 
 			cardbookImap.syncAccount(stopTime, true);
 		},
 
-		test: function() {
-			wdw_cardbooklog.updateStatusProgressInformation('TEST');
-		}
 	}
 }

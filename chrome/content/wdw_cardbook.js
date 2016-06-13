@@ -1208,7 +1208,6 @@ if ("undefined" == typeof(wdw_cardbook)) {
 
 		importCardsFromFile: function () {
 			try {
-				cardbookImap.test();
 				var myTree = document.getElementById('accountsOrCatsTree');
 				var myTarget = myTree.view.getCellText(myTree.currentIndex, {id: "accountId"});
 				cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
@@ -1614,7 +1613,6 @@ if ("undefined" == typeof(wdw_cardbook)) {
 		},
 
 		startDrag: function (aEvent, aTreeChildren) {
-			wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.startDrag");
 			try {
 				var listOfUid = [];
 				cardbookDirTree.dragMode = "dragMode";
@@ -1699,7 +1697,6 @@ if ("undefined" == typeof(wdw_cardbook)) {
 			var myDirPrefIdType = cardbookPrefService.getType();
 			var myDirPrefIdUrl = cardbookPrefService.getUrl();
 			var myDirPrefIdEnabled = cardbookPrefService.getEnabled();
-			wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.dragCards= "+myDirPrefIdType);
 			
 			if (myDirPrefIdEnabled) {
 				aEvent.preventDefault();
