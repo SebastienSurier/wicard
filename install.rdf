@@ -9,13 +9,43 @@
     <em:version>1.0</em:version>
     <em:creator>Julien et Sébastien</em:creator>
    
+    <!-- Target Application - Thunderbird -->
     <em:targetApplication>
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
-        <em:minVersion>1.5</em:minVersion>
-        <em:maxVersion>5.0.*</em:maxVersion>
+        <em:minVersion>40.0</em:minVersion>
+        <em:maxVersion>45.*</em:maxVersion>
       </Description>
     </em:targetApplication>
+
+    <em:localized>
+      <Description>
+        <em:locale>en-US</em:locale>
+        <em:description>VCard address book</em:description>
+      </Description>
+    </em:localized>
+    
+    <em:localized>
+      <Description>
+        <em:locale>fr</em:locale>
+        <em:description>Carnet d'adresses VCard</em:description>
+      </Description>
+    </em:localized>
+    
+    <em:localized>
+      <Description>
+        <em:locale>de</em:locale>
+        <em:description>VCard Adressbuch</em:description>
+      </Description>
+    </em:localized>
+    
+    <em:localized>
+      <Description>
+        <em:locale>pt-PT</em:locale>
+        <em:description>Agenda VCard</em:description>
+      </Description>
+    </em:localized>
+    
    
   </Description>      
 </RDF>
