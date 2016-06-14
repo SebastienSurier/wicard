@@ -127,6 +127,7 @@ if ("undefined" == typeof(wdw_cardbook)) {
 		var defaultLook = prefs.getBoolPref("extensions.cardbook.defaultLook");
 		cardbookRepository.validateLook(defaultLook);
 		window.setTimeout(function() { wdw_cardbook.refreshAccountsInDirTree(); }, 1000);
+		cardbookImap.detectConnexion();
 	},
 
 		syncAccounts: function () {

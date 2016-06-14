@@ -8,7 +8,6 @@ if ("undefined" == typeof(cardbookImap)) {
 		syncImapFolder : {},
 		draftFolder : {},
 		message: {},
-		aModifiedCard: {},
 
 
 		/*****************************************/
@@ -183,79 +182,223 @@ if ("undefined" == typeof(cardbookImap)) {
 			cardbookImap.loadSyncData(dirPrefIdUrl);
 			var cacheDir = cardbookRepository.getLocalDirectory();
 			cacheDir.append(aCard.dirPrefId);
-			var card = cardbookUtils.cardToVcardData(aCard, true);
+			var cardData = cardbookUtils.cardToVcardData(aCard, true);
+			var networkLinkService = Components.classes["@mozilla.org/network/network-link-service;1"].getService(Components.interfaces.nsINetworkLinkService);           
 
-			switch (modification) {
-				case "CREATE":
-					wdw_cardbooklog.updateStatusProgressInformation('detection CREATE');
-					cardbookImap.createMsg('CREATE', cacheDir.path + "/", aCard.uid, card);
+            wdw_cardbooklog.updateStatusProgressInformation('detection ' + modification);
+            if (networkLinkService.isLinkUp) {
+            	wdw_cardbooklog.updateStatusProgressInformation('writeModification connexion');
+				cardbookImap.createMsg(modification, aCard.uid, cardData);
+				lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); 
+			} else {
+				wdw_cardbooklog.updateStatusProgressInformation('writeModification pas de connexion');
+				cardbookImap.saveInFile(modification, aCard.uid, cardData);
+				lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.detectConnexion()} }, 2000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); 
+			}
+
+			// switch (modification) {
+			// 	case "CREATE":
+			// 		wdw_cardbooklog.updateStatusProgressInformation('detection CREATE');
+			// 		if (networkLinkService.isLinkUp) {
+			// 			cardbookImap.createMsg('CREATE', aCard.uid, card);
+			// 		} else {
+			// 			cardbookImap.saveInFile('CREATE', aCard.uid, card);
+			// 		}
 			
-					break;
-				case "UPDATE":
-					wdw_cardbooklog.updateStatusProgressInformation('detection UPDATE');
-					cardbookImap.createMsg('UPDATE', cacheDir.path + "/", aCard.uid, card);
+			// 		break;
+			// 	case "UPDATE":
+			// 		wdw_cardbooklog.updateStatusProgressInformation('detection UPDATE');
+			// 		cardbookImap.createMsg('UPDATE', aCard.uid, card);
 
-					break;
-				case "DELETE":
-					wdw_cardbooklog.updateStatusProgressInformation('detection DELETE');
+			// 		break;
+			// 	case "DELETE":
+			// 		wdw_cardbooklog.updateStatusProgressInformation('detection DELETE');
 
-					cardbookImap.createMsg('DELETE', cacheDir.path + "/", aCard.uid, card);
+			// 		cardbookImap.createMsg('DELETE', aCard.uid, card);
 
-					break;
-				default:
-					wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.writeModification error.');
-					break;
+			// 		break;
+			// 	default:
+			// 		wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.writeModification error.');
+			// 		break;
+			// }
+		},
+
+		/******************/
+		/** Mode offline **/
+		/******************/
+		// save les messages dans un fichier .json
+		saveInFile: function(objet, uidCard, cardData) { 
+			try {
+				var cacheDir = cardbookRepository.getLocalDirectory();
+				cacheDir.append(cardbookRepository.cardbookImapCardsId);
+				if (cacheDir.exists() && cacheDir.isDirectory()) {
+					cacheDir.append("saveMessages");
+					if (!cacheDir.exists()){
+					 	cacheDir.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0774);
+					}
+					cacheDir.append("saveMessages.json");
+					if (!cacheDir.exists()){
+						cacheDir.create( Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 420);
+					}
+					var fileString = cardbookImap.readFile(cacheDir);
+					wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.saveInFile = " + JSON.stringify(fileString));
+					var cardString = JSON.stringify(cardData);
+					cardString = cardString.split("\\r\\n").join("#@@@#");
+					cardString = cardString.split(" ").join("@###@");
+					cardString = cardString.split("\"").join("");
+					var obj = {"objet": objet, "uidCard": uidCard, "card": cardString};
+					cardbookSynchronization.writeContentToFile(cacheDir.path, fileString + JSON.stringify(obj), "UTF8");
+				}
+			} catch(e) {
+				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.saveInFile error : " + e);
+			}
+		},
+
+		readFile: function(cacheDir) {
+			var inputStream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance(Components.interfaces.nsIFileInputStream);
+			inputStream.init(cacheDir, -1, -1, 0);
+			var converterInputStream = Components.classes["@mozilla.org/intl/converter-input-stream;1"].createInstance(Components.interfaces.nsIConverterInputStream);
+			converterInputStream.init(inputStream, "UTF-8", 0, 0);
+			converterInputStream.QueryInterface(Components.interfaces.nsIUnicharLineInputStream);
+			var line = {};
+			var lineString = "";
+			var again;
+			do {
+				again = converterInputStream.readLine(line);
+				lineString = lineString + JSON.stringify(line);
+				lineString = lineString.split("\\").join("");
+				lineString = lineString.split("{\"value\":\"").join("");
+				lineString = lineString.substring(0,lineString.length-2);
+			}while(again);
+			if (lineString !== "") {
+				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.readFile deja une line");
+				lineString = lineString + "\n"; 
+			}
+			converterInputStream.close();
+			inputStream.close();
+			return lineString;
+		},
+
+		// charge les msg sauvegardés
+		loadMsgSave: function() {
+			wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.loadMsgSave");
+			try {
+				var myPrefId = cardbookUtils.getAccountId(cardbookRepository.cardbookImapCardsId);
+				cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
+				var cardbookPrefService = new cardbookPreferenceService(myPrefId);
+				var dirPrefIdUrl = cardbookPrefService.getUrl();  // imap dir
+				cardbookImap.loadSyncData(dirPrefIdUrl);
+				var cacheDir = cardbookRepository.getLocalDirectory();
+				cacheDir.append(cardbookRepository.cardbookImapCardsId);
+				if (cacheDir.exists() && cacheDir.isDirectory()) {
+					cacheDir.append("saveMessages");
+					var dirPath = cacheDir.path;
+					if (cacheDir.exists() && cacheDir.isDirectory()){
+						cacheDir.append("saveMessages.json");
+						if (cacheDir.exists()){
+							var inputStream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance(Components.interfaces.nsIFileInputStream);
+							inputStream.init(cacheDir, -1, -1, 0);
+							var converterInputStream = Components.classes["@mozilla.org/intl/converter-input-stream;1"].createInstance(Components.interfaces.nsIConverterInputStream);
+							converterInputStream.init(inputStream, "UTF-8", 0, 0);
+							converterInputStream.QueryInterface(Components.interfaces.nsIUnicharLineInputStream);
+							var line = {};
+							var again;
+							do {
+								again = converterInputStream.readLine(line);
+								wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.loadMsgSave= " + JSON.stringify(line));
+								var lineString = JSON.stringify(line);
+								lineString = lineString.split("\\").join("");
+								lineString = lineString.split("{\"value\":\"").join("");
+								lineString = lineString.split("#@@@#").join("\\r\\n");
+								lineString = lineString.split("@###@").join(" ");
+								lineString = lineString.substring(0,lineString.length-2);
+								var obj = JSON.parse(lineString);
+								cardbookImap.createMsg(obj.objet, obj.uidCard, obj.card);
+							}while(again);
+							converterInputStream.close();
+							inputStream.close();
+							cardbookImap.removeDir(dirPath);
+						}
+					}
+				}
+			} catch(e) {
+				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.loadMsgSave error : " + e);
+			}
+		},
+
+		// supprime le répertoire temporaire
+		removeDir: function(path) {
+			var dir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsIFile);
+			dir.initWithPath(path);
+			dir.remove(true);
+		}, 
+
+		// detecte une connexion et charge les msg sauvegardés
+		detectConnexion: function() {
+			wdw_cardbooklog.updateStatusProgressInformation("detectConnexion");
+			var networkLinkService = Components.classes["@mozilla.org/network/network-link-service;1"].getService(Components.interfaces.nsINetworkLinkService);
+			if (networkLinkService.isLinkUp) {
+				cardbookImap.loadMsgSave();
+				lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); 
 			}
 		},
 
 		// creer notre message et l'envoie dans le brouillon
-		createMsg: function(objet, path, uidCard, card) { 
-			wdw_cardbooklog.updateStatusProgressInformation("createMsg" + JSON.stringify(card));
-
-			Components.utils.import("resource:///modules/mailServices.js");
-			var params = Components.classes["@mozilla.org/messengercompose/composeparams;1"].createInstance(Components.interfaces.nsIMsgComposeParams);
-			var composeFields = params.composeFields = Components.classes["@mozilla.org/messengercompose/composefields;1"].createInstance(Components.interfaces.nsIMsgCompFields);
-			var securityInfo = params.composeFields.securityInfo = Components.classes["@mozilla.org/messenger-smime/composefields;1"].createInstance(Components.interfaces.nsIMsgSMIMECompFields);
+		createMsg: function(objet, uidCard, cardData) { 
+			wdw_cardbooklog.updateStatusProgressInformation("createMsg" + JSON.stringify(cardData));
 			
-			composeFields.QueryInterface( Components.interfaces.nsIMsgCompFields);
-  			composeFields.characterSet = 'UTF-8';
-  			composeFields.messageId = objet + " " + uidCard;
-  			composeFields.subject = objet + " card : Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name;
-			var body = JSON.stringify(card);
-			body = body.split(" ").join("@###@");
-			composeFields.body = body;
-			composeFields.bodyIsAsciiOnly = true;
-			composeFields.forcePlainText = true;
-			composeFields.attachVCard = false;
-			
-			securityInfo.requireEncryptMessage=false;
-			securityInfo.signMessage=false; 
-			
-			var msgInit = MailServices.compose.initCompose(params);  //nsIMsgCompose
-			var identity = MailServices.accounts.FindAccountForServer(cardbookImap.syncImapAccount.incomingServer.rootFolder.server);
-			msgInit.SendMsg(Components.interfaces.nsIMsgCompDeliverMode.SaveAsDraft, identity.defaultIdentity, identity.key, null, null);
-			lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-			lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); //TYPE_ONE_SHOT TYPE_REPEATING_SLACK
+			try {
+				Components.utils.import("resource:///modules/mailServices.js");
+				var params = Components.classes["@mozilla.org/messengercompose/composeparams;1"].createInstance(Components.interfaces.nsIMsgComposeParams);
+				var composeFields = params.composeFields = Components.classes["@mozilla.org/messengercompose/composefields;1"].createInstance(Components.interfaces.nsIMsgCompFields);
+				var securityInfo = params.composeFields.securityInfo = Components.classes["@mozilla.org/messenger-smime/composefields;1"].createInstance(Components.interfaces.nsIMsgSMIMECompFields);
+				
+				composeFields.QueryInterface( Components.interfaces.nsIMsgCompFields);
+	  			composeFields.characterSet = 'UTF-8';
+	  			composeFields.messageId = objet + " " + uidCard;
+	  			composeFields.subject = objet + " card : Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name;
+				var body = JSON.stringify(cardData);
+				body = body.split(" ").join("@###@");
+				composeFields.body = body;
+				composeFields.bodyIsAsciiOnly = true;
+				composeFields.forcePlainText = true;
+				composeFields.attachVCard = false;
+				
+				securityInfo.requireEncryptMessage=false;
+				securityInfo.signMessage=false; 
+				
+				var msgInit = MailServices.compose.initCompose(params);  //nsIMsgCompose
+				var identity = MailServices.accounts.FindAccountForServer(cardbookImap.syncImapAccount.incomingServer.rootFolder.server);
+				msgInit.SendMsg(Components.interfaces.nsIMsgCompDeliverMode.SaveAsDraft, identity.defaultIdentity, identity.key, null, null);
+				lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); //TYPE_ONE_SHOT TYPE_REPEATING_SLACK
+			} catch(e) {
+				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.createMsg error : " + e);
+			}
 		},
 
 		// deplace le message du draft vers notre repertoire selectionné
 		moveMsgToFolder: function() {
-			wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder' + cardbookImap.draftFolder.folderURL);
+			wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder');
 			try {
 				var msg = cardbookImap.draftFolder.messages;
-				while (msg.hasMoreElements()) {
-					
-					var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
-					var tab = unMsg.subject.split(" : ");
-					if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
-						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg pour la synchro = ' + unMsg.subject);
-						var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
-						messages.appendElement(unMsg, false);
-						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 ' + JSON.stringify(messages));
-					    // move the message
-					    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
-					} else {
-						wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
+				if (msg !== undefined) {
+					while (msg.hasMoreElements()) {
+						
+						var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
+						var tab = unMsg.subject.split(" : ");
+						if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
+							wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg pour la synchro = ' + unMsg.subject);
+							var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
+							messages.appendElement(unMsg, false);
+						    // move the message
+						    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
+						} else {
+							wdw_cardbooklog.updateStatusProgressInformation('moveMsgToFolder 1 = un msg du brouillon = ' + unMsg.subject);
+						}
 					}
 				}
 			} catch(e) {
@@ -275,7 +418,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			//cardbookPrefService.setLastImapSync(date.getTime());
 			cardbookImap.loadSyncData(dirPrefIdUrl);
 
-			var messages = cardbookImap.syncImapFolder.messages;
 
 			if (stopTime != null && stopTime !== undefined && stopTime != "") {
 				var maxTime = stopTime;
@@ -284,6 +426,7 @@ if ("undefined" == typeof(cardbookImap)) {
 			}
 
 			var listOfMsg = [];
+			var messages = cardbookImap.syncImapFolder.messages;
 			while (messages.hasMoreElements()) { 
 				var unMsg = messages.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
 				listOfMsg.push(unMsg);
@@ -304,38 +447,13 @@ if ("undefined" == typeof(cardbookImap)) {
 					wdw_cardbooklog.updateStatusProgressInformation('messsage plus recent dateMsg= ' + JSON.stringify(unMsg.date) + ' dateSync= ' + lastImapSync + ' maxTime= ' + maxTime);
 					var body = cardbookImap.getMsgBody(unMsg);
 					cardbookImap.message = unMsg;
-
-					var cacheDir = cardbookRepository.getLocalDirectory();
-					cacheDir.append(cardbookRepository.cardbookImapCardsId);
-					if (cacheDir.exists() && cacheDir.isDirectory()) {
-						cacheDir.append("tmp");
-						var tmpPath = cacheDir.path;
-						if (cacheDir.exists() == false){
-						 	cacheDir.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0774);
-						}
-						cacheDir.append(cardbookImap.message.messageId + ".vcf");
-						if (cacheDir.exists() == false){
-							cacheDir.create( Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 420);
-						}
-						cardbookSynchronization.writeContentToFile(cacheDir.path, body, "UTF8");
-						
-						var cardMsg = new cardbookCardParser(body, "", "", myPrefId);
-						cardbookImap.readModification(cardMsg, rebuild);
-						cardbookImap.removeTmpDir(tmpPath);
-					}
+					var cardMsg = new cardbookCardParser(body, "", "", myPrefId);
+					cardbookImap.readModification(cardMsg, rebuild);
 				} else {
 					wdw_cardbooklog.updateStatusProgressInformation('message plus vieu ' + unMsg.subject + " - " + body);
 				}
 			}
 		}, 
-
-		// supprime le répertoire temporaire
-		removeTmpDir: function(path) {
-			var tmpDir = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsIFile);
-			tmpDir.initWithPath(path);
-			tmpDir.remove(true);
-		}, 
-
 
 
 		/***********************/
@@ -436,14 +554,12 @@ if ("undefined" == typeof(cardbookImap)) {
 				card = cardbookRepository.cardbookDisplayCards[cardbookRepository.cardbookImapCardsId][i];
 				if (card.uid === uid) {
 					wdw_cardbooklog.updateStatusProgressInformation('searchCard: la card existe' + JSON.stringify(card));
-					cardbookImap.aModifiedCard = card;
 					return card;
 				} else {
 					wdw_cardbooklog.updateStatusProgressInformation("searchCard: la card n'existe pas");
-					cardbookImap.aModifiedCard = null;
 				}
 			}
-			return "";
+			return card;
 		}, 
 
 
@@ -468,14 +584,11 @@ if ("undefined" == typeof(cardbookImap)) {
 					var myArgs = {cardsIn: aListOfCards, cardsOut: [], action: ""};
 					var myWindow = window.openDialog("chrome://cardbook/content/wdw_mergeCards.xul", "", "chrome,modal,resizable,centerscreen", myArgs);
 					if (myArgs.action == "CREATE") {
-						wdw_cardbooklog.updateStatusProgressInformation("CARDSOUT = " + JSON.stringify(myArgs.cardsOut[0]));
 						cardbookImap.affectChange(cardLocal, myArgs.cardsOut[0]);
 						wdw_cardbook.saveCard(cardLocal);
 					} else if (myArgs.action == "CREATEANDREPLACE") {
 						cardbookImap.affectChange(cardLocal, myArgs.cardsOut[0]);
 						wdw_cardbook.saveCard(cardLocal);
-						//wdw_cardbook.saveCard(myArgs.cardsOut[0]);
-						//wdw_cardbook.deleteCards(myArgs.cardsIn);
 					}
 				}
 			} catch (e) {
@@ -496,7 +609,6 @@ if ("undefined" == typeof(cardbookImap)) {
 		// permet la fusion de 2 cards
 		fusionCard: function(cardLocal, cardMsg) {
 			var conflict = 0;
-			wdw_cardbooklog.updateStatusProgressInformation("fusionCard= " + JSON.stringify(cardLocal.tel) + " - " + JSON.stringify(cardMsg.tel));
 			cardMsg.fn = ""; // le nom affiché reste propre à l'ordinateur local
 			
 			if (cardLocal.lastname !== "" && cardMsg.lastname !== "" && cardLocal.lastname !== cardMsg.lastname) {
@@ -588,17 +700,17 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) {
 				 cardLocal.tel = cardbookImap.fusionArray(cardLocal.tel, cardMsg.tel);
 				 cardMsg.tel  = [];
-				if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) 
-					conflict++;
+				// if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) 
+				// 	conflict++;
 			} else {
 				cardLocal.tel = cardMsg.tel;
 				cardMsg.tel = [];
-			}
+			}			
 			if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) {
 				cardLocal.categories = cardbookImap.fusionArray(cardLocal.categories, cardMsg.categories);
 				cardMsg.categories  = [];
-				if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) 
-					conflict++;
+				// if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) 
+				// 	conflict++;
 			} else {
 				cardLocal.categories = cardMsg.categories;
 				cardMsg.categories = [];
@@ -606,8 +718,8 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email)) {
 				cardLocal.email = cardbookImap.fusionArray(cardLocal.email, cardMsg.email);
 				cardMsg.email  = [];
-				if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email))
-					conflict++;
+				// if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email))
+				// 	conflict++;
 			} else {
 				cardLocal.email = cardMsg.email;
 				cardMsg.email = [];
@@ -615,23 +727,8 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr)) {
 				cardLocal.adr = cardbookImap.fusionArray(cardLocal.adr, cardMsg.adr);
 				cardMsg.adr = [];
-				// var array = [];
-				// for (var i = 0; i < cardLocal.adr.length; i++) {
-				// 	for (var j = 0; j < cardMsg.adr.length; j++) {
-				// 		if (JSON.stringify(cardLocal.adr[i]) === JSON.stringify(cardMsg.adr[j])) {
-				// 			//cardMsg.adr.splice(j, 1);
-				// 			array.push(cardLocal.adr[i]);
-				// 		} else {
-				// 			array.push(cardMsg.adr[j]);
-				// 			//cardMsg.adr.splice(j, 1);
-				// 		} 
-				// 	}
-				// }
-				// cardLocal.adr = array;
-				// arrayMsg = [];
-				wdw_cardbooklog.updateStatusProgressInformation('TEST' + JSON.stringify(cardMsg.adr));
-				if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr))
-					conflict++;
+				// if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr))
+				// 	conflict++;
 			} else {
 				cardLocal.adr = cardMsg.adr;
 				cardMsg.adr = [];
@@ -639,8 +736,8 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp)) {
 				cardLocal.impp = cardbookImap.fusionArray(cardLocal.impp, cardMsg.impp);
 				cardMsg.impp = [];
-				if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp))
-					conflict++;
+				// if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp))
+				// 	conflict++;
 			} else {
 				cardLocal.impp = cardMsg.impp;
 				cardMsg.impp = [];
@@ -648,8 +745,8 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url)) {
 				cardLocal.url = cardbookImap.fusionArray(cardLocal.url, cardMsg.url);
 				cardMsg.url = [];
-				if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url))
-					conflict++;
+				// if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url))
+				// 	conflict++;
 			} else {
 				cardLocal.url = cardMsg.url;
 				cardMsg.url = [];
@@ -664,13 +761,10 @@ if ("undefined" == typeof(cardbookImap)) {
 			var array = [];
 			for (var i = 0; i < arrayLocal.length; i++) {
 				for (var j = 0; j < arrayMsg.length; j++) {
-					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) {
-						//arrayMsg.splice(j, 1);
+					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) 
 						array.push(arrayLocal[i]);
-					} else {
+					else
 						array.push(arrayMsg[j]);
-						//arrayMsg.splice(j, 1);
-					}
 				}
 			}
 			return array;
