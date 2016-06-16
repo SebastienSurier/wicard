@@ -801,6 +801,9 @@ if ("undefined" == typeof(cardbookImap)) {
 				lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
 				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); 
 				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.moveMsgToFolder()} }, cardbookImap.repeatTime, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); 
+			} else {
+				lTimerLoadFile = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
+				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.detectConnexion()} }, cardbookImap.repeatTime, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); 
 			}
 		},
 
