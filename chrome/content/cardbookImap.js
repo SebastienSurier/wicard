@@ -205,32 +205,6 @@ if ("undefined" == typeof(cardbookImap)) {
 				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.detectConnexion()} }, 2000, Components.interfaces.nsITimer.TYPE_ONE_SHOT); 
 				lTimerLoadFile.initWithCallback({ notify: function(lTimerLoadFile) { cardbookImap.detectConnexion()} }, cardbookImap.repeatTime, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK); 
 			}
-
-			// switch (modification) {
-			// 	case "CREATE":
-			// 		wdw_cardbooklog.updateStatusProgressInformation('detection CREATE');
-			// 		if (networkLinkService.isLinkUp) {
-			// 			cardbookImap.createMsg('CREATE', aCard.uid, card);
-			// 		} else {
-			// 			cardbookImap.saveInFile('CREATE', aCard.uid, card);
-			// 		}
-			
-			// 		break;
-			// 	case "UPDATE":
-			// 		wdw_cardbooklog.updateStatusProgressInformation('detection UPDATE');
-			// 		cardbookImap.createMsg('UPDATE', aCard.uid, card);
-
-			// 		break;
-			// 	case "DELETE":
-			// 		wdw_cardbooklog.updateStatusProgressInformation('detection DELETE');
-
-			// 		cardbookImap.createMsg('DELETE', aCard.uid, card);
-
-			// 		break;
-			// 	default:
-			// 		wdw_cardbooklog.updateStatusProgressInformation('cardbookImap.writeModification error.');
-			// 		break;
-			// }
 		},
 
 		// creer notre message et l'envoie dans le brouillon
@@ -384,10 +358,10 @@ if ("undefined" == typeof(cardbookImap)) {
 					case "UPDATE":
 						wdw_cardbooklog.updateStatusProgressInformation('read UPDATE');
 						if (isFound) {
+							cardbookUtils.addTagFromImapSync(cardLocal);
 							wdw_cardbooklog.updateStatusProgressInformation("il faut fusionner les card ici");
 							if (rebuild)  {// la cardMsg prend le dessus
 								cardbookImap.affectChange(cardLocal, cardMsg);
-								cardbookUtils.addTagFromImapSync(cardLocal);
 								wdw_cardbook.saveCard(cardLocal);
 							} else {
 							cardbookImap.updateCard(cardLocal, cardMsg);
@@ -474,16 +448,19 @@ if ("undefined" == typeof(cardbookImap)) {
 					aListOfCards.push(cardLocal);
 					aListOfCards.push(cardMsg);
 
-					var myArgs = {cardsIn: aListOfCards, cardsOut: [], action: ""};
+					var myArgs = {cardsIn: aListOfCards, cardsOut: [], action: "", imap: true};
 					var myWindow = window.openDialog("chrome://cardbook/content/wdw_mergeCards.xul", "", "chrome,modal,resizable,centerscreen", myArgs);
 					if (myArgs.action == "CREATE") {
 						cardbookImap.affectChange(cardLocal, myArgs.cardsOut[0]);
+						wdw_cardbook.saveCard(cardLocal);
+						// else if normalement jamais utilisé
 					} else if (myArgs.action == "CREATEANDREPLACE") {
 						cardbookImap.affectChange(cardLocal, myArgs.cardsOut[0]);
+						wdw_cardbook.saveCard(cardLocal);
 					}
+				} else {
+					wdw_cardbook.saveCard(cardLocal);
 				}
-
-				wdw_cardbook.saveCard(cardLocal);
 			} catch (e) {
 				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.updateCard error : " + e);
 			}
@@ -593,8 +570,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) {
 				 cardLocal.tel = cardbookImap.fusionArray(cardLocal.tel, cardMsg.tel);
 				 cardMsg.tel  = [];
-				// if (JSON.stringify(cardLocal.tel) !== "[]" && JSON.stringify(cardMsg.tel) !== "[]" && JSON.stringify(cardLocal.tel) !== JSON.stringify(cardMsg.tel)) 
-				// 	conflict++;
 			} else {
 				cardLocal.tel = cardMsg.tel;
 				cardMsg.tel = [];
@@ -602,8 +577,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) {
 				cardLocal.categories = cardbookImap.fusionArray(cardLocal.categories, cardMsg.categories);
 				cardMsg.categories  = [];
-				// if (JSON.stringify(cardLocal.categories) !== "[]" && JSON.stringify(cardMsg.categories) !== "[]" && JSON.stringify(cardLocal.categories) !== JSON.stringify(cardMsg.categories)) 
-				// 	conflict++;
 			} else {
 				cardLocal.categories = cardMsg.categories;
 				cardMsg.categories = [];
@@ -611,8 +584,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email)) {
 				cardLocal.email = cardbookImap.fusionArray(cardLocal.email, cardMsg.email);
 				cardMsg.email  = [];
-				// if (JSON.stringify(cardLocal.email) !== "[]" && JSON.stringify(cardMsg.email) !== "[]" && JSON.stringify(cardLocal.email) !== JSON.stringify(cardMsg.email))
-				// 	conflict++;
 			} else {
 				cardLocal.email = cardMsg.email;
 				cardMsg.email = [];
@@ -620,8 +591,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr)) {
 				cardLocal.adr = cardbookImap.fusionArray(cardLocal.adr, cardMsg.adr);
 				cardMsg.adr = [];
-				// if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr))
-				//conflict++;
 			} else {
 				cardLocal.adr = cardMsg.adr;
 				cardMsg.adr = [];
@@ -629,8 +598,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp)) {
 				cardLocal.impp = cardbookImap.fusionArray(cardLocal.impp, cardMsg.impp);
 				cardMsg.impp = [];
-				// if (JSON.stringify(cardLocal.impp) !== "[]" && JSON.stringify(cardMsg.impp) !== "[]" && JSON.stringify(cardLocal.impp) !== JSON.stringify(cardMsg.impp))
-				// 	conflict++;
 			} else {
 				cardLocal.impp = cardMsg.impp;
 				cardMsg.impp = [];
@@ -638,8 +605,6 @@ if ("undefined" == typeof(cardbookImap)) {
 			if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url)) {
 				cardLocal.url = cardbookImap.fusionArray(cardLocal.url, cardMsg.url);
 				cardMsg.url = [];
-				// if (JSON.stringify(cardLocal.url) !== "[]" && JSON.stringify(cardMsg.url) !== "[]" && JSON.stringify(cardLocal.url) !== JSON.stringify(cardMsg.url))
-				// 	conflict++;
 			} else {
 				cardLocal.url = cardMsg.url;
 				cardMsg.url = [];
