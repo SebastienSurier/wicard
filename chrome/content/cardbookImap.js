@@ -478,12 +478,12 @@ if ("undefined" == typeof(cardbookImap)) {
 					var myWindow = window.openDialog("chrome://cardbook/content/wdw_mergeCards.xul", "", "chrome,modal,resizable,centerscreen", myArgs);
 					if (myArgs.action == "CREATE") {
 						cardbookImap.affectChange(cardLocal, myArgs.cardsOut[0]);
-						wdw_cardbook.saveCard(cardLocal);
 					} else if (myArgs.action == "CREATEANDREPLACE") {
 						cardbookImap.affectChange(cardLocal, myArgs.cardsOut[0]);
-						wdw_cardbook.saveCard(cardLocal);
 					}
 				}
+
+				wdw_cardbook.saveCard(cardLocal);
 			} catch (e) {
 				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.updateCard error : " + e);
 			}
@@ -651,26 +651,17 @@ if ("undefined" == typeof(cardbookImap)) {
 
 		// permet la fusion de 2 tableaux
 		fusionArray: function(arrayLocal, arrayMsg) {
-			var array = [];
 			var arrayLocalOfMsg = arrayMsg;
 			for (var i = 0; i < arrayLocal.length; i++) {
-				var exist = false;
 				for (var j = 0; j < arrayMsg.length; j++) {
-					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) {
-						exist = true;
+					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) 
 						arrayLocalOfMsg.splice(j, 1);
-					}
-					//else
-						
-						//array.push(arrayMsg[j]);
 				}
-				if (exist)
-					array.push(arrayLocal[i]);
 			}
 			for (var i = 0; i < arrayLocalOfMsg.length; i++) {
-				array.push(arrayLocalOfMsg[i]);
+				arrayLocal.push(arrayLocalOfMsg[i]);
 			}
-			return array;
+			return arrayLocal;
 		},
 
 		affectChange: function(cardLocal, cardOut) {
