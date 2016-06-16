@@ -305,7 +305,7 @@ if ("undefined" == typeof(cardbookImap)) {
 				var dirPrefIdUrl = cardbookPrefService.getUrl();  // imap dir
 				var date = new Date();
 				var lastImapSync = cardbookPrefService.getLastImapSync();
-				//cardbookPrefService.setLastImapSync(date.getTime());
+				cardbookPrefService.setLastImapSync(date.getTime());
 				cardbookImap.loadSyncData(dirPrefIdUrl);
 
 
@@ -621,7 +621,7 @@ if ("undefined" == typeof(cardbookImap)) {
 				cardLocal.adr = cardbookImap.fusionArray(cardLocal.adr, cardMsg.adr);
 				cardMsg.adr = [];
 				// if (JSON.stringify(cardLocal.adr) !== "[]" && JSON.stringify(cardMsg.adr) !== "[]" && JSON.stringify(cardLocal.adr) !== JSON.stringify(cardMsg.adr))
-				// 	conflict++;
+				//conflict++;
 			} else {
 				cardLocal.adr = cardMsg.adr;
 				cardMsg.adr = [];
@@ -652,13 +652,23 @@ if ("undefined" == typeof(cardbookImap)) {
 		// permet la fusion de 2 tableaux
 		fusionArray: function(arrayLocal, arrayMsg) {
 			var array = [];
+			var arrayLocalOfMsg = arrayMsg;
 			for (var i = 0; i < arrayLocal.length; i++) {
+				var exist = false;
 				for (var j = 0; j < arrayMsg.length; j++) {
-					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) 
-						array.push(arrayLocal[i]);
-					else
-						array.push(arrayMsg[j]);
+					if (JSON.stringify(arrayLocal[i]) === JSON.stringify(arrayMsg[j])) {
+						exist = true;
+						arrayLocalOfMsg.splice(j, 1);
+					}
+					//else
+						
+						//array.push(arrayMsg[j]);
 				}
+				if (exist)
+					array.push(arrayLocal[i]);
+			}
+			for (var i = 0; i < arrayLocalOfMsg.length; i++) {
+				array.push(arrayLocalOfMsg[i]);
 			}
 			return array;
 		},
