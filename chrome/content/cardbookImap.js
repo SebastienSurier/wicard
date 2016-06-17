@@ -8,7 +8,7 @@ if ("undefined" == typeof(cardbookImap)) {
 		syncImapFolder : {},
 		draftFolder : {},
 		message: {},
-		repeatTime: 30000,
+		repeatTime: 2000,
 
 
 		/*****************************************/
