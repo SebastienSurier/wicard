@@ -362,16 +362,14 @@ if ("undefined" == typeof(cardbookImap)) {
 							wdw_cardbooklog.updateStatusProgressInformation("il faut fusionner les card ici");
 							if (rebuild)  {// la cardMsg prend le dessus
 								cardbookImap.affectChange(cardLocal, cardMsg);
-								wdw_cardbook.saveCard(cardLocal);
+								cardbookImap.createCard(cardLocal);
 							} else {
 							cardbookImap.updateCard(cardLocal, cardMsg);
 							}
 						} else {
 							wdw_cardbooklog.updateStatusProgressInformation("aucune card trouvée avec l'UID = " + uidMsg + ". Elle vient d'être ajoutée");
-							if (rebuild)  {// la cardMsg prend le dessus
-								cardbookUtils.addTagFromImapSync(cardMsg);
-								cardbookImap.createCard(cardMsg);
-							} 
+							cardbookUtils.addTagFromImapSync(cardMsg);
+							cardbookImap.createCard(cardMsg);
 						}
 						break;
 					
@@ -430,9 +428,9 @@ if ("undefined" == typeof(cardbookImap)) {
 		}, 
 
 
-		createCard: function(cardMsg) {
+		createCard: function(card) {
 			try {
-				wdw_cardbook.saveCard(cardMsg);
+				wdw_cardbook.saveCard(card);
 			} catch (e) {
 				wdw_cardbooklog.updateStatusProgressInformation("cardbookImap.createCard error : " + e);
 			}
