@@ -202,7 +202,7 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 			var type = document.getElementById('locationNetworkPageType').selectedItem.value;
 			var username = document.getElementById('locationNetworkPageUsername').value;
 			var password = document.getElementById('locationNetworkPagePassword').value;
-			if (type = 'IMAP') {
+			if (type == 'IMAP') {
 				//TODO IMAP en construction
 				var url = cardbookImap.getUrl();
 			} else if (type == 'GOOGLE') {
@@ -220,7 +220,7 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 
 			cardbookUtils.jsInclude(["chrome://cardbook/content/uuid.js"]);
 			var dirPrefId = new UUID() + "";
-			if (type = 'IMAP') {
+			if (type == 'IMAP') {
 				//TODO IMAP en construction
 				cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
 				let cardbookPrefService = new cardbookPreferenceService(dirPrefId);
@@ -231,9 +231,6 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 				document.getElementById('resultValidation').value = strBundle.GetStringFromName("ValidationOKLabel");
 				wdw_addressbooksAdd.gValidateURL = true;
 				document.getElementById('addressbook-wizard').canAdvance = true;
-								
-				console.log('wdw_addressbooksAdd IMAP');
-				wdw_cardbooklog.updateStatusProgressInformation('wdw_addressbooksAdd IMAP');
 				//wdw_addressbooksAdd.waitForDiscoveryFinished(dirPrefId);
 
 			} else if (type == 'GOOGLE') {
@@ -443,7 +440,6 @@ if ("undefined" == typeof(wdw_addressbooksAdd)) {
 
 		cancelWizard: function () {
 			wdw_addressbooksAdd.gType = "";
-			console.log('TEST : cancelWizard');
 			wdw_addressbooksAdd.closeWizard();
 		},
 

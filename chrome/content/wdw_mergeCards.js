@@ -249,6 +249,15 @@ if ("undefined" == typeof(wdw_mergeCards)) {
 			var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 			var defaultLook = prefs.getBoolPref("extensions.cardbook.defaultLook");
 			wdw_mergeCards.validateLook(defaultLook);
+			var fromImap = false;
+			if (window.arguments[0].imap != null && window.arguments[0].imap !== undefined) {
+				fromImap = window.arguments[0].imap;
+			}
+			if (fromImap) {
+				var strBundle = document.getElementById("cardbook-strings");
+				document.getElementById('createEditionLabel').label=strBundle.getString("updateEditionLabel");
+				document.getElementById('createAndReplaceEditionLabel').hidden = true;
+			}
 			
 			listOfCards = window.arguments[0].cardsIn;
 			var aListRows = document.getElementById('fieldsVbox');

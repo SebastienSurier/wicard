@@ -1809,7 +1809,6 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 										myCard.cardurl = "";
 										cardbookRepository.addCardToRepository(myCard, aMode);
 									} else {
-										wdw_cardbooklog.updateStatusProgressInformation("TEST 0"); 
 										cardbookRepository.addCardToRepository(myCard, aMode, aFile.leafName);
 									
 									}
