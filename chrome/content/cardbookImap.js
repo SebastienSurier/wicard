@@ -478,10 +478,10 @@ if ("undefined" === typeof(cardbookImap)) {
 		},
 
 		fusionCard: function(cardLocal, cardMsg) {
-			var conflict = 0;
+			var conflict = false;
 
 			cardMsg.fn = ""; // le nom affiché reste propre à l'ordinateur local
-			
+
 			if (cardLocal.lastname !== "" && cardMsg.lastname !== "" && cardLocal.lastname !== cardMsg.lastname) {
 				// conflit
 				conflict++;
@@ -616,24 +616,9 @@ if ("undefined" === typeof(cardbookImap)) {
 		},
 
 		affectChange: function(cardLocal, cardOut) {
-			cardLocal.lastname = cardOut.lastname;
-			cardLocal.firstname = cardOut.firstname;
-			cardLocal.othername = cardOut.othername;
-			cardLocal.prefixname = cardOut.prefixname;
-			cardLocal.suffixname = cardOut.suffixname;
-			cardLocal.nickname = cardOut.nickname;
-			cardLocal.bday = cardOut.bday;
-			cardLocal.org = cardOut.org;
-			cardLocal.title = cardOut.title;
-			cardLocal.role = cardOut.role;
-			cardLocal.note = cardOut.note;
-			cardLocal.note = cardOut.note;
-			cardLocal.tel = cardOut.tel;
-			cardLocal.categories = cardOut.categories;
-			cardLocal.email = cardOut.email;
-			cardLocal.adr = cardOut.adr;
-			cardLocal.impp = cardOut.impp;
-			cardLocal.url = cardOut.url;
+            for (k in cardOut) {
+                cardLocal[k] = cardOut[k];
+            }
 		},
 
 		rebuildAddressbook: function() {
