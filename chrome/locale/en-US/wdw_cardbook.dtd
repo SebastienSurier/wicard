@@ -163,6 +163,7 @@
 <!ENTITY exportCardToDirFromCardsLabel "Export card to a directory">
 <!ENTITY importCardFromFileFromAccountsOrCatsLabel "Import cards from a file">
 <!ENTITY importCardFromDirFromAccountsOrCatsLabel "Import cards from a directory">
+<!ENTITY rebuildFromAccountsOrCatsLabel "Rebuild cardbook">
 <!ENTITY removeCatFromAccountsOrCatsLabel "Remove category">
 <!ENTITY enableOrDisableFromAccountsOrCatsLabel "Enable address book">
 <!ENTITY deleteCardFromCardsLabel "Delete card">
