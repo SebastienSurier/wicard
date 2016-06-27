@@ -921,7 +921,6 @@ if ("undefined" == typeof(wdw_cardbook)) {
 					cardbookUtils.updateRev(aModifiedCard); // maj date 
 					// New card
 					if (aModifiedCard.uid == "") {
-						wdw_cardbooklog.updateStatusProgressInformation("no uid = new card");
 						if (cardbookRepository.cardbookSearchMode === "SEARCH") {
 							cardbookUtils.formatStringForOutput("cardCreationInSearchMode");
 							return;
@@ -961,7 +960,6 @@ if ("undefined" == typeof(wdw_cardbook)) {
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
 							
 						} else {
-							wdw_cardbooklog.updateStatusProgressInformation("saveCard ELSE");
 							cardbookUtils.addTagCreated(aModifiedCard);
 							cardbookUtils.addEtag(aModifiedCard, "0");
 							wdw_cardbook.addCardToWindow(aModifiedCard, "WINDOW", cardbookUtils.getFileCacheNameFromCard(aModifiedCard, myCurrentDirPrefIdType));
@@ -972,7 +970,6 @@ if ("undefined" == typeof(wdw_cardbook)) {
 						
 					// Existing card
 					} else {
-						wdw_cardbooklog.updateStatusProgressInformation("uid find = update card");
 						cardbookUtils.jsInclude(["chrome://cardbook/content/preferences/cardbookPreferences.js"]);
 						var cardbookPrefService = new cardbookPreferenceService(aModifiedCard.dirPrefId);
 						var myCurrentDirPrefIdName = cardbookPrefService.getName();
