@@ -236,21 +236,30 @@ if ("undefined" == typeof(cardbookImap)) {
 			try {
 				var msg = cardbookImap.draftFolder.messages;
 				if (msg !== undefined) {
+					var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
 					while (msg.hasMoreElements()) {
 						
 						var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
 						var tab = unMsg.subject.split(" : ");
 						if (tab[1] ===  "Don't remove and keep this message in the " + cardbookImap.syncImapFolder.name) {
-							var messages = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
+							unMsg.markRead(true);
 							messages.appendElement(unMsg, false);
+
 						    // move the message
-						    cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
-						} else {
-						}
+						    if (messages.length > 0)
+						    	cardbookImap.syncImapFolder.copyMessages(cardbookImap.draftFolder, messages, true, null, null, false, false); 
+						} 
+					}
+				}
+				var msg = cardbookImap.syncImapFolder.messages;
+				if (msg !== undefined) {
+					while (msg.hasMoreElements()) {
+						var unMsg = msg.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
+						unMsg.markRead(true);
 					}
 				}
 			} catch(e) {
-				wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.moveMsgToFolder error : " + e);
+				//wdw_cardbooklog.updateStatusProgressInformation("wdw_cardbook.moveMsgToFolder error : " + e);
 			}
 		},   
 
@@ -325,14 +334,13 @@ if ("undefined" == typeof(cardbookImap)) {
 
 				if (cardLocal != null && cardLocal !== undefined && cardLocal != "") 
 					isFound = true;
-
 				switch (modification) {
 					case "CREATE":
 						if (!isFound) {
 							cardbookUtils.addTagFromImapSync(cardMsg);
 							cardbookImap.createCard(cardMsg);
 						} else {
-							wdw_cardbooklog.updateStatusProgressInformation('ERROR : il existe déjà  une card avec cet UID = ' + uidMsg);
+							wdw_cardbooklog.updateStatusProgressInformationWithDebug2('ERROR : il existe déjà  une card avec cet UID = ' + uidMsg);
 						}
 						break;
 					
@@ -346,7 +354,7 @@ if ("undefined" == typeof(cardbookImap)) {
 							cardbookImap.updateCard(cardLocal, cardMsg);
 							}
 						} else {
-							wdw_cardbooklog.updateStatusProgressInformation("aucune card trouvée avec l'UID = " + uidMsg + ". Elle vient d'être ajoutée");
+							wdw_cardbooklog.updateStatusProgressInformationWithDebug2("aucune card trouvée avec l'UID = " + uidMsg + ". Elle vient d'être ajoutée");
 							cardbookUtils.addTagFromImapSync(cardMsg);
 							cardbookImap.createCard(cardMsg);
 						}
@@ -357,7 +365,7 @@ if ("undefined" == typeof(cardbookImap)) {
 							cardbookUtils.addTagFromImapSync(cardLocal);
 							cardbookImap.deleteCard(cardLocal);
 						} else {
-							wdw_cardbooklog.updateStatusProgressInformation("ERROR : aucune card trouvée avec l'UID = " + uidMsg);
+							wdw_cardbooklog.updateStatusProgressInformationWithDebug2("ERROR : aucune card trouvée avec l'UID = " + uidMsg);
 						}
 						break;
 					
@@ -390,15 +398,13 @@ if ("undefined" == typeof(cardbookImap)) {
 
 		// cherche une card avec son uid
 		searchCard: function(uid) {
-			var card = "";
 			for (var i = 0; i < cardbookRepository.cardbookDisplayCards[cardbookRepository.cardbookImapCardsId].length; i++) {
-				card = cardbookRepository.cardbookDisplayCards[cardbookRepository.cardbookImapCardsId][i];
+				var card = cardbookRepository.cardbookDisplayCards[cardbookRepository.cardbookImapCardsId][i];
 				if (card.uid === uid) {
-					//wdw_cardbooklog.updateStatusProgressInformation('searchCard: la card existe : ' + uid);
 					return card;
 				} 
 			}
-			return card;
+			return null;
 		}, 
 
 

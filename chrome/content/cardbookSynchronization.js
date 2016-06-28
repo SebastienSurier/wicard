@@ -1769,17 +1769,19 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 				if (fileContent != null && fileContent !== undefined && fileContent != "") {
 					var re = /[\n\u0085\u2028\u2029]|\r\n?/;
 					var fileContentArray = fileContent.split(re);
+					
 					var cardContent = "";
 
 					for (let i = 0; i < fileContentArray.length; i++) {
-						if (fileContentArray[i] == "BEGIN:VCARD") {
+						if (fileContentArray[i].toUpperCase() == "BEGIN:VCARD") {
 							cardbookRepository.cardbookServerSyncTotal[myDirPrefId]++;
 						}
 					}
 					for (let i = 0; i < fileContentArray.length; i++) {
-						if (fileContentArray[i] == "BEGIN:VCARD") {
+
+						if (fileContentArray[i].toUpperCase() == "BEGIN:VCARD") {
 							cardContent = fileContentArray[i];
-						} else if (fileContentArray[i] == "END:VCARD") {
+						} else if (fileContentArray[i].toUpperCase() == "END:VCARD") {
 							cardContent = cardContent + "\r\n" + fileContentArray[i];
 							try {
 								var myCard = new cardbookCardParser(cardContent, "", "", aFileId);
@@ -2012,7 +2014,6 @@ if ("undefined" == typeof(cardbookSynchronization)) {
 		writeCardsToFile: function (aFileName, aListofCard, aMediaConversion) {
 			try {
 				var output = cardbookUtils.getDataForUpdatingFile(aListofCard, aMediaConversion);
-				wdw_cardbooklog.updateStatusProgressInformation("writeCardsToFile=" + aFileName);
 				cardbookSynchronization.writeContentToFile(aFileName, output, "UTF8");
 			}
 			catch (e) {

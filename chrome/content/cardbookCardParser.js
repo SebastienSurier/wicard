@@ -207,8 +207,11 @@ cardbookCardParser.prototype = {
 		var tmpdispurl = [];
 		this.jsInclude(["chrome://cardbook/content/cardbookUtils.js"]);
 		var re = /[\n\u0085\u2028\u2029]|\r\n?/;
+		
 		var vCardDataArray = vCardData.split(re);
-		if (vCardDataArray.indexOf("VERSION:3.0") >= 0 || vCardDataArray.indexOf("VERSION:4.0") >= 0) {
+		if (vCardDataArray.indexOf("VERSION:2.1") >= 0 || vCardDataArray.indexOf("version:2.1") >= 0 
+			|| vCardDataArray.indexOf("VERSION:3.0") >= 0 || vCardDataArray.indexOf("version:3.0") >= 0 
+			|| vCardDataArray.indexOf("VERSION:4.0") >= 0 || vCardDataArray.indexOf("version:4.0") >= 0) {
 			try {
 				// For multilines data
 				var limit = vCardDataArray.length-1;
@@ -219,7 +222,7 @@ cardbookCardParser.prototype = {
 						limit--;
 					}
 				}
-				
+
 				for (var vCardDataArrayIndex = 0; vCardDataArrayIndex < vCardDataArray.length-1;) {
 					var localDelim1 = -1;
 					var localDelim2 = -1;
@@ -233,7 +236,6 @@ cardbookCardParser.prototype = {
 					vCardDataArrayHeaderKey = "";
 					vCardDataArrayHeaderOption = "";
 					vCardDataArrayTrailer = "";
-					
 					// Splitting data
 					if (localDelim1 >= 0) {
 						vCardDataArrayHeader = vCardDataArray[vCardDataArrayIndex].substr(0,localDelim1);
@@ -247,11 +249,13 @@ cardbookCardParser.prototype = {
 							vCardDataArrayHeaderOption = "";
 						}
 					}
+					for (let i = 0; i < vCardDataArrayHeader.length; i++) {
+						vCardDataArrayHeader[i] = vCardDataArrayHeader[i].toUpperCase();
+					}
 	
 					if ( vCardDataArrayIndex < vCardDataArray.length-1) {
 						vCardDataArrayIndex++;
 					}
-
 					switch (this.findPropertyGroup(vCardDataArrayHeaderKey)) {
 						case "BEGIN":
 							break;
